@@ -49,7 +49,7 @@ public class Terreno extends Imovel
      * Construtor por cópia
      */
 	public Terreno(Terreno t) {
-		super((t.getRua(), t.getPrecoMinimo(), t.getPrecoPedido())
+		super(t.getRua(), t.getPrecoMinimo(), t.getPrecoPedido());
 		this.diametroCanalizacao = t.getDiametroCanalizacao();
 		this.potenciaSuportada = t.getPotenciaSuportada();
 		this.acessoEsgotos = t.getAcessoEsgotos();

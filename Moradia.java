@@ -47,7 +47,7 @@ public class Moradia extends Imovel
  	 * Construtor por cópia
  	 */
 	public Moradia(Moradia m) {
-		super(m.getRua(), m.getprecoMinimo(), m.getPrecoPedido());
+		super(m.getRua(), m.getPrecoMinimo(), m.getPrecoPedido());
 		this.tipo = m.getTipo();
 		this.areaImplantacao = m.getAreaImplantacao();
 		this.areaCoberta = m.getAreaCoberta();
