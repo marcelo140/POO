@@ -161,4 +161,24 @@ public class Moradia extends Imovel
 	public void setNumeroPorta(int numeroPorta) {
 		this.numPorta = numeroPorta;
 	}
+
+	/**
+	 * Verifica se um dado objeto é igual a esta Moradia.
+	 * @param o Objeto
+	 */
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if ((o == null) || (this.getClass() != o.getClass())) return false;
+		else {
+			Moradia m = (Moradia) o;
+			return (super.equals(m) &&
+					this.tipo.equals(m.tipo) &&
+                    this.areaImplantacao == m.areaImplantacao &&
+					 this.areaCoberta == m.areaCoberta &&
+				     this.areaTerreno == m.areaTerreno && 
+				  	 this.numQuartos == m.numQuartos && 
+				     this.numWC == m.numWC && 
+					 this.numPorta == m.numPorta);
+		}
+	}
 }

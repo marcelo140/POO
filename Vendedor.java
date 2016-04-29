@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * O vendedor é a entidade responsável pela gestão dos anúncios de imóveis para
@@ -8,8 +9,8 @@ import java.util.ArrayList;
  */
 public class Vendedor extends Utilizador {
 
-	ArrayList<Imovel> imoveisEmVenda  = new ArrayList<Imovel>();
-	ArrayList<Imovel> imoveisVendidos = new ArrayList<Imovel>();
+	List<Imovel> imoveisEmVenda  = new ArrayList<Imovel>();
+	List<Imovel> imoveisVendidos = new ArrayList<Imovel>();
 
 	/**
 	 * Construtor por parametros
@@ -21,7 +22,7 @@ public class Vendedor extends Utilizador {
 	 * @param imoveisEmVenda
 	 * @param imoveisVendidos
 	 */
-	public Vendedor(String email, String nome, String password, String morada, String dataNascimento, ArrayList<Imovel> imoveisEmVenda, ArrayList<Imovel> imoveisVendidos) {
+	public Vendedor(String email, String nome, String password, String morada, String dataNascimento, List<Imovel> imoveisEmVenda, List<Imovel> imoveisVendidos) {
 		super(email, nome, password, morada, dataNascimento);
 		
 		for (Imovel im : imoveisEmVenda)
@@ -46,14 +47,29 @@ public class Vendedor extends Utilizador {
 	/**
 	 * Obtem imóveis em venda do Vendedor
 	 */
-	public ArrayList<Imovel> getImoveisEmVenda() {
-		return this.imoveisEmVenda;
+	public List<Imovel> getImoveisEmVenda() {
+		return new ArrayList<Imovel> (this.imoveisEmVenda);
 	}
 
 	/**
 	 * Obtem imóveis vendidos pelo Vendedor
 	 */
-	public ArrayList<Imovel> getImoveisVendidos() {
-		return this.imoveisVendidos;
+	public List<Imovel> getImoveisVendidos() {
+		return new ArrayList<Imovel> (this.imoveisVendidos);
+	}
+
+	/**
+	 * Verifica se dado Objeto é igual a este Vendedor.
+	 * @param o Objeto
+	 */
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if ((o == null) || (this.getClass() != o.getClass())) return false;
+		else {
+			Vendedor v = (Vendedor) o;
+			return (super.equals(v) &&
+					this.imoveisEmVenda.equals(v.imoveisEmVenda) &&
+					this.imoveisVendidos.equals(v.imoveisVendidos));
+		}
 	}
 }

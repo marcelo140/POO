@@ -86,4 +86,19 @@ public abstract class Imovel
 	public void setPrecoPedido(double precoPedido) {
 		this.precoPedido = precoPedido;
 	}
+	
+	/**
+	 * Verifica se um objeto dado é igual a este.
+	 * @param o Objeto
+	 */
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if ((o == null) || (this.getClass() != o.getClass())) return false;
+		else {
+			Imovel i = (Imovel) o;
+			return ( this.precoMinimo == i.precoMinimo &&
+					 this.precoPedido == i.precoPedido && 
+				     this.rua.equals(i.rua)); 
+		}
+	}
 }

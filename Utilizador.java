@@ -121,4 +121,21 @@ public abstract class Utilizador
 	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+
+	/**
+	 * Verifica se um dado Objeto é igual a este Utilizador.
+	 * @param o Objeto
+	 */
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if ((o == null) || (this.getClass() != o.getClass())) return false;
+		else {
+			Utilizador u = (Utilizador) o;
+			return (this.email.equals(u.email) &&
+					this.nome.equals(u.nome) &&
+					this.password.equals(u.password) &&
+					this.morada.equals(u.morada) &&
+					this.dataNascimento.equals(u.dataNascimento));
+		}
+	}
 }

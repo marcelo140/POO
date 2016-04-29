@@ -129,4 +129,22 @@ public class Terreno extends Imovel
 	public void setAcessoEsgotos(boolean acesso) {
 		this.acessoEsgotos = acesso;
 	}
+
+	/**
+	 * Verifica se um dado Objeto é igual a este Terreno.
+	 * @param o Objeto
+	 */
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if ( (o == null) || (this.getClass() != o.getClass()) ) return false;
+		else {
+			Terreno t = (Terreno) o;
+			return (super.equals(t) && 
+					this.tipo.equals(t.tipo) &&
+					this.area == t.area && 
+				  	this.diametroCanalizacao == t.diametroCanalizacao &&
+					this.potenciaSuportada == t.potenciaSuportada &&
+				  	this.acessoEsgotos == t.acessoEsgotos );
+		}
+	}
 }

@@ -44,4 +44,19 @@ public class Comprador extends Utilizador
 	public TreeSet<Imovel> getFavoritos() {
 		return this.favoritos;
 	}
+
+	/**
+	 * Verifica se o objeto dado é igual a este.
+	 * @param o Objeto
+	 */
+	public boolean equals(Object o) {
+		if (o == this) return true;
+		if ( (o == null) || (this.getClass() != o.getClass())) return false;
+		else {
+			Comprador c = (Comprador) o;
+			return super.equals(c) &&
+				this.favoritos.equals(c.getFavoritos() );
+		}
+
+	}
 }
