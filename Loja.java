@@ -109,5 +109,22 @@ public class Loja extends Imovel
     public void setWC(boolean WC) {
         this.WC = WC;
     }
+
+	/**
+	 * Verifica se o Objeto dado é igual a esta Loja
+	 * @param o Objeto
+	 */
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if ((o == null) || (o.getClass() != this.getClass())) return false;
+		else {
+			Loja l = (Loja) o;
+			return  super.equals(l) && 
+					this.parteHabitacional.equals(l.parteHabitacional) &&
+					this.tipoNegocio.equals(l.tipoNegocio) && 
+					this.area == l.area &&
+					this.WC == l.WC;
+		}
+	} 
 }
 

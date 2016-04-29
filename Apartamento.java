@@ -164,5 +164,26 @@ public class Apartamento extends Imovel
 	public void setGaragem(boolean garagem) {
 		this.garagem = garagem;
 	}
+
+	/**
+	 * Verifica se um dado Objeto é igual a este Apartamento
+	 * @param o Obejto
+	 */
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if ((o == null) || (this.getClass() != o.getClass())) return false;
+		else {
+			Apartamento a = (Apartamento) o;
+			return  super.equals(a) &&
+					this.tipo.equals(a.tipo) && 
+					this.area == a.area &&
+					this.nQuartos == a.nQuartos &&
+					this.nWC == a.nWC &&
+					this.andar == a.andar &&
+					this.porta == a.porta &&
+					this.garagem == a.garagem;
+		}
+	}
+
 }
 
