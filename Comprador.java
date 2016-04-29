@@ -1,3 +1,4 @@
+import java.util.TreeSet;
 
 /**
  * Write a description of class Comprador here.
@@ -5,29 +6,42 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Comprador
+public class Comprador extends Utilizador
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    TreeSet<Imovel> favoritos = new TreeSet<Imovel>();
 
-    /**
-     * Constructor for objects of class Comprador
-     */
-    public Comprador()
-    {
-        // initialise instance variables
-        x = 0;
+	/**
+ 	 * Construtor padrão
+ 	 */
+    public Comprador() {
+        super();
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+	/**
+ 	 * Construtor por parâmetros
+ 	 */
+    public Comprador(String email, String nome, String password, String morada, String dataNascimento, TreeSet<Imovel> favoritos) {
+        super(email,nome,password,morada,dataNascimento);
+        
+        for(Imovel im: favoritos)
+            this.favoritos.add(im);
     }
+
+	/**
+ 	 * Construtor por cópia
+ 	 */
+    public Comprador(Comprador c) {
+        super(c.getEmail(), c.getNome(), c.getPassword(), c.getMorada(), c.getDataNascimento());
+    
+        for(Imovel im: favoritos)
+            this.favoritos.add(im);
+    }
+
+	/**
+ 	 * Obtem imóveis favoritos do utilizador
+ 	 * @return
+ 	 */
+	public TreeSet<Imovel> getFavoritos() {
+		return this.favoritos;
+	}
 }
