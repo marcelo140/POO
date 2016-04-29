@@ -37,8 +37,7 @@ public class Terreno extends Imovel
      * Construtor padrão
      */	
 	public Terreno() {
-		super();
-		this("n/a", 0.0, 0.0, 0.0, false);
+		this("n/a", 0, 0, "n/a", 0.0, 0.0, 0.0, false);
 	}
 	
 	/**

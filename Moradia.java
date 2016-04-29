@@ -33,8 +33,7 @@ public class Moradia extends Imovel
  	 * Construtor padrão
  	 */
 	public Moradia() {
-		super();
-		this("n/a", 0.0, 0.0, 0.0, 0.0, 0, 0, 0);
+		this("n/a", 0.0, 0.0, "n/a", 0.0, 0.0, 0.0, 0, 0, 0);
 	}
 
 	/**
