@@ -11,13 +11,6 @@ public class Comprador extends Utilizador
     TreeSet<Imovel> favoritos = new TreeSet<Imovel>();
 
 	/**
- 	 * Construtor padrão
- 	 */
-    public Comprador() {
-        super();
-    }
-
-	/**
  	 * Construtor por parâmetros
  	 */
     public Comprador(String email, String nome, String password, String morada, String dataNascimento, TreeSet<Imovel> favoritos) {
@@ -25,6 +18,13 @@ public class Comprador extends Utilizador
         
         for(Imovel im: favoritos)
             this.favoritos.add(im);
+    }
+
+	/**
+ 	 * Construtor padrão
+ 	 */
+    public Comprador() {
+        super();
     }
 
 	/**

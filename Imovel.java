@@ -12,15 +12,6 @@ public abstract class Imovel
 	private double precoPedido;
 
 	/**
-     * Construtor padrão
-     */	
-	public Imovel() {
-		this.rua = "n/a";
-		this.precoMinimo = 0.0;
-		this.precoPedido = 0.0;
-	}
-
-	/**
      * Construtor por parâmetros
      * @param rua
      * @param precoMinimo
@@ -30,6 +21,13 @@ public abstract class Imovel
 		this.rua = rua;
 		this.precoMinimo = precoMinimo;
 		this.precoPedido = precoPedido;
+	}
+
+	/**
+     * Construtor padrão
+     */	
+	public Imovel() {
+		this("n/a", 0.0, 0.0);
 	}
 
 	/**

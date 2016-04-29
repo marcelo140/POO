@@ -16,20 +16,6 @@ public class Moradia extends Imovel
 	private int numPorta;
 
 	/**
- 	 * Construtor padrão
- 	 */
-	public Moradia() {
-		super();
-		this.tipo = "n/a";
-		this.areaImplantacao = 0.0;
-		this.areaCoberta = 0.0;
-		this.areaTerreno = 0.0;
-		this.numQuartos = 0;
-		this.numWC = 0;
-		this.numPorta = 0;
-	}
-
-	/**
  	 * Construtor por parâmetro
  	 */
 	public Moradia(String rua, double precoMinimo, double precoPedido, String tipo, double areaImplantacao, double areaCoberta, double areaTerreno, int numQuartos, int numWC, int numPorta) {
@@ -41,6 +27,14 @@ public class Moradia extends Imovel
 		this.numQuartos = numQuartos;
 		this.numWC = numWC;
 		this.numPorta = numPorta;
+	}
+
+	/**
+ 	 * Construtor padrão
+ 	 */
+	public Moradia() {
+		super();
+		this("n/a", 0.0, 0.0, 0.0, 0.0, 0, 0, 0);
 	}
 
 	/**

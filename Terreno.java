@@ -14,18 +14,6 @@ public class Terreno extends Imovel
 	private boolean acessoEsgotos;
 
 	/**
-     * Construtor padrão
-     */	
-	public Terreno() {
-		super();
-		this.tipo = "n/a";
-		this.area = 0.0;
-		this.diametroCanalizacao = 0.0;
-		this.potenciaSuportada = 0.0;
-		this.acessoEsgotos = false;
-	}
-	
-	/**
      * Construtor por parâmatros
      * @param rua
      * @param precoMinimo
@@ -45,6 +33,14 @@ public class Terreno extends Imovel
 		this.acessoEsgotos = acessoEsgotos;
 	}
 
+	/**
+     * Construtor padrão
+     */	
+	public Terreno() {
+		super();
+		this("n/a", 0.0, 0.0, 0.0, false);
+	}
+	
 	/**
      * Construtor por cópia
      */

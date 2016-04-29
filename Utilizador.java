@@ -14,17 +14,6 @@ public abstract class Utilizador
 	private String dataNascimento;
 
 	/**
-     * Construtor padrão
-     */
-	public Utilizador() {
-		this.email = "n/a";
-		this.nome = "n/a";
-		this.password = "n/a";
-		this.morada = "n/a";
-		this.dataNascimento = "n/a";
-	}
-
-	/**
      * Construtor por parâmetros
      * @param email
      * @param nome
@@ -38,6 +27,13 @@ public abstract class Utilizador
 		this.password = password;
 		this.morada = morada;
 		this.dataNascimento = dataNascimento;
+	}
+
+	/**
+     * Construtor padrão
+     */
+	public Utilizador() {
+		this("n/a", "n/a", "n/a", "n/a", "n/a");
 	}
 
 	/**
