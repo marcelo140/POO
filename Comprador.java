@@ -69,6 +69,18 @@ public class Comprador extends Utilizador
 	}
 
 	/**
+	 * HashCode da classe Comprador
+	 */
+	public int hashCode() {
+		int hash = 7;
+
+		hash = 31*hash + super.hashCode();
+		hash = 31*hash + this.favoritos.hashCode();
+
+		return hash;
+	}
+
+	/**
  	 * Cria uma cópia de um comprador
  	 * @return Comprador
  	 */

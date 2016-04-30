@@ -149,6 +149,26 @@ public class Terreno extends Imovel
 	}
 
 	/**
+	 * HashCode da classe Terreno
+	 */
+	public int hashCode() {
+		int hash = 7;
+		long aux;
+
+		hash = 31*hash + super.hashCode();
+		hash = 31*hash + this.tipo.hashCode();
+		aux  = Double.doubleToLongBits(this.area);
+		hash = 31*hash + (int)(aux^(aux >>> 32));
+		aux  = Double.doubleToLongBits(this.diametroCanalizacao);
+		hash = 31*hash + (int)(aux^(aux >>> 32));
+		aux  = Double.doubleToLongBits(this.potenciaSuportada);
+		hash = 31*hash + (int)(aux^(aux >>> 32));
+		hash = 31*hash + (this.acessoEsgotos ? 0 : 1);
+
+		return hash;
+	}
+
+	/**
  	 * Cria uma cópia do terreno
  	 * @return Terreno
  	 */

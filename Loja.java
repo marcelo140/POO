@@ -143,6 +143,24 @@ public class Loja extends Imovel
 	}
 
 	/**
+	 * HashCode da classe Loja
+	 */
+	public int hash() {
+		int hash = 7;
+		long aux;
+	
+		hash = 31*hash + super.hashCode();	
+		hash = 31*hash + this.parteHabitacional.hashCode();
+		hash = 31*hash + this.tipoNegocio.hashCode();
+		aux = Double.doubleToLongBits(this.area);
+		hash = 31*hash + (int)(aux^(aux >>> 32));
+		hash = 31*hash + this.porta;
+		hash = 31*hash + (this.wc ? 0 : 1);
+		
+		return hash;	
+	}
+
+	/**
  	 * Cria uma cópia da loja
  	 * @return Loja
  	 */

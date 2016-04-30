@@ -139,6 +139,21 @@ public abstract class Utilizador
 	}
 
 	/**
+	 * HashCode da classe Utilizador
+	 */
+	public int hashCode() {
+		int hash = 7;
+		
+		hash = 31*hash + this.email.hashCode();
+		hash = 31*hash + this.nome.hashCode();
+		hash = 31*hash + this.password.hashCode();
+		hash = 31*hash + this.morada.hashCode();
+		hash = 31*hash + this.dataNascimento.hashCode();
+
+		return hash;
+	}
+
+	/**
  	 * Cria uma cópia de um utilizador
  	 * @return Utilizador
  	 */

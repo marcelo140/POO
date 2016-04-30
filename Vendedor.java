@@ -100,6 +100,7 @@ public class Vendedor extends Utilizador
 	public int hashCode() {
 		int hash = 7;
 
+		hash = 31*hash + super.hashCode();
 		hash = 31*hash + this.imoveisEmVenda.hashCode();
 		hash = 31*hash + this.imoveisVendidos.hashCode();
 

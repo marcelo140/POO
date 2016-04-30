@@ -58,13 +58,13 @@ public class Apartamento extends Imovel
      */
 	public Apartamento(Apartamento t){
 		super(t);		
-	   this.tipo = t.getTipo();
-       this.area = t.getArea();
-       this.quartos = t.getNQuartos();
-       this.wc = t.getWC();
-       this.andar = t.getAndar();
-       this.porta = t.getPorta();
-       this.garagem = t.getGaragem();
+		this.tipo = t.getTipo();
+		this.area = t.getArea();
+		this.quartos = t.getNQuartos();
+		this.wc = t.getWC();
+		this.andar = t.getAndar();
+		this.porta = t.getPorta();
+		this.garagem = t.getGaragem();
 	}
 
 	/**
@@ -197,6 +197,26 @@ public class Apartamento extends Imovel
 					this.porta == a.porta &&
 					this.garagem == a.garagem;
 		}
+	}
+
+	/**
+	 * HashCode da classe Apartamento
+	 */
+	public int hashCode() {
+		int hash = 7;
+		long aux;
+		
+		hash = 31*hash + super.hashCode();
+		hash = 31*hash + this.tipo.hashCode();
+		aux  = Double.doubleToLongBits(this.area);
+		hash = 31*hash + (int) (aux^(aux >>> 32));
+		hash = 31*hash + this.quartos;
+		hash = 31*hash + this.wc;
+		hash = 31*hash + this.andar;
+		hash = 31*hash + this.porta;
+		hash = 31*hash + (this.garagem ? 0 : 1);
+
+		return hash;
 	}
 
 	/**

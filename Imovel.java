@@ -100,6 +100,22 @@ public abstract class Imovel
 	}
 
 	/**
+	 * HashCode da classe Imovel
+	 */
+	public int hashCode() {
+		int hash = 7;
+		long aux;
+
+		hash = 31*hash + this.rua.hashCode();
+		aux = Double.doubleToLongBits(this.precoMinimo);
+		hash = 31*hash + (int)(aux^(aux >>> 32));
+		aux = Double.doubleToLongBits(this.precoPedido);
+		hash = 31*hash + (int)(aux^(aux >>> 32));
+
+		return hash;
+	}
+
+	/**
  	 * Cria uma cópia do imóvel
  	 * @return Imóvel
  	 */
