@@ -67,4 +67,12 @@ public class Comprador extends Utilizador
 		}
 
 	}
+
+	/**
+ 	 * Cria uma cópia de um comprador
+ 	 * @return Comprador
+ 	 */
+	public Comprador clone() {
+		return new Comprador(this);
+	}
 }

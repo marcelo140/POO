@@ -137,4 +137,10 @@ public abstract class Utilizador
 					this.dataNascimento.equals(u.dataNascimento));
 		}
 	}
+
+	/**
+ 	 * Cria uma cópia de um utilizador
+ 	 * @return Utilizador
+ 	 */
+	public abstract Utilizador clone();
 }

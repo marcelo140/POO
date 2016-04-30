@@ -93,4 +93,12 @@ public class Vendedor extends Utilizador
 					this.imoveisVendidos.equals(v.imoveisVendidos));
 		}
 	}
+
+	/**
+ 	 * Cria uma cópia de um vendedor
+ 	 * @return Vendedor
+ 	 */
+	public Vendedor clone() {
+		return new Vendedor(this);
+	}
 }
