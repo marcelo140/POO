@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 public class Comprador extends Utilizador
 {
-    Set<Imovel> favoritos;
+    private Set<Imovel> favoritos;
 
 	/**
  	 * Construtor por parâmetros

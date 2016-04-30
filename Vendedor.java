@@ -9,8 +9,8 @@ import java.util.GregorianCalendar;
 
 public class Vendedor extends Utilizador 
 {
-	List<Imovel> imoveisEmVenda;
-	List<Imovel> imoveisVendidos;
+	private List<Imovel> imoveisEmVenda;
+	private List<Imovel> imoveisVendidos;
 
 	/**
 	 * Construtor por parametros
@@ -92,6 +92,18 @@ public class Vendedor extends Utilizador
 					this.imoveisEmVenda.equals(v.imoveisEmVenda) &&
 					this.imoveisVendidos.equals(v.imoveisVendidos));
 		}
+	}
+
+	/**
+	 * HashCode do Vendedor
+	 */
+	public int hashCode() {
+		int hash = 7;
+
+		hash = 31*hash + this.imoveisEmVenda.hashCode();
+		hash = 31*hash + this.imoveisVendidos.hashCode();
+
+		return hash;
 	}
 
 	/**

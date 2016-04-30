@@ -5,8 +5,8 @@ import java.util.Calendar;
  */
 public class Consulta {
 
-	GregorianCalendar data; // Data da consulta
-	String email; // Email do visitante
+	private GregorianCalendar data; // Data da consulta
+	private String email; // Email do visitante
 
 	/**
 	 * Construtor por parametros.

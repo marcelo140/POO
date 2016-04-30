@@ -6,8 +6,8 @@ import java.util.Map;
  */
 public class Imoobiliaria {
 
-	TreeMap<String, Utilizador> utilizadores;
-	TreeMap<Imovel, Vendedor> anuncios;
+	private TreeMap<String, Utilizador> utilizadores;
+	private TreeMap<Imovel, Vendedor> anuncios;
 
 	/**
 	 * Construtor por parametros
