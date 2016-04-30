@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.GregorianCalendar;
 
 /**
  * O vendedor é a entidade responsável pela gestão dos anúncios de imóveis para
  * venda. 
- * @author Bruno Cancelinha 
- * @version 0.1
  */
-public class Vendedor extends Utilizador {
 
-	List<Imovel> imoveisEmVenda  = new ArrayList<Imovel>();
-	List<Imovel> imoveisVendidos = new ArrayList<Imovel>();
+public class Vendedor extends Utilizador 
+{
+	List<Imovel> imoveisEmVenda;
+	List<Imovel> imoveisVendidos;
 
 	/**
 	 * Construtor por parametros
@@ -22,12 +22,14 @@ public class Vendedor extends Utilizador {
 	 * @param imoveisEmVenda
 	 * @param imoveisVendidos
 	 */
-	public Vendedor(String email, String nome, String password, String morada, String dataNascimento, List<Imovel> imoveisEmVenda, List<Imovel> imoveisVendidos) {
+	public Vendedor(String email, String nome, String password, String morada, GregorianCalendar dataNascimento, List<Imovel> imoveisEmVenda, List<Imovel> imoveisVendidos) {
 		super(email, nome, password, morada, dataNascimento);
-		
+
+		this.imoveisEmVenda = new ArrayList<Imovel>();
 		for (Imovel im : imoveisEmVenda)
 			this.imoveisEmVenda.add(im);
-		
+	
+		this.imoveisVendidos = new ArrayList<Imovel>();	
 		for (Imovel im : imoveisVendidos)
 			this.imoveisVendidos.add(im);
 	}
@@ -37,25 +39,44 @@ public class Vendedor extends Utilizador {
 	 */
 	public Vendedor() {
 		super();
+		this.imoveisEmVenda = new ArrayList<Imovel>();
+		this.imoveisVendidos = new ArrayList<Imovel>();	
 	}
 		
-	public Vendedor(Vendedor vend) {
-		this(vend.getEmail(), vend.getNome(), vend.getPassword(), vend.getMorada(), vend.getDataNascimento(), vend.getImoveisEmVenda(), vend.getImoveisVendidos() );
-		
+	public Vendedor(Vendedor v) {
+		this(v.getEmail(), v.getNome(), v.getPassword(), v.getMorada(), v.getDataNascimento(), v.getImoveisEmVenda(), v.getImoveisVendidos());
 	}
 
 	/**
 	 * Obtem imóveis em venda do Vendedor
 	 */
-	public List<Imovel> getImoveisEmVenda() {
+	private List<Imovel> getImoveisEmVenda() {
 		return new ArrayList<Imovel> (this.imoveisEmVenda);
 	}
 
 	/**
 	 * Obtem imóveis vendidos pelo Vendedor
 	 */
-	public List<Imovel> getImoveisVendidos() {
+	private List<Imovel> getImoveisVendidos() {
 		return new ArrayList<Imovel> (this.imoveisVendidos);
+	}
+
+	/**
+ 	 * Define a lista de imóveis em venda
+ 	 * @param imoveisEmVenda
+ 	 */
+	private void setImoveisEmVenda(List<Imovel> imoveisEmVenda) {
+		for(Imovel i: imoveisEmVenda)
+			this.imoveisEmVenda.add(i.clone());
+	}
+
+	/**
+ 	 * Define a lista de imóveis vendidos
+ 	 * @param imoveisVendidos
+ 	 */
+	private void setImoveisVendidos(List<Imovel> imoveisVendidos) {
+		for(Imovel i: imoveisEmVenda)
+			this.imoveisEmVenda.add(i.clone());
 	}
 
 	/**

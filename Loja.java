@@ -1,9 +1,6 @@
 
 /**
  * Write a description of class Loja here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
  */
 public class Loja extends Imovel
 {
@@ -11,18 +8,20 @@ public class Loja extends Imovel
     private String tipoNegocio;
     private double area;
     private int porta;
-    private boolean WC;
+    private boolean wc;
+
     /**
      * Construtor padrão
      */ 
     public Loja(){
        super();
-       this.parteHabitacional = new Apartamento();
+       this.parteHabitacional = null;
        this.tipoNegocio = "n/a";
        this.area = 0;
        this.porta = 0;
-       this.WC = false;
-       }
+       this.wc = false;
+    }
+
     /**
      * Construtor por parâmatros
      * @param rua
@@ -32,27 +31,38 @@ public class Loja extends Imovel
      * @param tipo
      * @param area
      * @param porta
-     * @param WC
+     * @param wc
      */
-    public Loja(String rua, double precoMinimo, double precoPedido, String tipo, double area, int porta, boolean WC){
-       super(rua, precoMinimo, precoPedido);
+    public Loja(String rua, double precoMinimo, double precoPedido, Apartamento parteHab,
+                String tipo, double area, int porta, boolean wc){
+		super(rua, precoMinimo, precoPedido);
+		this.parteHabitacional = parteHab.clone();
        this.tipoNegocio = tipo;
        this.area = area;
        this.porta = porta;
-       this.WC = WC;
+       this.wc = wc;
        }
+
     /**
      * Construtor por cópia
      */
        public Loja(Loja t){
-       super.setRua(t.getRua());
-       super.setPrecoMinimo(t.getPrecoMinimo());
-       super.setPrecoPedido(t.getPrecoPedido());
+		super(t);
+		this.parteHabitacional = t.getParteHabitacional();
        this.tipoNegocio = t.getTipoNegocio();
        this.area = t.getArea();
        this.porta = t.getPorta();
-       this.WC = t.getWC();
+       this.wc = t.getWC();
     }
+
+	/**
+ 	 * Obter parte habitacional da loja
+ 	 * @return Apartamento
+ 	 */
+	private Apartamento getParteHabitacional() {
+		return this.parteHabitacional.clone();
+	}
+
     /**
      * Obter tipo de negócio da loja
      * @return
@@ -75,16 +85,21 @@ public class Loja extends Imovel
     return this.porta;
     }
     /**
-     * Determina se o apartamento tem WC
+     * Determina se o apartamento tem wc
      * @return
      */
     public boolean getWC(){
-    return this.WC;
+    return this.wc;
     }
     /**
      * Define tipo de negócio 
      * @param tipo
      */
+
+	private void setParteHabitacional(Apartamento parteHab) {
+		this.parteHabitacional = parteHab.clone();
+	}
+
     public void setTipo(String tipo) {
         this.tipoNegocio = tipoNegocio;
     }
@@ -106,8 +121,8 @@ public class Loja extends Imovel
      * Define se o apartamento tem, ou não, garagem
      * @param garagem
      */
-    public void setWC(boolean WC) {
-        this.WC = WC;
+    public void setwc(boolean wc) {
+        this.wc = wc;
     }
 
 	/**
@@ -123,8 +138,16 @@ public class Loja extends Imovel
 					this.parteHabitacional.equals(l.parteHabitacional) &&
 					this.tipoNegocio.equals(l.tipoNegocio) && 
 					this.area == l.area &&
-					this.WC == l.WC;
+					this.wc == l.wc;
 		}
-	} 
+	}
+
+	/**
+ 	 * Cria uma cópia da loja
+ 	 * @return Loja
+ 	 */
+	public Loja clone() {
+		return new Loja(this);
+	}
 }
 

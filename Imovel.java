@@ -1,9 +1,6 @@
 
 /**
  * Abstract class Imovel - write a description of the class here
- * 
- * @author (your name here)
- * @version (version number or date here)
  */
 public abstract class Imovel
 {
@@ -33,10 +30,10 @@ public abstract class Imovel
 	/**
      * Construtor por cópia
      */
-	public Imovel(Imovel imov) {
-		this.rua = imov.getRua();
-		this.precoMinimo = imov.getPrecoMinimo();
-		this.precoPedido = imov.getPrecoPedido();
+	public Imovel(Imovel i) {
+		this.rua = i.getRua();
+		this.precoMinimo = i.getPrecoMinimo();
+		this.precoPedido = i.getPrecoPedido();
 	}
 
 	/**
@@ -101,4 +98,10 @@ public abstract class Imovel
 				     this.rua.equals(i.rua)); 
 		}
 	}
+
+	/**
+ 	 * Cria uma cópia do imóvel
+ 	 * @return Imóvel
+ 	 */
+	public abstract Imovel clone();
 }

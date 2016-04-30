@@ -44,7 +44,7 @@ public class Terreno extends Imovel
      * Construtor por cópia
      */
 	public Terreno(Terreno t) {
-		super(t.getRua(), t.getPrecoMinimo(), t.getPrecoPedido());
+		super(t);
 		this.diametroCanalizacao = t.getDiametroCanalizacao();
 		this.potenciaSuportada = t.getPotenciaSuportada();
 		this.acessoEsgotos = t.getAcessoEsgotos();
@@ -146,5 +146,13 @@ public class Terreno extends Imovel
 					this.potenciaSuportada == t.potenciaSuportada &&
 				  	this.acessoEsgotos == t.acessoEsgotos );
 		}
+	}
+
+	/**
+ 	 * Cria uma cópia do terreno
+ 	 * @return Terreno
+ 	 */
+	public Terreno clone() {
+		return new Terreno(this);
 	}
 }

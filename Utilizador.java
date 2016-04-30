@@ -1,17 +1,16 @@
+import java.util.GregorianCalendar;
 
 /**
- * Abstract class Utilizador - write a description of the class here
- * 
- * @author (your name here)
- * @version (version number or date here)
+ * Abstract class Utilizador - Gerir dados do utilizador
  */
+
 public abstract class Utilizador
 {
 	private String email;
 	private String nome;
 	private String password;
 	private String morada;
-	private String dataNascimento;
+	private GregorianCalendar dataNascimento;
 
 	/**
      * Construtor por parâmetros
@@ -21,30 +20,30 @@ public abstract class Utilizador
      * @param morada
      * @param dataNascimento
      */
-	public Utilizador(String email, String nome, String password, String morada, String dataNascimento) {
+	public Utilizador(String email, String nome, String password, String morada, GregorianCalendar dataNascimento) {
 		this.email = email;
 		this.nome = nome;
 		this.password = password;
 		this.morada = morada;
-		this.dataNascimento = dataNascimento;
+		this.dataNascimento = (GregorianCalendar) dataNascimento.clone();
 	}
 
 	/**
      * Construtor padrão
      */
 	public Utilizador() {
-		this("n/a", "n/a", "n/a", "n/a", "n/a");
+		this("n/a", "n/a", "n/a", "n/a", null);
 	}
 
 	/**
      * Construtor por cópia
      */
-	public Utilizador(Utilizador util) {
-		this.email = util.getEmail();
-		this.nome = util.getNome();
-		this.password = util.getPassword();
-		this.morada = util.getMorada();
-		this.dataNascimento = util.getDataNascimento();
+	public Utilizador(Utilizador u) {
+		this.email = u.getEmail();
+		this.nome = u.getNome();
+		this.password = u.getPassword();
+		this.morada = u.getMorada();
+		this.dataNascimento = u.getDataNascimento();
 	}
 
 	/**
@@ -78,8 +77,8 @@ public abstract class Utilizador
     /**
      * Obter a data de nascimento do utilizador
      */
-	public String getDataNascimento() {
-		return this.dataNascimento;
+	public GregorianCalendar getDataNascimento() {
+		return (GregorianCalendar) this.dataNascimento.clone();
 	}
 
 	/**
@@ -118,8 +117,8 @@ public abstract class Utilizador
      * Define a data de nascimento do utilizador
      * @param dataNascimento
      */
-	public void setDataNascimento(String dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setDataNascimento(GregorianCalendar dataNascimento) {
+		this.dataNascimento = (GregorianCalendar) dataNascimento.clone();
 	}
 
 	/**

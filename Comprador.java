@@ -1,23 +1,23 @@
+import java.util.Set;
 import java.util.TreeSet;
+import java.util.GregorianCalendar;
 
 /**
  * Write a description of class Comprador here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
  */
+
 public class Comprador extends Utilizador
 {
-    TreeSet<Imovel> favoritos = new TreeSet<Imovel>();
+    Set<Imovel> favoritos;
 
 	/**
  	 * Construtor por parâmetros
  	 */
-    public Comprador(String email, String nome, String password, String morada, String dataNascimento, TreeSet<Imovel> favoritos) {
+    public Comprador(String email, String nome, String password, String morada, GregorianCalendar dataNascimento, Set<Imovel> favoritos) {
         super(email,nome,password,morada,dataNascimento);
-        
-        for(Imovel im: favoritos)
-            this.favoritos.add(im);
+ 
+       	this.favoritos = new TreeSet<Imovel>();
+        setFavoritos(favoritos);
     }
 
 	/**
@@ -25,24 +25,32 @@ public class Comprador extends Utilizador
  	 */
     public Comprador() {
         super();
+		this.favoritos = new TreeSet<Imovel>();
     }
 
 	/**
  	 * Construtor por cópia
  	 */
     public Comprador(Comprador c) {
-        super(c.getEmail(), c.getNome(), c.getPassword(), c.getMorada(), c.getDataNascimento());
-    
-        for(Imovel im: favoritos)
-            this.favoritos.add(im);
+        super(c);
+		this.favoritos = c.getFavoritos(); 
     }
 
 	/**
- 	 * Obtem imóveis favoritos do utilizador
- 	 * @return
+ 	 * Obter cópia dos favoritos
+ 	 * @return Set
  	 */
-	public TreeSet<Imovel> getFavoritos() {
-		return this.favoritos;
+	private Set<Imovel> getFavoritos() {
+		return new TreeSet<Imovel>(this.favoritos);
+	}
+
+	/**
+ 	 * Definir favoritos
+ 	 * @param favoritos
+ 	 */
+	private void setFavoritos(Set<Imovel> favoritos) {
+		for(Imovel f: favoritos)
+			this.favoritos.add(f.clone());
 	}
 
 	/**

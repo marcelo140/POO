@@ -1,9 +1,6 @@
 
 /**
  * Write a description of class Moradia here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
  */
 public class Moradia extends Imovel
 {
@@ -11,22 +8,24 @@ public class Moradia extends Imovel
 	private double areaImplantacao;
 	private double areaCoberta;
 	private double areaTerreno;
-	private int numQuartos;
-	private int numWC;
-	private int numPorta;
+	private int quartos;
+	private int wc;
+	private int porta;
 
 	/**
  	 * Construtor por parâmetro
  	 */
-	public Moradia(String rua, double precoMinimo, double precoPedido, String tipo, double areaImplantacao, double areaCoberta, double areaTerreno, int numQuartos, int numWC, int numPorta) {
+	public Moradia(String rua, double precoMinimo, double precoPedido,
+                   String tipo, double areaImplantacao, double areaCoberta,
+                   double areaTerreno, int quartos, int wc, int porta) {
 		super(rua, precoMinimo, precoPedido);
 		this.tipo = tipo;
 		this.areaImplantacao = areaImplantacao;
 		this.areaCoberta = areaCoberta;
 		this.areaTerreno = areaTerreno;
-		this.numQuartos = numQuartos;
-		this.numWC = numWC;
-		this.numPorta = numPorta;
+		this.quartos = quartos;
+		this.wc = wc;
+		this.porta = porta;
 	}
 
 	/**
@@ -40,14 +39,14 @@ public class Moradia extends Imovel
  	 * Construtor por cópia
  	 */
 	public Moradia(Moradia m) {
-		super(m.getRua(), m.getPrecoMinimo(), m.getPrecoPedido());
+		super(m);
 		this.tipo = m.getTipo();
 		this.areaImplantacao = m.getAreaImplantacao();
 		this.areaCoberta = m.getAreaCoberta();
 		this.areaTerreno = m.getAreaTerreno();
-		this.numQuartos = m.getNumQuartos();
-		this.numWC = m.getNumWC();
-		this.numPorta = m.getNumeroPorta();
+		this.quartos = m.getQuartos();
+		this.wc = m.getWC();
+		this.porta = m.getPorta();
 	}
 
 	/**
@@ -86,24 +85,24 @@ public class Moradia extends Imovel
  	 * Obter número de quartos da moradia
  	 * @result
  	 */
-	public int getNumQuartos() {
-		return this.numQuartos;
+	public int getQuartos() {
+		return this.quartos;
 	}
 
 	/**
  	 * Obter número de quartos da moradia
  	 * @result
  	 */
-	public int getNumWC() {
-		return this.numWC;
+	public int getWC() {
+		return this.wc;
 	}
 
 	/**
  	 * Obter número da porta da moradia
  	 * @result
  	 */
-	public int getNumeroPorta() {
-		return this.numPorta;
+	public int getPorta() {
+		return this.porta;
 	}
 
 	/**
@@ -140,18 +139,18 @@ public class Moradia extends Imovel
 
 	/**
  	 * Define o número de quartos da moradia
- 	 * @param numQuartos
+ 	 * @param quartos
  	 */
-	public void setNumQuartos(int numQuartos) {
-		this.numQuartos = numQuartos;
+	public void setNumQuartos(int quartos) {
+		this.quartos = quartos;
 	}
 
 	/**
  	 * Define o número de casas de banho da moradia
- 	 * @param numWC
+ 	 * @param wc
  	 */
-	public void setNumWC(int numWC) {
-		this.numWC = numWC;
+	public void setNumWC(int wc) {
+		this.wc = wc;
 	}
 
 	/**
@@ -159,7 +158,7 @@ public class Moradia extends Imovel
  	 * @param numeroPorta
  	 */
 	public void setNumeroPorta(int numeroPorta) {
-		this.numPorta = numeroPorta;
+		this.porta = numeroPorta;
 	}
 
 	/**
@@ -176,9 +175,17 @@ public class Moradia extends Imovel
                     this.areaImplantacao == m.areaImplantacao &&
 					 this.areaCoberta == m.areaCoberta &&
 				     this.areaTerreno == m.areaTerreno && 
-				  	 this.numQuartos == m.numQuartos && 
-				     this.numWC == m.numWC && 
-					 this.numPorta == m.numPorta);
+				  	 this.quartos == m.quartos && 
+				     this.wc == m.wc && 
+					 this.porta == m.porta);
 		}
+	}
+
+	/**
+ 	 * Cria uma cópia da Moradia
+ 	 * @return Moradia
+ 	 */
+	public Moradia clone() {
+		return new Moradia(this);
 	}
 }
