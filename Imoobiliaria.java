@@ -4,18 +4,20 @@ import java.util.Map;
 /**
  * Classe que definie a imoobiliaria 
  */
-public class Imoobiliaria {
-
-	private TreeMap<String, Utilizador> utilizadores;
-	private TreeMap<Imovel, Vendedor> anuncios;
+public class Imoobiliaria 
+{
+	String utilizador;
+	private Map<String, Utilizador> utilizadores;
+	private Map<Imovel, Vendedor> anuncios;
 
 	/**
 	 * Construtor por parametros
 	 * @param utilizadores
 	 * @param anuncios
 	 */
-	public Imoobiliaria(Map<String, Utilizador> utilizadores, 
+	public Imoobiliaria(String sessao, Map<String, Utilizador> utilizadores, 
 				Map<Imovel, Vendedor> anuncios) {
+		this.utilizador = new String(utilizador);
 		this.utilizadores = new TreeMap<String, Utilizador>(utilizadores);
 		this.anuncios = new TreeMap<Imovel, Vendedor>(anuncios);
 	}
@@ -24,6 +26,7 @@ public class Imoobiliaria {
 	 * Construtor padrão
 	 */
 	public Imoobiliaria() {
+		utilizador = null;
 		this.utilizadores = new TreeMap<String, Utilizador>();
 		this.anuncios = new TreeMap<Imovel, Vendedor>();
 	}
@@ -33,18 +36,18 @@ public class Imoobiliaria {
 	 * @param i imoobiliaria	
 	 */
 	public Imoobiliaria(Imoobiliaria i) {
-		this(i.utilizadores, i.anuncios);
+		this(i.utilizador, i.utilizadores, i.anuncios);
 	}
 
 	/**
-	 * Obtem utilizadores da imoobiliaria
+	 * Obtem utilizadores da imobiliaria
 	 */
 	private Map<String, Utilizador> getUtilizadores() {
 		return new TreeMap<String, Utilizador>(this.utilizadores);
 	}
 
 	/**
-	 * Obtem anúncios da imoobiliaria
+	 * Obtem anúncios da imobiliaria
 	 */
 	private Map<Imovel, Vendedor> getAnuncios() {
 		return new TreeMap<Imovel, Vendedor>(this.anuncios);
@@ -98,4 +101,30 @@ public class Imoobiliaria {
 	public Imoobiliaria clone() {
 		return new Imoobiliaria(this);
 	}
+
+	public void registarUtilizador(Utilizador utilizador) throws UtilizadorExistenteException {
+		String id = utilizador.getEmail();
+
+		if (this.utilizadores.containsKey(id))
+			throw new UtilizadorExistenteException("Utilizador "+id+" já existe");
+
+		this.utilizadores.put(utilizador.getEmail(), utilizador);
+	}
+
+	public void iniciaSessao(String email, String password) throws SemAutorizacaoException {
+		Utilizador u = this.utilizadores.get(email);
+
+		if (u == null)
+			throw new SemAutorizacaoException("Utilizador "+email+" não existe");
+
+		if (u.getPassword().equals(password) == false)
+			throw new SemAutorizacaoException("Password não corresponde");
+
+		this.utilizador = email;
+	}
+
+	public void fechaSessao() {
+		this.utilizador = null;
+	}
+
 }
