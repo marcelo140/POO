@@ -6,20 +6,39 @@ import java.util.Map;
  */
 public class Imoobiliaria 
 {
-	String utilizador;
+	Utilizador utilizador;
 	private Map<String, Utilizador> utilizadores;
 	private Map<Imovel, Vendedor> anuncios;
+	private Map<String, Imovel> imoveis; //IdImovel -> Imovel
 
 	/**
 	 * Construtor por parametros
+	 * @param utilizador
 	 * @param utilizadores
 	 * @param anuncios
+	 * @param imoveis
 	 */
-	public Imoobiliaria(String sessao, Map<String, Utilizador> utilizadores, 
-				Map<Imovel, Vendedor> anuncios) {
-		this.utilizador = new String(utilizador);
+	public Imoobiliaria(Vendedor utilizador, Map<String, Utilizador> utilizadores, 
+				Map<Imovel, Vendedor> anuncios, Map<String, Imovel> imoveis) {
+		this.utilizador = new Vendedor(utilizador);
 		this.utilizadores = new TreeMap<String, Utilizador>(utilizadores);
 		this.anuncios = new TreeMap<Imovel, Vendedor>(anuncios);
+		this.imoveis = new TreeMap<String, Imovel>(imoveis);
+	}
+
+	/**
+	 * Construtor por parametros
+	 * @param utilizador
+	 * @param utilizadores
+	 * @param anuncios
+	 * @param imoveis
+	 */
+	public Imoobiliaria(Comprador utilizador, Map<String, Utilizador> utilizadores, 
+				Map<Imovel, Vendedor> anuncios, Map<String, Imovel> imoveis) {
+		this.utilizador = new Comprador(utilizador);
+		this.utilizadores = new TreeMap<String, Utilizador>(utilizadores);
+		this.anuncios = new TreeMap<Imovel, Vendedor>(anuncios);
+		this.imoveis = new TreeMap<String, Imovel>(imoveis);
 	}
 
 	/**
@@ -29,6 +48,7 @@ public class Imoobiliaria
 		utilizador = null;
 		this.utilizadores = new TreeMap<String, Utilizador>();
 		this.anuncios = new TreeMap<Imovel, Vendedor>();
+		this.imoveis = new TreeMap<String, Imovel>();
 	}
 
 	/**
@@ -36,7 +56,13 @@ public class Imoobiliaria
 	 * @param i imoobiliaria	
 	 */
 	public Imoobiliaria(Imoobiliaria i) {
-		this(i.utilizador, i.utilizadores, i.anuncios);
+		if(i.utilizador.getClass().getSimpleName().equals("Vendedor"))
+			this.utilizador = new Vendedor((Vendedor) i.utilizador);
+		
+		
+		this.utilizadores = new TreeMap<String, Utilizador>(i.utilizadores);
+		this.anuncios = new TreeMap<Imovel, Vendedor>(i.anuncios);
+		this.imoveis = new TreeMap<String, Imovel>(i.imoveis);
 	}
 
 	/**
@@ -54,6 +80,13 @@ public class Imoobiliaria
 	}
 
 	/**
+	 * Obtem todos os imóveis da imobiliaria
+	 */
+	private Map<String, Imovel> getImoveis() {
+		return new TreeMap<String, Imovel>(this.imoveis);
+	}
+
+	/**
 	 * Define os utilizadores
 	 * @param utilizadores
 	 */
@@ -68,7 +101,16 @@ public class Imoobiliaria
 	private void setAnuncios(Map<Imovel, Vendedor> anuncios) {
 		this.anuncios = new TreeMap<Imovel, Vendedor> (anuncios);
 	}
-	
+
+	/**
+	 * Define os Imóveis
+	 * @param imoveis
+	 */
+	private void setImoveis(Map<String, Imovel> imoveis) {
+		this.imoveis = new TreeMap<String, Imovel> (imoveis);
+	}	
+
+
 	/**
 	 * Verifica se um dado Objeto é igual a esta Imoobiliaria
 	 * @param o Objeto
@@ -120,11 +162,27 @@ public class Imoobiliaria
 		if (u.getPassword().equals(password) == false)
 			throw new SemAutorizacaoException("Password não corresponde");
 
-		this.utilizador = email;
+		this.utilizador = this.utilizadores.get(email);
 	}
 
 	public void fechaSessao() {
 		this.utilizador = null;
 	}
 
+	/**
+	 * Regista um imóvel na imoobiliaria
+	 * @param im Imóvel
+	 * @throws ImovelExisteException Caso o imóvel a adicionar já existe
+	 * @throws SemAutorizacaoException Caso o utilizador não tenha autorização
+	 */
+	public void registaImovel(Imovel im) throws ImovelExisteException, SemAutorizacaoException {
+		
+		if (this.utilizador.getClass().getSimpleName().equals("Cliente"))
+			throw new SemAutorizacaoException("Utilizador " + this.utilizador.getNome() + " não está inscrito como Vendedor");
+
+		if (this.anuncios.containsKey(im))
+			throw new ImovelExisteException("Imóvel já existe.");
+
+		this.imoveis.put(im.hashCode() + "", im);
+	}
 }
