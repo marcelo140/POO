@@ -1,30 +1,35 @@
-
+import java.util.*;
 /**
  * Abstract class Imovel - write a description of the class here
  */
 public abstract class Imovel
 {
-	private String rua;
+	private String rua, estado;
 	private double precoMinimo;
 	private double precoPedido;
+	private List<Consulta> consultas;
 
 	/**
      * Construtor por parâmetros
      * @param rua
+	 * @param estado
      * @param precoMinimo
      * @param precoPedido
+	 * @param consultas
      */	
-	public Imovel(String rua, double precoMinimo, double precoPedido) {
+	public Imovel(String rua, String estado, double precoMinimo, double precoPedido, List<Consulta> consultas) {
 		this.rua = rua;
+		this.estado = estado;
 		this.precoMinimo = precoMinimo;
 		this.precoPedido = precoPedido;
+		this.consultas = new ArrayList<Consulta>(consultas);
 	}
 
 	/**
      * Construtor padrão
      */	
 	public Imovel() {
-		this("n/a", 0.0, 0.0);
+		this("n/a", "n/a", 0.0, 0.0, null);
 	}
 
 	/**
@@ -32,8 +37,10 @@ public abstract class Imovel
      */
 	public Imovel(Imovel i) {
 		this.rua = i.getRua();
+		this.estado = i.getEstado();
 		this.precoMinimo = i.getPrecoMinimo();
 		this.precoPedido = i.getPrecoPedido();
+		this.consultas = new ArrayList<Consulta> (i.getConsultas());
 	}
 
 	/**
@@ -61,11 +68,34 @@ public abstract class Imovel
 	}
 
 	/**
+	 * Obter o estado do imóvel
+	 * @return estado
+	 */
+	public String getEstado() {
+		return this.estado;
+	}
+
+	/**
+	 * Obter consultas do imóvel
+	 * @return consultas
+	 */
+	public List<Consulta> getConsultas(  ) {
+		return new ArrayList<Consulta> (consultas);
+	}
+	/**
      * Define nome da rua
      * @param rua
      */
 	public void setRua(String rua) {
 		this.rua = rua;
+	}
+
+	/**
+	 * Define o estado
+	 * @param estado
+	 */
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	/**
@@ -85,6 +115,14 @@ public abstract class Imovel
 	}
 	
 	/**
+     * Define consultas 
+     * @param consultas
+     */
+	public void setConsultas(List<Consulta> consultas) {
+		this.consultas = new ArrayList<Consulta> (consultas);
+	}
+	
+	/**
 	 * Verifica se um objeto dado é igual a este.
 	 * @param o Objeto
 	 */
@@ -101,6 +139,7 @@ public abstract class Imovel
 
 	/**
 	 * HashCode da classe Imovel
+	 * @return hashCode
 	 */
 	public int hashCode() {
 		int hash = 7;
@@ -120,4 +159,12 @@ public abstract class Imovel
  	 * @return Imóvel
  	 */
 	public abstract Imovel clone();
+
+	/**
+	 * Adiciona uma consulta ao imóvel
+	 * @param consulta
+	 */
+	public void addConsulta(Consulta c) {
+		consultas.add(c);
+	}
 }
