@@ -1,5 +1,4 @@
-import java.util.TreeMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Classe que definie a imoobiliaria 
@@ -7,7 +6,7 @@ import java.util.Map;
 public class Imoobiliaria 
 {
 	Utilizador utilizador;
-	private Map<String, Utilizador> utilizadores;
+	private Map<String, Utilizador> utilizadores; //Email -> Utilizador
 	private Map<Imovel, Vendedor> anuncios;
 	private Map<String, Imovel> imoveis; //IdImovel -> Imovel
 
@@ -159,7 +158,7 @@ public class Imoobiliaria
 		if (u == null)
 			throw new SemAutorizacaoException("Utilizador "+email+" não existe");
 
-		if (u.getPassword().equals(password) == false)
+		if (!u.getPassword().equals(password))
 			throw new SemAutorizacaoException("Password não corresponde");
 
 		this.utilizador = this.utilizadores.get(email);
@@ -169,6 +168,8 @@ public class Imoobiliaria
 		this.utilizador = null;
 	}
 
+/************************** Vendedores ******************************/
+
 	/**
 	 * Regista um imóvel na imoobiliaria
 	 * @param im Imóvel
@@ -177,12 +178,84 @@ public class Imoobiliaria
 	 */
 	public void registaImovel(Imovel im) throws ImovelExisteException, SemAutorizacaoException {
 		
-		if (this.utilizador.getClass().getSimpleName().equals("Cliente"))
-			throw new SemAutorizacaoException("Utilizador " + this.utilizador.getNome() + " não está inscrito como Vendedor");
+		if (!(this.utilizador instanceof Vendedor))
+			throw new SemAutorizacaoException("Utilizador não está inscrito como Vendedor");
 
 		if (this.anuncios.containsKey(im))
 			throw new ImovelExisteException("Imóvel já existe.");
 
 		this.imoveis.put(im.hashCode() + "", im);
+		this.anuncios.put(im, (Vendedor) utilizador);
 	}
+
+	/**
+	 * Devolve lista com as datas (e emails, caso exista essa informação) das
+	 * 10 últimas consultas aos imóveis que tem para venda.
+	 * @throws SemAutorizacaoException Caso o utilizador não esteja ligado como Vendedor
+	 * @return Lista com as 10 últimas consultas
+	 */
+	public List<Consulta> getConsultas() throws SemAutorizacaoException {
+		ArrayList<Consulta> consultas = new ArrayList<>();
+		Vendedor v;
+		ArrayList<Imovel> imoveis; 
+
+		if (!(utilizador instanceof Vendedor))
+			throw new SemAutorizacaoException("O utilizador não está ligado como Vendedor");
+
+		v = new Vendedor((Vendedor) utilizador);
+		imoveis = (ArrayList<Imovel>) v.getImoveisEmVenda();
+ 
+		for (Imovel i : imoveis ) {
+			consultas.addAll(i.getConsultas());	
+		}
+
+		consultas.sort((c1, c2) -> c1.getData().compareTo(c2.getData()) );
+
+		return consultas.subList(0, 10);
+	}
+
+	/**
+	 * Altera o estado de um imóvel
+	 * @param idImovel
+	 * @param estado
+	 * @throws ImovelInexistenteException Caso o imóvel não exista
+	 * @throws SemAutorizacaoException Caso o utilizador não esteja ligado como Vendedor
+	 * @throws EstadoInvalidoException Caso o estado dado não seja válido
+	 */  
+	public void setEstado(String idImovel, String estado) 
+							throws ImovelInexistenteException ,
+							       SemAutorizacaoException ,
+		   						   EstadoInvalidoException {
+		
+		if (!(utilizador instanceof Vendedor))
+			throw new SemAutorizacaoException("Utilizador não está ligado como Vendedor");
+		if (!imoveis.containsKey(idImovel))
+			throw new ImovelInexistenteException("Imóvel inexistente");
+		if (!(estado.equals("venda") || estado.equals("reservado") || 
+				estado.equals("vendido")))
+			throw new EstadoInvalidoException("Estado deve ser 'venda', 'reservado' ou 'vendido'");
+
+		 imoveis.get(idImovel).setEstado(estado);
+	}
+
+	/**
+	 * Obter os códigos dos n imóveis mais consultados.
+	 * @param n
+	 * @return Conjunto com os n imóveis
+	 */
+	public Set<String> getTopImoveis(int n) {
+		List<String> topImoveis = new ArrayList<String>();
+
+		for(String s: imoveis.keySet()) {
+			topImoveis.add(s);
+		}
+	
+		topImoveis.sort((s1, s2) -> imoveis.get(s2).getConsultas().size() 
+				- imoveis.get(s1).getConsultas().size());
+
+		return new TreeSet<String>(topImoveis.subList(0,n));
+	}
+
+	
+/************************** Todos os Utilizadores ******************************/
 }

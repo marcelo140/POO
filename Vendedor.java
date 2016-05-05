@@ -50,14 +50,14 @@ public class Vendedor extends Utilizador
 	/**
 	 * Obtem imóveis em venda do Vendedor
 	 */
-	private List<Imovel> getImoveisEmVenda() {
+	public List<Imovel> getImoveisEmVenda() {
 		return new ArrayList<Imovel> (this.imoveisEmVenda);
 	}
 
 	/**
 	 * Obtem imóveis vendidos pelo Vendedor
 	 */
-	private List<Imovel> getImoveisVendidos() {
+	public List<Imovel> getImoveisVendidos() {
 		return new ArrayList<Imovel> (this.imoveisVendidos);
 	}
 
