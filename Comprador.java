@@ -50,7 +50,7 @@ public class Comprador extends Utilizador
  	 */
 	private void setFavoritos(Set<Imovel> favoritos) {
 		for(Imovel f: favoritos)
-			this.favoritos.add(f.clone());
+			this.favoritos.add(f);
 	}
 
 	/**
