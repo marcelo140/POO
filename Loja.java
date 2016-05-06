@@ -25,6 +25,7 @@ public class Loja extends Imovel
     /**
      * Construtor por parâmatros
      * @param rua
+     * @param estado
      * @param precoMinimo
      * @param precoPedido
      * @param parteHab
@@ -33,27 +34,27 @@ public class Loja extends Imovel
      * @param porta
      * @param wc
      */
-    public Loja(String rua, double precoMinimo, double precoPedido, Apartamento parteHab,
-                String tipo, double area, int porta, boolean wc){
-		super(rua, precoMinimo, precoPedido);
+    public Loja(String rua, String estado, double precoMinimo, double precoPedido, 
+                Apartamento parteHab, String tipo, double area, int porta, boolean wc) {
+		super(rua, estado, precoMinimo, precoPedido);
 		this.parteHabitacional = parteHab.clone();
-       this.tipoNegocio = tipo;
-       this.area = area;
-       this.porta = porta;
-       this.wc = wc;
-       }
+		this.tipoNegocio = tipo;
+		this.area = area;
+		this.porta = porta;
+		this.wc = wc;
+	}
 
-    /**
-     * Construtor por cópia
-     */
-       public Loja(Loja t){
+	/**
+	 * Construtor por cópia
+	 */
+	public Loja(Loja t){
 		super(t);
 		this.parteHabitacional = t.getParteHabitacional();
-       this.tipoNegocio = t.getTipoNegocio();
-       this.area = t.getArea();
-       this.porta = t.getPorta();
-       this.wc = t.getWC();
-    }
+		this.tipoNegocio = t.getTipoNegocio();
+		this.area = t.getArea();
+		this.porta = t.getPorta();
+		this.wc = t.getWC();
+	}
 
 	/**
  	 * Obter parte habitacional da loja
@@ -158,6 +159,22 @@ public class Loja extends Imovel
 		hash = 31*hash + (this.wc ? 0 : 1);
 		
 		return hash;	
+	}
+	
+	/**
+ 	 * Converte a Loja numa String
+ 	 * @return String
+ 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(super.toString());
+		sb.append(parteHabitacional.toString());
+		sb.append("Tipo de Negócio: ").append(tipoNegocio).append("\n");
+		sb.append("Área: ").append(area).append("\n");
+		sb.append("WC: ").append(wc).append("\n");
+
+		return sb.toString();
 	}
 
 	/**

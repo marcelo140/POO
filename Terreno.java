@@ -1,9 +1,5 @@
-
 /**
  * Write a description of class Terreno here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
  */
 public class Terreno extends Imovel
 {
@@ -16,6 +12,7 @@ public class Terreno extends Imovel
 	/**
      * Construtor por parâmatros
      * @param rua
+     * @param estado
      * @param precoMinimo
      * @param precoPedido
      * @param tipo
@@ -24,8 +21,10 @@ public class Terreno extends Imovel
      * @param potenciaSuportada
      * @param acessoEsgotos
      */
-	public Terreno(String rua, double precoMinimo, double precoPedido, String tipo, double area, double diametroCanalizacao, double potenciaSuportada, boolean acessoEsgotos) {
-		super(rua, precoMinimo, precoPedido);
+	public Terreno(String rua, String estado, double precoMinimo, double precoPedido, 
+                   String tipo, double area, double diametroCanalizacao, 
+                   double potenciaSuportada, boolean acessoEsgotos) {
+		super(rua, estado, precoMinimo, precoPedido);
 		this.tipo = tipo;
 		this.area = area;
 		this.diametroCanalizacao = diametroCanalizacao;
@@ -37,7 +36,7 @@ public class Terreno extends Imovel
      * Construtor padrão
      */	
 	public Terreno() {
-		this("n/a", 0, 0, "n/a", 0.0, 0.0, 0.0, false);
+		this("n/a", "n/a", 0, 0, "n/a", 0.0, 0.0, 0.0, false);
 	}
 	
 	/**
@@ -140,11 +139,11 @@ public class Terreno extends Imovel
 		else {
 			Terreno t = (Terreno) o;
 			return (super.equals(t) && 
-					this.tipo.equals(t.tipo) &&
-					this.area == t.area && 
-				  	this.diametroCanalizacao == t.diametroCanalizacao &&
-					this.potenciaSuportada == t.potenciaSuportada &&
-				  	this.acessoEsgotos == t.acessoEsgotos );
+					this.tipo.equals(t.getTipo()) &&
+					this.area == t.getArea() && 
+				  	this.diametroCanalizacao == t.getDiametroCanalizacao() &&
+					this.potenciaSuportada == t.getPotenciaSuportada() &&
+				  	this.acessoEsgotos == t.getAcessoEsgotos() );
 		}
 	}
 
@@ -166,6 +165,22 @@ public class Terreno extends Imovel
 		hash = 31*hash + (this.acessoEsgotos ? 0 : 1);
 
 		return hash;
+	}
+
+	/**
+ 	 * Converte Terreno numa String
+ 	 * @return String
+ 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Tipo: ").append(tipo).append("\n");
+		sb.append("Área: ").append(area).append("\n");
+		sb.append("Diâmetro da canalização: ").append(diametroCanalizacao).append("\n");
+		sb.append("Potência suportada: ").append(potenciaSuportada).append("\n");
+		sb.append("Acesso aos esgotos: ").append(acessoEsgotos).append("\n");
+
+		return sb.toString();
 	}
 
 	/**

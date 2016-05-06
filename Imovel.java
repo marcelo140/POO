@@ -1,12 +1,12 @@
-import java.util.*;
 /**
  * Abstract class Imovel - write a description of the class here
  */
-public abstract class Imovel
-{
+
+import java.util.*;
+
+public abstract class Imovel {
 	private String rua, estado;
-	private double precoMinimo;
-	private double precoPedido;
+	private double precoMinimo, precoPedido;
 	private List<Consulta> consultas;
 
 	/**
@@ -17,7 +17,8 @@ public abstract class Imovel
      * @param precoPedido
 	 * @param consultas
      */	
-	public Imovel(String rua, String estado, double precoMinimo, double precoPedido, List<Consulta> consultas) {
+	public Imovel(String rua, String estado, double precoMinimo, double precoPedido, 
+                  List<Consulta> consultas) {
 		this.rua = rua;
 		this.estado = estado;
 		this.precoMinimo = precoMinimo;
@@ -36,11 +37,11 @@ public abstract class Imovel
      * Construtor por cópia
      */
 	public Imovel(Imovel i) {
-		this.rua = i.getRua();
-		this.estado = i.getEstado();
-		this.precoMinimo = i.getPrecoMinimo();
-		this.precoPedido = i.getPrecoPedido();
-		this.consultas = new ArrayList<Consulta> (i.getConsultas());
+		rua = i.getRua();
+		estado = i.getEstado();
+		precoMinimo = i.getPrecoMinimo();
+		precoPedido = i.getPrecoPedido();
+		consultas = new ArrayList<Consulta> (i.getConsultas());
 	}
 
 	/**
@@ -48,7 +49,7 @@ public abstract class Imovel
  	 * @return
  	 */
 	public String getRua() {
-		return this.rua;
+		return rua;
 	}
 
 	/**
@@ -56,7 +57,7 @@ public abstract class Imovel
  	 * @return
  	 */
 	public double getPrecoMinimo() {
-		return this.precoMinimo;
+		return precoMinimo;
 	}
 
 	/**
@@ -64,7 +65,7 @@ public abstract class Imovel
      * @return
      */
 	public double getPrecoPedido() {
-		return this.precoPedido;
+		return precoPedido;
 	}
 
 	/**
@@ -72,7 +73,7 @@ public abstract class Imovel
 	 * @return estado
 	 */
 	public String getEstado() {
-		return this.estado;
+		return estado;
 	}
 
 	/**
@@ -131,9 +132,10 @@ public abstract class Imovel
 		if ((o == null) || (this.getClass() != o.getClass())) return false;
 		else {
 			Imovel i = (Imovel) o;
-			return ( this.precoMinimo == i.precoMinimo &&
-					 this.precoPedido == i.precoPedido && 
-				     this.rua.equals(i.rua)); 
+			return ( this.precoMinimo == i.getPrecoMinimo() &&
+					 this.precoPedido == i.getPrecoPedido() &&
+				     this.rua.equals(i.getRua()) &&
+					 this.estado.equals(i.getEstado()));
 		}
 	}
 
@@ -145,13 +147,29 @@ public abstract class Imovel
 		int hash = 7;
 		long aux;
 
-		hash = 31*hash + this.rua.hashCode();
-		aux = Double.doubleToLongBits(this.precoMinimo);
+		hash = 31*hash + rua.hashCode();
+		hash = 31*hash + estado.hashCode();
+		aux = Double.doubleToLongBits(precoMinimo);
 		hash = 31*hash + (int)(aux^(aux >>> 32));
-		aux = Double.doubleToLongBits(this.precoPedido);
+		aux = Double.doubleToLongBits(precoPedido);
 		hash = 31*hash + (int)(aux^(aux >>> 32));
 
 		return hash;
+	}
+
+	/**
+ 	 * Transforma o imóvel numa String
+ 	 * @return String
+ 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Rua: ").append(rua).append("\n");
+		sb.append("Estado: ").append(estado).append("\n");
+		sb.append("Preço mínimo: ").append(precoMinimo).append("\n");
+		sb.append("Preço pedido: ").append(precoPedido).append("\n");
+
+		return sb.toString();
 	}
 
 	/**

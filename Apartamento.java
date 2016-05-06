@@ -1,17 +1,12 @@
-
 /**
  * Write a description of class Apartamento here.
  */
 
-public class Apartamento extends Imovel
-{
-    private String tipo;
-    private double area;
-    private int quartos;
-    private int wc;
-    private int andar;
-    private int porta;
-    private boolean garagem;
+public class Apartamento extends Imovel {
+	private String tipo;
+	private double area;
+	private int quartos, wc, andar, porta;
+	private boolean garagem;
     
     /**
      * Construtor por parâmatros
@@ -26,38 +21,38 @@ public class Apartamento extends Imovel
      * @param porta
      * @param garagem
      */
-    public Apartamento(String rua, double precoMinimo, double precoPedido,
-                       String tipo, double area, int quartos,int wc, 
-                       int andar, int porta, boolean garagem){
-       super(rua, precoMinimo, precoPedido);
-       this.tipo = tipo;
-       this.area = area;
-       this.quartos = quartos;
-       this.wc = wc;
-       this.andar = andar;
-       this.porta = porta;
-       this.garagem = garagem;
-       }
+	public Apartamento(String rua, String estado, double precoMinimo, double precoPedido,
+					   String tipo, double area, int quartos,int wc, 
+					   int andar, int porta, boolean garagem){
+		super(rua, estado, precoMinimo, precoPedido);
+		this.tipo = tipo;
+		this.area = area;
+		this.quartos = quartos;
+		this.wc = wc;
+		this.andar = andar;
+		this.porta = porta;
+		this.garagem = garagem;
+	}
     
 	/**
-     * Construtor padrão
-     */	
-    public Apartamento(){
-       super();
-       this.tipo = "n/a";
-       this.area = 0;
-       this.quartos = 0;
-       this.wc = 0;
-       this.andar = 0;
-       this.porta = 0;
-       this.garagem = false;
-       }
+	 * Construtor padrão
+	 */	
+	public Apartamento(){
+		super();
+		this.tipo = "n/a";
+		this.area = 0;
+		this.quartos = 0;
+		this.wc = 0;
+		this.andar = 0;
+		this.porta = 0;
+		this.garagem = false;
+	}
 
-    /**
-     * Construtor por cópia
-     */
+	/**
+	 * Construtor por cópia
+	 */
 	public Apartamento(Apartamento t){
-		super(t);		
+		super(t);
 		this.tipo = t.getTipo();
 		this.area = t.getArea();
 		this.quartos = t.getNQuartos();
@@ -136,7 +131,7 @@ public class Apartamento extends Imovel
      * @param area
      */
 	public void setArea(double area) {
-		this.area= area;
+		this.area = area;
 	}
 
 	/**
@@ -189,14 +184,33 @@ public class Apartamento extends Imovel
 		else {
 			Apartamento a = (Apartamento) o;
 			return  super.equals(a) &&
-					this.tipo.equals(a.tipo) && 
-					this.area == a.area &&
-					this.quartos == a.quartos &&
-					this.wc == a.wc &&
-					this.andar == a.andar &&
-					this.porta == a.porta &&
-					this.garagem == a.garagem;
+					this.tipo.equals(a.getTipo()) && 
+					this.area == a.getArea() &&
+					this.quartos == a.getQuartos() &&
+					this.wc == a.getWC() &&
+					this.andar == a.getAndar() &&
+					this.porta == a.getPorta() &&
+					this.garagem == a.getGaragem();
 		}
+	}
+
+	/**
+ 	 * Converte um Apartamento numa String
+ 	 * @return String
+ 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(super.toString());
+		sb.append("Tipo: ").append(tipo).append("\n");
+		sb.append("Área: ").append(area).append("\n");
+		sb.append("Quartos: ").append(quartos).append("\n");
+		sb.append("WC: ").append(wc).append("\n");
+		sb.append("Andar: ").append(andar).append("\n");
+		sb.append("Porta: ").append(porta).append("\n");
+		sb.append("Garagem: ").append(garagem).append("\n");
+		
+		return sb.toString();
 	}
 
 	/**

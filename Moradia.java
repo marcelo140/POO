@@ -5,20 +5,27 @@
 public class Moradia extends Imovel
 {
 	private String tipo;
-	private double areaImplantacao;
-	private double areaCoberta;
-	private double areaTerreno;
-	private int quartos;
-	private int wc;
-	private int porta;
+	private double areaImplantacao, areaCoberta, areaTerreno;
+	private int quartos, wc, porta;
 
 	/**
  	 * Construtor por parâmetro
+ 	 * @param rua
+ 	 * @param estado
+ 	 * @param precoMinimo
+ 	 * @param precoPedido
+ 	 * @param tipo
+ 	 * @param areaImplantacao
+ 	 * @param areaCoberta
+ 	 * @param areaTerreno
+ 	 * @param quartos
+ 	 * @param wc
+ 	 * @param porta
  	 */
-	public Moradia(String rua, double precoMinimo, double precoPedido,
+	public Moradia(String rua, String estado, double precoMinimo, double precoPedido,
                    String tipo, double areaImplantacao, double areaCoberta,
                    double areaTerreno, int quartos, int wc, int porta) {
-		super(rua, precoMinimo, precoPedido);
+		super(rua, estado, precoMinimo, precoPedido);
 		this.tipo = tipo;
 		this.areaImplantacao = areaImplantacao;
 		this.areaCoberta = areaCoberta;
@@ -32,7 +39,7 @@ public class Moradia extends Imovel
  	 * Construtor padrão
  	 */
 	public Moradia() {
-		this("n/a", 0.0, 0.0, "n/a", 0.0, 0.0, 0.0, 0, 0, 0);
+		this("n/a", "n/a", 0.0, 0.0, "n/a", 0.0, 0.0, 0.0, 0, 0, 0);
 	}
 
 	/**
@@ -171,14 +178,33 @@ public class Moradia extends Imovel
 		else {
 			Moradia m = (Moradia) o;
 			return (super.equals(m) &&
-					this.tipo.equals(m.tipo) &&
-                    this.areaImplantacao == m.areaImplantacao &&
-					 this.areaCoberta == m.areaCoberta &&
-				     this.areaTerreno == m.areaTerreno && 
-				  	 this.quartos == m.quartos && 
-				     this.wc == m.wc && 
-					 this.porta == m.porta);
+					this.tipo.equals(m.getTipo()) &&
+                    this.areaImplantacao == m.getAreaImplantacao() &&
+					this.areaCoberta == m.getAreaCoberta() &&
+				    this.areaTerreno == m.getAreaTerreno() && 
+				  	this.quartos == m.getQuartos() && 
+				    this.wc == m.getWC() && 
+					this.porta == m.getPorta());
 		}
+	}
+
+	/**
+ 	 * Converte uma moradia numa String
+ 	 * @return String
+ 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(super.toString());
+		sb.append("Tipo: ").append(tipo).append("\n");
+		sb.append("Área de implantação: ").append(areaImplantacao).append("\n");
+		sb.append("Área coberta: ").append(areaCoberta).append("\n");
+		sb.append("Área do terreno: ").append(areaTerreno).append("\n");
+		sb.append("Quartos: ").append(quartos).append("\n");
+		sb.append("WC: ").append(wc).append("\n");
+		sb.append("Porta: ").append(porta).append("\n");
+
+		return sb.toString();
 	}
 	
 	/**
@@ -189,16 +215,16 @@ public class Moradia extends Imovel
 		long aux;
 
 		hash = 31*hash + super.hashCode();
-		hash = 31*hash + this.tipo.hashCode();
-		aux  = Double.doubleToLongBits(this.areaImplantacao);
+		hash = 31*hash + tipo.hashCode();
+		aux  = Double.doubleToLongBits(areaImplantacao);
 		hash = 31*hash + (int)(aux^(aux >>> 32));
-		aux  = Double.doubleToLongBits(this.areaCoberta);
+		aux  = Double.doubleToLongBits(areaCoberta);
 		hash = 31*hash + (int)(aux^(aux >>> 32));
-		aux  = Double.doubleToLongBits(this.areaTerreno);
+		aux  = Double.doubleToLongBits(areaTerreno);
 		hash = 31*hash + (int)(aux^(aux >>> 32));
-		hash = 31*hash + this.quartos;
-		hash = 31*hash + this.wc;
-		hash = 31*hash + this.porta;
+		hash = 31*hash + quartos;
+		hash = 31*hash + wc;
+		hash = 31*hash + porta;
 
 		return hash;
 	}
