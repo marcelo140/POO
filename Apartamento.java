@@ -2,6 +2,8 @@
  * Write a description of class Apartamento here.
  */
 
+import java.util.ArrayList;
+
 public class Apartamento extends Imovel {
 	private String tipo;
 	private double area;
@@ -22,9 +24,9 @@ public class Apartamento extends Imovel {
      * @param garagem
      */
 	public Apartamento(String rua, String estado, double precoMinimo, double precoPedido,
-					   String tipo, double area, int quartos,int wc, 
-					   int andar, int porta, boolean garagem){
-		super(rua, estado, precoMinimo, precoPedido);
+					   ArrayList<Consulta> consultas, String tipo, double area, int quartos, 
+					   int wc, int andar, int porta, boolean garagem){
+		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.area = area;
 		this.quartos = quartos;
@@ -55,7 +57,7 @@ public class Apartamento extends Imovel {
 		super(t);
 		this.tipo = t.getTipo();
 		this.area = t.getArea();
-		this.quartos = t.getNQuartos();
+		this.quartos = t.getQuartos();
 		this.wc = t.getWC();
 		this.andar = t.getAndar();
 		this.porta = t.getPorta();
@@ -82,7 +84,7 @@ public class Apartamento extends Imovel {
      * Obter número de quartos
      * @return
      */
-    public int getNQuartos(){
+    public int getQuartos(){
 	    return this.quartos;
     }
 

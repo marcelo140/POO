@@ -13,9 +13,9 @@ public class Comprador extends Utilizador
 	/**
  	 * Construtor por parâmetros
  	 */
-    public Comprador(String email, String nome, String password, String morada, GregorianCalendar dataNascimento, Set<Imovel> favoritos) {
+    public Comprador(String email, String nome, String password, String morada, 
+					 GregorianCalendar dataNascimento, Set<Imovel> favoritos) {
         super(email,nome,password,morada,dataNascimento);
- 
        	this.favoritos = new TreeSet<Imovel>();
         setFavoritos(favoritos);
     }
@@ -78,6 +78,19 @@ public class Comprador extends Utilizador
 		hash = 31*hash + this.favoritos.hashCode();
 
 		return hash;
+	}
+
+	/**
+ 	 * Converte Comprador em String
+ 	 * @return String
+ 	 */
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(super.toString());
+		sb.append(favoritos.toString()).append("\n");
+	
+		return sb.toString();
 	}
 
 	/**

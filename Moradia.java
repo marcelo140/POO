@@ -2,6 +2,9 @@
 /**
  * Write a description of class Moradia here.
  */
+
+import java.util.ArrayList;
+
 public class Moradia extends Imovel
 {
 	private String tipo;
@@ -23,9 +26,9 @@ public class Moradia extends Imovel
  	 * @param porta
  	 */
 	public Moradia(String rua, String estado, double precoMinimo, double precoPedido,
-                   String tipo, double areaImplantacao, double areaCoberta,
+                   ArrayList<Consulta> consultas, String tipo, double areaImplantacao, double areaCoberta,
                    double areaTerreno, int quartos, int wc, int porta) {
-		super(rua, estado, precoMinimo, precoPedido);
+		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.areaImplantacao = areaImplantacao;
 		this.areaCoberta = areaCoberta;
@@ -39,7 +42,7 @@ public class Moradia extends Imovel
  	 * Construtor padrão
  	 */
 	public Moradia() {
-		this("n/a", "n/a", 0.0, 0.0, "n/a", 0.0, 0.0, 0.0, 0, 0, 0);
+		this("n/a", "n/a", 0.0, 0.0, null, "n/a", 0.0, 0.0, 0.0, 0, 0, 0);
 	}
 
 	/**

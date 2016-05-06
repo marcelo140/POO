@@ -22,7 +22,9 @@ public class Vendedor extends Utilizador
 	 * @param imoveisEmVenda
 	 * @param imoveisVendidos
 	 */
-	public Vendedor(String email, String nome, String password, String morada, GregorianCalendar dataNascimento, List<Imovel> imoveisEmVenda, List<Imovel> imoveisVendidos) {
+	public Vendedor(String email, String nome, String password, String morada, 
+                    GregorianCalendar dataNascimento, List<Imovel> imoveisEmVenda, 
+                    List<Imovel> imoveisVendidos) {
 		super(email, nome, password, morada, dataNascimento);
 
 		this.imoveisEmVenda = new ArrayList<Imovel>();
@@ -44,7 +46,8 @@ public class Vendedor extends Utilizador
 	}
 		
 	public Vendedor(Vendedor v) {
-		this(v.getEmail(), v.getNome(), v.getPassword(), v.getMorada(), v.getDataNascimento(), v.getImoveisEmVenda(), v.getImoveisVendidos());
+		this(v.getEmail(), v.getNome(), v.getPassword(), v.getMorada(), 
+             v.getDataNascimento(), v.getImoveisEmVenda(), v.getImoveisVendidos());
 	}
 
 	/**
@@ -105,6 +108,20 @@ public class Vendedor extends Utilizador
 		hash = 31*hash + this.imoveisVendidos.hashCode();
 
 		return hash;
+	}
+
+	/**
+ 	 * Converte Vendedor em String
+ 	 * @return String
+ 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(super.toString());
+		sb.append("Imoveis em venda: ").append(imoveisEmVenda.toString()).append("\n");
+		sb.append("Imoveis vendidos: ").append(imoveisVendidos.toString()).append("\n");
+
+		return sb.toString();
 	}
 
 	/**

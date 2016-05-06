@@ -2,6 +2,9 @@
 /**
  * Write a description of class Loja here.
  */
+
+import java.util.ArrayList;
+
 public class Loja extends Imovel
 {
     private Apartamento parteHabitacional;
@@ -34,9 +37,10 @@ public class Loja extends Imovel
      * @param porta
      * @param wc
      */
-    public Loja(String rua, String estado, double precoMinimo, double precoPedido, 
-                Apartamento parteHab, String tipo, double area, int porta, boolean wc) {
-		super(rua, estado, precoMinimo, precoPedido);
+    public Loja(String rua, String estado, double precoMinimo, double precoPedido,
+                ArrayList<Consulta> consultas, Apartamento parteHab, String tipo, 
+                double area, int porta, boolean wc) {
+		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.parteHabitacional = parteHab.clone();
 		this.tipoNegocio = tipo;
 		this.area = area;

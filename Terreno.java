@@ -1,6 +1,9 @@
 /**
  * Write a description of class Terreno here.
  */
+
+import java.util.ArrayList;
+
 public class Terreno extends Imovel
 {
 	private String tipo;
@@ -22,9 +25,9 @@ public class Terreno extends Imovel
      * @param acessoEsgotos
      */
 	public Terreno(String rua, String estado, double precoMinimo, double precoPedido, 
-                   String tipo, double area, double diametroCanalizacao, 
-                   double potenciaSuportada, boolean acessoEsgotos) {
-		super(rua, estado, precoMinimo, precoPedido);
+                   ArrayList<Consulta> consultas, String tipo, double area, 
+                   double diametroCanalizacao, double potenciaSuportada, boolean acessoEsgotos) {
+		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.area = area;
 		this.diametroCanalizacao = diametroCanalizacao;
@@ -36,7 +39,7 @@ public class Terreno extends Imovel
      * Construtor padrão
      */	
 	public Terreno() {
-		this("n/a", "n/a", 0, 0, "n/a", 0.0, 0.0, 0.0, false);
+		this("n/a", "n/a", 0, 0, null, "n/a", 0.0, 0.0, 0.0, false);
 	}
 	
 	/**

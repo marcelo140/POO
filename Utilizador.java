@@ -6,10 +6,7 @@ import java.util.GregorianCalendar;
 
 public abstract class Utilizador
 {
-	private String email;
-	private String nome;
-	private String password;
-	private String morada;
+	private String email, nome, password, morada;
 	private GregorianCalendar dataNascimento;
 
 	/**
@@ -20,7 +17,8 @@ public abstract class Utilizador
      * @param morada
      * @param dataNascimento
      */
-	public Utilizador(String email, String nome, String password, String morada, GregorianCalendar dataNascimento) {
+	public Utilizador(String email, String nome, String password, String morada, 
+                      GregorianCalendar dataNascimento) {
 		this.email = email;
 		this.nome = nome;
 		this.password = password;
@@ -151,6 +149,21 @@ public abstract class Utilizador
 		hash = 31*hash + this.dataNascimento.hashCode();
 
 		return hash;
+	}
+	
+	/**
+ 	 * Converte um utilizador numa String
+ 	 * @return String
+ 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Email: ").append(email).append("\n");		
+		sb.append("Nome: ").append(nome).append("\n");		
+		sb.append("Morada: ").append(morada).append("\n");		
+		sb.append("Data de Nascimento: ").append(dataNascimento.toString()).append("\n");	
+
+		return sb.toString();	
 	}
 
 	/**
