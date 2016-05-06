@@ -258,4 +258,22 @@ public class Imoobiliaria
 
 	
 /************************** Todos os Utilizadores ******************************/
+
+	/**
+	 * Devolve uma lista de imóveis da classe dada com preco inferior ao preco dado
+	 * @param classe
+	 * @param preco
+	 * @return Lista de Imóveis
+	 */
+	public List<Imovel> getImovel(String classe, int preco) {
+		List<Imovel> l = new ArrayList<Imovel>();
+
+		for (Imovel i : this.imoveis.values()) {
+			if (i.getClass().getSimpleName().equals(classe) && i.getPrecoPedido() <= preco)
+				l.add(i);
+		}
+
+		return l;
+	}
+
 }

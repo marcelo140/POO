@@ -79,8 +79,8 @@ public abstract class Imovel
 	 * Obter consultas do imóvel
 	 * @return consultas
 	 */
-	public List<Consulta> getConsultas(  ) {
-		return new ArrayList<Consulta> (consultas);
+	public List<Consulta> getConsultas() {
+		return new ArrayList<Consulta>(consultas);
 	}
 	/**
      * Define nome da rua
