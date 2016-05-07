@@ -276,4 +276,68 @@ public class Imoobiliaria
 		return l;
 	}
 
+	/**
+	 * Obter lista de imóveis habitáveis até um dado preço
+	 * @param preco
+	 * @return lista de imóveis habitáveis
+	 */
+	public List<Habitavel> getHabitaveis(int preco) {
+		ArrayList<Habitavel> imoveisHabitaveis = new ArrayList<>();
+
+		for (Imovel i : this.imoveis.values()) {
+			if (i instanceof LojaHabitavel ||
+				   	i instanceof Moradia || i instanceof Apartamento) {
+				Habitavel h = (Habitavel) i;
+				imoveisHabitaveis.add(h);
+			}
+		}
+
+		return imoveisHabitaveis;
+	}
+
+	/**
+	 * Obter mapeamento para cada imóvel, respetivo vendedor
+	 * @return Mapeamento imovel, vendedor
+	 */
+	public Map<Imovel, Vendedor> getMapeamentoImoveis() {
+		return new TreeMap<Imovel, Vendedor> (anuncios);
+	}
+
+/************************** Compradores ******************************/
+	
+	/**
+	 * Marcar um imóvel como favorito
+	 * @param idImovel
+	 * @throws ImovelInexistenteException Caso o imóvel não exista
+	 * @throws SemAutorizacaoException Caso o utilizador não esteja ligado como Comprador
+	 */
+	public void setFavorito(String idImovel) throws ImovelInexistenteException, 
+		   											SemAutorizacaoException{
+
+		if (!(utilizador instanceof Comprador))
+			throw new SemAutorizacaoException("Utilizador não está ligado como Comprador");
+		if (!(imoveis.containsKey(idImovel)))
+			throw new ImovelInexistenteException("Imovel não existe.");
+
+		Comprador c = (Comprador) utilizador;
+		Imovel i = imoveis.get(idImovel);
+		c.addFavoritos(i);		
+	}
+
+	/**
+	 * TODO sort
+	 * Obter imóveis favoritos de um utilizador ordenados por preço.
+	 * @throws SemAutorizacaoException Caso o utilizador não esteja ligado como Comprador.
+	 * @return Conjunto de imóveis ordenados por preço.
+	 */
+	public TreeSet<Imovel> getFavoritos() throws SemAutorizacaoException {
+		
+		if (!(utilizador instanceof Comprador))
+			throw new SemAutorizacaoException("Utilizador não está ligado como Comprador");
+
+		Comprador c = (Comprador) utilizador;
+			
+		return new TreeSet<Imovel> (c.getFavoritos()); 
+	}
+
 }
