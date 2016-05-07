@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class Loja extends Imovel
 {
-    private Apartamento parteHabitacional;
     private String tipoNegocio;
     private double area;
     private int porta;
@@ -18,7 +17,6 @@ public class Loja extends Imovel
      */ 
     public Loja(){
        super();
-       this.parteHabitacional = null;
        this.tipoNegocio = "n/a";
        this.area = 0;
        this.porta = 0;
@@ -38,10 +36,9 @@ public class Loja extends Imovel
      * @param wc
      */
     public Loja(String rua, String estado, double precoMinimo, double precoPedido,
-                ArrayList<Consulta> consultas, Apartamento parteHab, String tipo, 
+                ArrayList<Consulta> consultas, String tipo, 
                 double area, int porta, boolean wc) {
 		super(rua, estado, precoMinimo, precoPedido, consultas);
-		this.parteHabitacional = parteHab.clone();
 		this.tipoNegocio = tipo;
 		this.area = area;
 		this.porta = porta;
@@ -53,20 +50,12 @@ public class Loja extends Imovel
 	 */
 	public Loja(Loja t){
 		super(t);
-		this.parteHabitacional = t.getParteHabitacional();
 		this.tipoNegocio = t.getTipoNegocio();
 		this.area = t.getArea();
 		this.porta = t.getPorta();
 		this.wc = t.getWC();
 	}
 
-	/**
- 	 * Obter parte habitacional da loja
- 	 * @return Apartamento
- 	 */
-	private Apartamento getParteHabitacional() {
-		return this.parteHabitacional.clone();
-	}
 
     /**
      * Obter tipo de negócio da loja
@@ -100,11 +89,6 @@ public class Loja extends Imovel
      * Define tipo de negócio 
      * @param tipo
      */
-
-	private void setParteHabitacional(Apartamento parteHab) {
-		this.parteHabitacional = parteHab.clone();
-	}
-
     public void setTipo(String tipo) {
         this.tipoNegocio = tipoNegocio;
     }
@@ -140,7 +124,6 @@ public class Loja extends Imovel
 		else {
 			Loja l = (Loja) o;
 			return  super.equals(l) && 
-					this.parteHabitacional.equals(l.parteHabitacional) &&
 					this.tipoNegocio.equals(l.tipoNegocio) && 
 					this.area == l.area &&
 					this.wc == l.wc;
@@ -155,7 +138,6 @@ public class Loja extends Imovel
 		long aux;
 	
 		hash = 31*hash + super.hashCode();	
-		hash = 31*hash + this.parteHabitacional.hashCode();
 		hash = 31*hash + this.tipoNegocio.hashCode();
 		aux = Double.doubleToLongBits(this.area);
 		hash = 31*hash + (int)(aux^(aux >>> 32));
@@ -173,7 +155,6 @@ public class Loja extends Imovel
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(super.toString());
-		sb.append(parteHabitacional.toString());
 		sb.append("Tipo de Negócio: ").append(tipoNegocio).append("\n");
 		sb.append("Área: ").append(area).append("\n");
 		sb.append("WC: ").append(wc).append("\n");
