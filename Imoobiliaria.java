@@ -325,7 +325,6 @@ public class Imoobiliaria
 	}
 
 	/**
-	 * TODO sort
 	 * Obter imóveis favoritos de um utilizador ordenados por preço.
 	 * @throws SemAutorizacaoException Caso o utilizador não esteja ligado como Comprador.
 	 * @return Conjunto de imóveis ordenados por preço.
@@ -336,8 +335,11 @@ public class Imoobiliaria
 			throw new SemAutorizacaoException("Utilizador não está ligado como Comprador");
 
 		Comprador c = (Comprador) utilizador;
-			
-		return new TreeSet<Imovel> (c.getFavoritos()); 
+	
+		ArrayList<Imovel> favs = new ArrayList<Imovel>(c.getFavoritos());
+		favs.sort((i1, i2) -> Double.compare(i1.getPrecoPedido(), i2.getPrecoPedido()));
+
+		return new TreeSet<Imovel> (favs);
 	}
 
 }
