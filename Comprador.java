@@ -15,8 +15,8 @@ public class Comprador extends Utilizador
  	 */
     public Comprador(String email, String nome, String password, String morada, 
 					 GregorianCalendar dataNascimento, Set<Imovel> favoritos) {
-        super(email,nome,password,morada,dataNascimento);
-       	this.favoritos = new TreeSet<Imovel>();
+
+        super(email, nome, password, morada, dataNascimento);
         setFavoritos(favoritos);
     }
 
@@ -41,7 +41,12 @@ public class Comprador extends Utilizador
  	 * @return Set
  	 */
 	public Set<Imovel> getFavoritos() {
-		return new TreeSet<Imovel>(this.favoritos);
+		TreeSet<Imovel> favoritos = new TreeSet<>();
+
+		for(Imovel im: this.favoritos)
+			favoritos.add(im.clone());
+		
+		return favoritos;
 	}
 
 	/**
@@ -49,6 +54,8 @@ public class Comprador extends Utilizador
  	 * @param favoritos
  	 */
 	private void setFavoritos(Set<Imovel> favoritos) {
+		this.favoritos = new TreeSet<Imovel>();
+
 		for(Imovel f: favoritos)
 			this.favoritos.add(f);
 	}
@@ -57,8 +64,8 @@ public class Comprador extends Utilizador
 	 * Adiciona um imóvel aos favoritos do comprador
 	 * @param Imovel
 	 */
-	public void addFavoritos(Imovel i) {
-		this.favoritos.add(i);
+	public void addFavoritos(Imovel im) {
+		this.favoritos.add(im.clone());
 	}
 
 	/**
@@ -66,14 +73,15 @@ public class Comprador extends Utilizador
 	 * @param o Objeto
 	 */
 	public boolean equals(Object o) {
-		if (o == this) return true;
-		if ( (o == null) || (this.getClass() != o.getClass())) return false;
-		else {
-			Comprador c = (Comprador) o;
-			return super.equals(c) &&
-				this.favoritos.equals(c.getFavoritos() );
-		}
+		if (o == this)
+			 return true;
 
+		if ((o == null) || (this.getClass() != o.getClass())) 
+			return false;
+
+		Comprador c = (Comprador) o;
+		return super.equals(c) &&
+			   this.favoritos.equals(c.getFavoritos());
 	}
 
 	/**
@@ -83,7 +91,7 @@ public class Comprador extends Utilizador
 		int hash = 7;
 
 		hash = 31*hash + super.hashCode();
-		hash = 31*hash + this.favoritos.hashCode();
+		hash = 31*hash + favoritos.hashCode();
 
 		return hash;
 	}

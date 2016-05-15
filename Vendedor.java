@@ -25,15 +25,10 @@ public class Vendedor extends Utilizador
 	public Vendedor(String email, String nome, String password, String morada, 
                     GregorianCalendar dataNascimento, List<Imovel> imoveisEmVenda, 
                     List<Imovel> imoveisVendidos) {
-		super(email, nome, password, morada, dataNascimento);
 
-		this.imoveisEmVenda = new ArrayList<Imovel>();
-		for (Imovel im : imoveisEmVenda)
-			this.imoveisEmVenda.add(im);
-	
-		this.imoveisVendidos = new ArrayList<Imovel>();	
-		for (Imovel im : imoveisVendidos)
-			this.imoveisVendidos.add(im);
+		super(email, nome, password, morada, dataNascimento);
+		setImoveisEmVenda(imoveisEmVenda);
+		setImoveisVendidos(imoveisVendidos);
 	}
 
 	/**
@@ -46,22 +41,33 @@ public class Vendedor extends Utilizador
 	}
 		
 	public Vendedor(Vendedor v) {
-		this(v.getEmail(), v.getNome(), v.getPassword(), v.getMorada(), 
-             v.getDataNascimento(), v.getImoveisEmVenda(), v.getImoveisVendidos());
+		super(v);
+        imoveisEmVenda = v.getImoveisEmVenda();
+		imoveisVendidos = v.getImoveisVendidos();
 	}
 
 	/**
 	 * Obtem imóveis em venda do Vendedor
 	 */
 	public List<Imovel> getImoveisEmVenda() {
-		return new ArrayList<Imovel> (this.imoveisEmVenda);
+		ArrayList<Imovel> imoveisEmVenda = new ArrayList<>();
+
+		for(Imovel im: this.imoveisEmVenda)
+			imoveisEmVenda.add(im.clone());
+
+		return imoveisEmVenda;
 	}
 
 	/**
 	 * Obtem imóveis vendidos pelo Vendedor
 	 */
 	public List<Imovel> getImoveisVendidos() {
-		return new ArrayList<Imovel> (this.imoveisVendidos);
+		ArrayList<Imovel> imoveisVendidos = new ArrayList<>();
+
+		for(Imovel im: this.imoveisVendidos)
+			imoveisVendidos.add(im.clone());
+
+		return imoveisVendidos;
 	}
 
 	/**
@@ -69,8 +75,10 @@ public class Vendedor extends Utilizador
  	 * @param imoveisEmVenda
  	 */
 	private void setImoveisEmVenda(List<Imovel> imoveisEmVenda) {
-		for(Imovel i: imoveisEmVenda)
-			this.imoveisEmVenda.add(i.clone());
+		this.imoveisEmVenda = new ArrayList<Imovel>(imoveisEmVenda);
+
+		for(Imovel im: imoveisEmVenda)
+			this.imoveisEmVenda.add(im.clone());
 	}
 
 	/**
@@ -78,8 +86,10 @@ public class Vendedor extends Utilizador
  	 * @param imoveisVendidos
  	 */
 	private void setImoveisVendidos(List<Imovel> imoveisVendidos) {
-		for(Imovel i: imoveisEmVenda)
-			this.imoveisEmVenda.add(i.clone());
+		this.imoveisVendidos = new ArrayList<Imovel>();
+
+		for(Imovel im: imoveisVendidos)
+			this.imoveisVendidos.add(im.clone());
 	}
 
 	/**
@@ -87,14 +97,16 @@ public class Vendedor extends Utilizador
 	 * @param o Objeto
 	 */
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if ((o == null) || (this.getClass() != o.getClass())) return false;
-		else {
-			Vendedor v = (Vendedor) o;
-			return (super.equals(v) &&
-					this.imoveisEmVenda.equals(v.imoveisEmVenda) &&
-					this.imoveisVendidos.equals(v.imoveisVendidos));
-		}
+		if (this == o)
+			 return true;
+
+		if ((o == null) || (this.getClass() != o.getClass())) 
+			return false;
+
+		Vendedor v = (Vendedor) o;
+		return (super.equals(v) &&
+				imoveisEmVenda.equals(v.getImoveisEmVenda()) &&
+				imoveisVendidos.equals(v.getImoveisVendidos()));
 	}
 
 	/**
@@ -104,8 +116,8 @@ public class Vendedor extends Utilizador
 		int hash = 7;
 
 		hash = 31*hash + super.hashCode();
-		hash = 31*hash + this.imoveisEmVenda.hashCode();
-		hash = 31*hash + this.imoveisVendidos.hashCode();
+		hash = 31*hash + imoveisEmVenda.hashCode();
+		hash = 31*hash + imoveisVendidos.hashCode();
 
 		return hash;
 	}

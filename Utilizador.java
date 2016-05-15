@@ -37,46 +37,46 @@ public abstract class Utilizador
      * Construtor por cópia
      */
 	public Utilizador(Utilizador u) {
-		this.email = u.getEmail();
-		this.nome = u.getNome();
-		this.password = u.getPassword();
-		this.morada = u.getMorada();
-		this.dataNascimento = u.getDataNascimento();
+		email = u.getEmail();
+		nome = u.getNome();
+		password = u.getPassword();
+		morada = u.getMorada();
+		dataNascimento = u.getDataNascimento();
 	}
 
 	/**
      * Obter o email do utilizador
      */
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	/**
      * Obter o nome do utilizador
      */
 	public String getNome() {
-		return this.nome;
+		return nome;
 	}
 
 	/**
      * Obter a password do utilizador
      */
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	/**
      * Obter morada do utilizador
      */
 	public String getMorada() {
-		return this.morada;
+		return morada;
 	}
 
     /**
      * Obter a data de nascimento do utilizador
      */
 	public GregorianCalendar getDataNascimento() {
-		return (GregorianCalendar) this.dataNascimento.clone();
+		return (GregorianCalendar) dataNascimento.clone();
 	}
 
 	/**
@@ -124,16 +124,18 @@ public abstract class Utilizador
 	 * @param o Objeto
 	 */
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if ((o == null) || (this.getClass() != o.getClass())) return false;
-		else {
-			Utilizador u = (Utilizador) o;
-			return (this.email.equals(u.email) &&
-					this.nome.equals(u.nome) &&
-					this.password.equals(u.password) &&
-					this.morada.equals(u.morada) &&
-					this.dataNascimento.equals(u.dataNascimento));
-		}
+		if (this == o) 
+			return true;
+
+		if ((o == null) || (this.getClass() != o.getClass())) 
+			return false;
+
+		Utilizador u = (Utilizador) o;
+		return (email.equals(u.getEmail()) &&
+				nome.equals(u.getNome()) &&
+				password.equals(u.getPassword()) &&
+				morada.equals(u.getMorada()) &&
+				dataNascimento.equals(u.getDataNascimento()));
 	}
 
 	/**
@@ -142,11 +144,11 @@ public abstract class Utilizador
 	public int hashCode() {
 		int hash = 7;
 		
-		hash = 31*hash + this.email.hashCode();
-		hash = 31*hash + this.nome.hashCode();
-		hash = 31*hash + this.password.hashCode();
-		hash = 31*hash + this.morada.hashCode();
-		hash = 31*hash + this.dataNascimento.hashCode();
+		hash = 31*hash + email.hashCode();
+		hash = 31*hash + nome.hashCode();
+		hash = 31*hash + password.hashCode();
+		hash = 31*hash + morada.hashCode();
+		hash = 31*hash + dataNascimento.hashCode();
 
 		return hash;
 	}
