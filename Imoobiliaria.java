@@ -196,15 +196,19 @@ public class Imoobiliaria
 	 * @throws SemAutorizacaoException Caso o utilizador não tenha autorização
 	 */
 	public void registaImovel(Imovel im) throws ImovelExisteException, SemAutorizacaoException {
-		
-		if (!(this.utilizador instanceof Vendedor))
+		Vendedor v;
+
+		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("Utilizador não está inscrito como Vendedor");
 
-		if (this.anuncios.containsKey(im))
+		if (anuncios.containsKey(im))
 			throw new ImovelExisteException("Imóvel já existe.");
 
-		this.imoveis.put(im.hashCode() + "", im);
-		this.anuncios.put(im, (Vendedor) utilizador);
+		v = (Vendedor) utilizador;
+		
+		v.addImovelEmVenda(im);	
+		imoveis.put(im.hashCode() + "", im);
+		anuncios.put(im, v);
 	}
 
 	/**
@@ -215,22 +219,22 @@ public class Imoobiliaria
 	 */
 	public List<Consulta> getConsultas() throws SemAutorizacaoException {
 		ArrayList<Consulta> consultas = new ArrayList<>();
-		Vendedor v;
 		ArrayList<Imovel> imoveis; 
+		Vendedor v;
 
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("O utilizador não está ligado como Vendedor");
 
-		v = new Vendedor((Vendedor) utilizador);
+		v = (Vendedor) utilizador;
 		imoveis = (ArrayList<Imovel>) v.getImoveisEmVenda();
  
-		for (Imovel i : imoveis ) {
+		for (Imovel i: imoveis){
 			consultas.addAll(i.getConsultas());	
 		}
 
-		consultas.sort((c1, c2) -> c1.getData().compareTo(c2.getData()) );
+		consultas.sort((c1, c2) -> c1.getData().compareTo(c2.getData()));
 
-		return consultas.subList(0, 10);
+		return consultas.subList(0, 9);
 	}
 
 	/**
@@ -248,11 +252,12 @@ public class Imoobiliaria
 		
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("Utilizador não está ligado como Vendedor");
+
 		if (!imoveis.containsKey(idImovel))
 			throw new ImovelInexistenteException("Imóvel inexistente");
-		if (!(estado.equals("venda") || estado.equals("reservado") || 
-				estado.equals("vendido")))
-			throw new EstadoInvalidoException("Estado deve ser 'venda', 'reservado' ou 'vendido'");
+
+		if (!(estado.equals("em venda") || estado.equals("reservado") || estado.equals("vendido")))
+			throw new EstadoInvalidoException("Estado deve ser 'em venda', 'reservado' ou 'vendido'");
 
 		 imoveis.get(idImovel).setEstado(estado);
 	}
@@ -262,19 +267,23 @@ public class Imoobiliaria
 	 * @param n
 	 * @return Conjunto com os n imóveis
 	 */
-	public Set<String> getTopImoveis(int n) {
-		List<String> topImoveis = new ArrayList<String>();
+/*
+	public Set<String> getTopImoveis(int n) throws SemAutorizacaoException {
+		ArrayList<String> topImoveis;
+		Vendedor v;
 
-		for(String s: imoveis.keySet()) {
-			topImoveis.add(s);
-		}
+		if (!(utilizador instanceof Vendedor))
+			throw new SemAutorizacaoException("Utilizador não está ligado como vendedor");	
+
+		v = (Vendedor) utilizador;
+		topImoveis = (ArrayList<String>) v.getImoveisEmVenda();
 	
-		topImoveis.sort((s1, s2) -> imoveis.get(s2).getConsultas().size() 
-				- imoveis.get(s1).getConsultas().size());
+		topImoveis.sort((s1, s2) -> imoveis.get(s2).getConsultas().size() - 
+                                    imoveis.get(s1).getConsultas().size());
 
 		return new TreeSet<String>(topImoveis.subList(0,n));
 	}
-
+*/
 	
 /************************** Todos os Utilizadores ******************************/
 
@@ -287,7 +296,7 @@ public class Imoobiliaria
 	public List<Imovel> getImovel(String classe, int preco) {
 		List<Imovel> l = new ArrayList<Imovel>();
 
-		for (Imovel i : this.imoveis.values()) {
+		for (Imovel i: imoveis.values()) {
 			if (i.getClass().getSimpleName().equals(classe) && i.getPrecoPedido() <= preco)
 				l.add(i);
 		}
@@ -304,8 +313,7 @@ public class Imoobiliaria
 		ArrayList<Habitavel> imoveisHabitaveis = new ArrayList<>();
 
 		for (Imovel i : this.imoveis.values()) {
-			if (i instanceof LojaHabitavel ||
-				   	i instanceof Moradia || i instanceof Apartamento) {
+			if (i instanceof Habitavel) {
 				Habitavel h = (Habitavel) i;
 				imoveisHabitaveis.add(h);
 			}
@@ -335,11 +343,13 @@ public class Imoobiliaria
 
 		if (!(utilizador instanceof Comprador))
 			throw new SemAutorizacaoException("Utilizador não está ligado como Comprador");
+
 		if (!(imoveis.containsKey(idImovel)))
 			throw new ImovelInexistenteException("Imovel não existe.");
 
 		Comprador c = (Comprador) utilizador;
 		Imovel i = imoveis.get(idImovel);
+
 		c.addFavoritos(i);		
 	}
 
@@ -355,10 +365,7 @@ public class Imoobiliaria
 
 		Comprador c = (Comprador) utilizador;
 	
-		ArrayList<Imovel> favs = new ArrayList<Imovel>(c.getFavoritos());
-		favs.sort((i1, i2) -> Double.compare(i1.getPrecoPedido(), i2.getPrecoPedido()));
-
-		return new TreeSet<Imovel> (favs);
+		return (TreeSet<Imovel>) c.getFavoritos();
 	}
 
 }
