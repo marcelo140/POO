@@ -25,7 +25,7 @@ public class Comprador extends Utilizador
  	 */
     public Comprador() {
         super();
-		this.favoritos = new TreeSet<Imovel>();
+		favoritos = new TreeSet<Imovel>(new ComparatorImovelByPreco());
     }
 
 	/**
@@ -41,7 +41,7 @@ public class Comprador extends Utilizador
  	 * @return Set
  	 */
 	public Set<Imovel> getFavoritos() {
-		TreeSet<Imovel> favoritos = new TreeSet<>();
+		TreeSet<Imovel> favoritos = new TreeSet<>(new ComparatorImovelByPreco());
 
 		for(Imovel im: this.favoritos)
 			favoritos.add(im.clone());
@@ -54,7 +54,7 @@ public class Comprador extends Utilizador
  	 * @param favoritos
  	 */
 	private void setFavoritos(Set<Imovel> favoritos) {
-		this.favoritos = new TreeSet<Imovel>();
+		this.favoritos = new TreeSet<Imovel>(new ComparatorImovelByPreco());
 
 		for(Imovel f: favoritos)
 			this.favoritos.add(f);
@@ -65,7 +65,7 @@ public class Comprador extends Utilizador
 	 * @param Imovel
 	 */
 	public void addFavoritos(Imovel im) {
-		this.favoritos.add(im.clone());
+		this.favoritos.add(im);
 	}
 
 	/**
