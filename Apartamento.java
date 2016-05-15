@@ -4,7 +4,7 @@
 
 import java.util.ArrayList;
 
-public class Apartamento extends Imovel {
+public class Apartamento extends Imovel implements Habitavel {
 	private String tipo;
 	private double area;
 	private int quartos, wc, andar, porta;

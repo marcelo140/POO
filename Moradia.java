@@ -5,7 +5,7 @@
 
 import java.util.ArrayList;
 
-public class Moradia extends Imovel
+public class Moradia extends Imovel implements Habitavel
 {
 	private String tipo;
 	private double areaImplantacao, areaCoberta, areaTerreno;

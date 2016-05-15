@@ -40,7 +40,7 @@ public class Comprador extends Utilizador
  	 * Obter cópia dos favoritos
  	 * @return Set
  	 */
-	private Set<Imovel> getFavoritos() {
+	public Set<Imovel> getFavoritos() {
 		return new TreeSet<Imovel>(this.favoritos);
 	}
 
@@ -51,6 +51,14 @@ public class Comprador extends Utilizador
 	private void setFavoritos(Set<Imovel> favoritos) {
 		for(Imovel f: favoritos)
 			this.favoritos.add(f);
+	}
+
+	/**
+	 * Adiciona um imóvel aos favoritos do comprador
+	 * @param Imovel
+	 */
+	public void addFavoritos(Imovel i) {
+		this.favoritos.add(i);
 	}
 
 	/**
