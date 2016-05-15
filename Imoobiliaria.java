@@ -1,11 +1,11 @@
 import java.util.*;
 
 /**
- * Classe que definie a imoobiliaria 
+ * Classe que definie a imobiliaria 
  */
 public class Imoobiliaria 
 {
-	Utilizador utilizador;
+	private Utilizador utilizador;
 	private Map<String, Utilizador> utilizadores; //Email -> Utilizador
 	private Map<Imovel, Vendedor> anuncios;
 	private Map<String, Imovel> imoveis; //IdImovel -> Imovel
@@ -17,27 +17,13 @@ public class Imoobiliaria
 	 * @param anuncios
 	 * @param imoveis
 	 */
-	public Imoobiliaria(Vendedor utilizador, Map<String, Utilizador> utilizadores, 
-				Map<Imovel, Vendedor> anuncios, Map<String, Imovel> imoveis) {
-		this.utilizador = new Vendedor(utilizador);
-		this.utilizadores = new TreeMap<String, Utilizador>(utilizadores);
-		this.anuncios = new TreeMap<Imovel, Vendedor>(anuncios);
-		this.imoveis = new TreeMap<String, Imovel>(imoveis);
-	}
+	public Imoobiliaria(Utilizador utilizador, Map<String, Utilizador> utilizadores, 
+						Map<Imovel, Vendedor> anuncios, Map<String, Imovel> imoveis) {
 
-	/**
-	 * Construtor por parametros
-	 * @param utilizador
-	 * @param utilizadores
-	 * @param anuncios
-	 * @param imoveis
-	 */
-	public Imoobiliaria(Comprador utilizador, Map<String, Utilizador> utilizadores, 
-				Map<Imovel, Vendedor> anuncios, Map<String, Imovel> imoveis) {
-		this.utilizador = new Comprador(utilizador);
-		this.utilizadores = new TreeMap<String, Utilizador>(utilizadores);
-		this.anuncios = new TreeMap<Imovel, Vendedor>(anuncios);
-		this.imoveis = new TreeMap<String, Imovel>(imoveis);
+		setUtilizador(utilizador);
+		setUtilizadores(utilizadores);
+		setAnuncios(anuncios);
+		setImoveis(imoveis);
 	}
 
 	/**
@@ -45,9 +31,9 @@ public class Imoobiliaria
 	 */
 	public Imoobiliaria() {
 		utilizador = null;
-		this.utilizadores = new TreeMap<String, Utilizador>();
-		this.anuncios = new TreeMap<Imovel, Vendedor>();
-		this.imoveis = new TreeMap<String, Imovel>();
+		utilizadores = new TreeMap<String, Utilizador>();
+		anuncios = new TreeMap<Imovel, Vendedor>();
+		imoveis = new TreeMap<String, Imovel>();
 	}
 
 	/**
@@ -55,34 +41,65 @@ public class Imoobiliaria
 	 * @param i imoobiliaria	
 	 */
 	public Imoobiliaria(Imoobiliaria i) {
-		if(i.utilizador.getClass().getSimpleName().equals("Vendedor"))
-			this.utilizador = new Vendedor((Vendedor) i.utilizador);
-		
-		
-		this.utilizadores = new TreeMap<String, Utilizador>(i.utilizadores);
-		this.anuncios = new TreeMap<Imovel, Vendedor>(i.anuncios);
-		this.imoveis = new TreeMap<String, Imovel>(i.imoveis);
+		utilizador = i.getUtilizador();	
+		utilizadores = i.getUtilizadores();
+		anuncios = i.getAnuncios();
+		imoveis = i.getImoveis();
+	}
+
+	/**
+ 	 * Obtem utilizador logado
+ 	 * @return Utilizador
+ 	 */
+	private Utilizador getUtilizador() {
+		Vendedor v;
+		Comprador c;
+
+		if (utilizador instanceof Vendedor) {
+			v = (Vendedor) utilizador;
+			return v.clone();
+		}
+
+		if (utilizador instanceof Comprador) {
+			c = (Comprador) utilizador;
+			return c.clone();
+		}
+
+		return null;
 	}
 
 	/**
 	 * Obtem utilizadores da imobiliaria
 	 */
 	private Map<String, Utilizador> getUtilizadores() {
-		return new TreeMap<String, Utilizador>(this.utilizadores);
+		return new TreeMap<String, Utilizador>(utilizadores);
 	}
 
 	/**
 	 * Obtem anúncios da imobiliaria
 	 */
 	private Map<Imovel, Vendedor> getAnuncios() {
-		return new TreeMap<Imovel, Vendedor>(this.anuncios);
+		return new TreeMap<Imovel, Vendedor>(anuncios);
 	}
 
 	/**
 	 * Obtem todos os imóveis da imobiliaria
 	 */
 	private Map<String, Imovel> getImoveis() {
-		return new TreeMap<String, Imovel>(this.imoveis);
+		return new TreeMap<String, Imovel>(imoveis);
+	}
+
+	/**
+ 	 * Define o utilizador logado
+ 	 * @param Utilizador
+ 	 */
+	private void setUtilizador(Utilizador u) {
+		if (u instanceof Vendedor)
+			utilizador = new Vendedor((Vendedor) u);
+		else if (u instanceof Comprador)
+			utilizador = new Comprador((Comprador) u);
+		else
+			utilizador = null;
 	}
 
 	/**
