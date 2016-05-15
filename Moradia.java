@@ -28,6 +28,7 @@ public class Moradia extends Imovel implements Habitavel
 	public Moradia(String rua, String estado, double precoMinimo, double precoPedido,
                    ArrayList<Consulta> consultas, String tipo, double areaImplantacao, double areaCoberta,
                    double areaTerreno, int quartos, int wc, int porta) {
+
 		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.areaImplantacao = areaImplantacao;
@@ -42,7 +43,14 @@ public class Moradia extends Imovel implements Habitavel
  	 * Construtor padrão
  	 */
 	public Moradia() {
-		this("n/a", "n/a", 0.0, 0.0, null, "n/a", 0.0, 0.0, 0.0, 0, 0, 0);
+		super();
+		tipo = "n/a";
+		areaImplantacao = 0.0;
+		areaCoberta = 0.0;
+		areaTerreno = 0.0;
+		quartos = 0;
+		wc = 0;
+		porta = 0;	
 	}
 
 	/**
@@ -50,13 +58,13 @@ public class Moradia extends Imovel implements Habitavel
  	 */
 	public Moradia(Moradia m) {
 		super(m);
-		this.tipo = m.getTipo();
-		this.areaImplantacao = m.getAreaImplantacao();
-		this.areaCoberta = m.getAreaCoberta();
-		this.areaTerreno = m.getAreaTerreno();
-		this.quartos = m.getQuartos();
-		this.wc = m.getWC();
-		this.porta = m.getPorta();
+		tipo = m.getTipo();
+		areaImplantacao = m.getAreaImplantacao();
+		areaCoberta = m.getAreaCoberta();
+		areaTerreno = m.getAreaTerreno();
+		quartos = m.getQuartos();
+		wc = m.getWC();
+		porta = m.getPorta();
 	}
 
 	/**
@@ -64,7 +72,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * @return
  	 */
 	public String getTipo() {
-		return this.tipo;
+		return tipo;
 	}
 
 	/**
@@ -72,7 +80,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * @result
  	 */
 	public double getAreaImplantacao() {
-		return this.areaImplantacao;
+		return areaImplantacao;
 	}
 
 	/**
@@ -80,7 +88,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * @result
  	 */
 	public double getAreaCoberta() {
-		return this.areaCoberta;
+		return areaCoberta;
 	}
 
 	/**
@@ -88,7 +96,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * @result
  	 */
 	public double getAreaTerreno() {
-		return this.areaTerreno;
+		return areaTerreno;
 	}
 
 	/**
@@ -96,7 +104,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * @result
  	 */
 	public int getQuartos() {
-		return this.quartos;
+		return quartos;
 	}
 
 	/**
@@ -104,7 +112,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * @result
  	 */
 	public int getWC() {
-		return this.wc;
+		return wc;
 	}
 
 	/**
@@ -112,7 +120,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * @result
  	 */
 	public int getPorta() {
-		return this.porta;
+		return porta;
 	}
 
 	/**
@@ -176,19 +184,21 @@ public class Moradia extends Imovel implements Habitavel
 	 * @param o Objeto
 	 */
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if ((o == null) || (this.getClass() != o.getClass())) return false;
-		else {
-			Moradia m = (Moradia) o;
-			return (super.equals(m) &&
-					this.tipo.equals(m.getTipo()) &&
-                    this.areaImplantacao == m.getAreaImplantacao() &&
-					this.areaCoberta == m.getAreaCoberta() &&
-				    this.areaTerreno == m.getAreaTerreno() && 
-				  	this.quartos == m.getQuartos() && 
-				    this.wc == m.getWC() && 
-					this.porta == m.getPorta());
-		}
+		if (this == o) 
+			return true;
+
+		if ((o == null) || (this.getClass() != o.getClass()))
+			 return false;
+
+		Moradia m = (Moradia) o;
+		return (super.equals(m) &&
+				this.tipo.equals(m.getTipo()) &&
+				this.areaImplantacao == m.getAreaImplantacao() &&
+				this.areaCoberta == m.getAreaCoberta() &&
+			    this.areaTerreno == m.getAreaTerreno() && 
+			  	this.quartos == m.getQuartos() && 
+			    this.wc == m.getWC() && 
+				this.porta == m.getPorta());
 	}
 
 	/**

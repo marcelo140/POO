@@ -13,7 +13,7 @@ public class LojaHabitavel extends Loja implements Habitavel {
      */ 
     public LojaHabitavel(){
        super();
-       this.parteHabitacional = null;
+       this.parteHabitacional = new Apartamento();
     }
 
     /**
@@ -31,8 +31,9 @@ public class LojaHabitavel extends Loja implements Habitavel {
     public LojaHabitavel(String rua, String estado, double precoMinimo, double precoPedido,
                 ArrayList<Consulta> consultas, Apartamento parteHab, String tipo, 
                 double area, int porta, boolean wc) {
+
 		super(rua, estado, precoMinimo, precoPedido, consultas, tipo, area, porta, wc);
-		this.parteHabitacional = parteHab.clone();
+		setParteHabitacional(parteHab);
 	}
 
 	/**
@@ -40,7 +41,7 @@ public class LojaHabitavel extends Loja implements Habitavel {
 	 */
 	public LojaHabitavel(LojaHabitavel t){
 		super(t);
-		this.parteHabitacional = t.getParteHabitacional();
+		parteHabitacional = t.getParteHabitacional();
 	}
 
 	/**
@@ -48,21 +49,23 @@ public class LojaHabitavel extends Loja implements Habitavel {
  	 * @return Apartamento
  	 */
 	private Apartamento getParteHabitacional() {
-		return this.parteHabitacional.clone();
+		return parteHabitacional.clone();
 	}
 
 	private void setParteHabitacional(Apartamento parteHab) {
-		this.parteHabitacional = parteHab.clone();
+		parteHabitacional = parteHab.clone();
 	}
 
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if ((o == null) || (o.getClass() != this.getClass())) return false;
-		else {
-			LojaHabitavel l = (LojaHabitavel) o;
-			return  super.equals(l) && 
-					this.parteHabitacional.equals(l.parteHabitacional);
-		}
+		if (this == o)
+			 return true;
+
+		if ((o == null) || (o.getClass() != this.getClass())) 
+			return false;
+
+		LojaHabitavel l = (LojaHabitavel) o;
+		return super.equals(l) && 
+			   parteHabitacional.equals(l.getParteHabitacional());
 	}
 
 	/**

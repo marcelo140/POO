@@ -26,6 +26,7 @@ public class Apartamento extends Imovel implements Habitavel {
 	public Apartamento(String rua, String estado, double precoMinimo, double precoPedido,
 					   ArrayList<Consulta> consultas, String tipo, double area, int quartos, 
 					   int wc, int andar, int porta, boolean garagem){
+
 		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.area = area;
@@ -69,7 +70,7 @@ public class Apartamento extends Imovel implements Habitavel {
      * @return
      */
     public String getTipo() {
-	 return this.tipo;
+		return tipo;
     }
 
     /**
@@ -77,7 +78,7 @@ public class Apartamento extends Imovel implements Habitavel {
      * @return
      */
     public double getArea(){
-	    return this.area;
+	    return area;
     }
 
     /**
@@ -85,7 +86,7 @@ public class Apartamento extends Imovel implements Habitavel {
      * @return
      */
     public int getQuartos(){
-	    return this.quartos;
+	    return quartos;
     }
 
     /**
@@ -93,7 +94,7 @@ public class Apartamento extends Imovel implements Habitavel {
      * @return
      */
     public int getWC(){
-	    return this.wc;
+	    return wc;
     }
 
     /**
@@ -101,7 +102,7 @@ public class Apartamento extends Imovel implements Habitavel {
      * @return
      */
     public int getAndar(){
-	    return this.andar;
+	    return andar;
     }
 
     /**
@@ -109,7 +110,7 @@ public class Apartamento extends Imovel implements Habitavel {
      * @return
      */
     public int getPorta(){
-	    return this.porta;
+	    return porta;
     }
 
     /**
@@ -117,7 +118,7 @@ public class Apartamento extends Imovel implements Habitavel {
      * @return
      */
     public boolean getGaragem(){
-	    return this.garagem;
+	    return garagem;
     }
 
     /**
@@ -181,19 +182,21 @@ public class Apartamento extends Imovel implements Habitavel {
 	 * @param o Objeto
 	 */
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if ((o == null) || (this.getClass() != o.getClass())) return false;
-		else {
-			Apartamento a = (Apartamento) o;
-			return  super.equals(a) &&
-					this.tipo.equals(a.getTipo()) && 
-					this.area == a.getArea() &&
-					this.quartos == a.getQuartos() &&
-					this.wc == a.getWC() &&
-					this.andar == a.getAndar() &&
-					this.porta == a.getPorta() &&
-					this.garagem == a.getGaragem();
-		}
+		if (this == o) 
+			return true;
+
+		if ((o == null) || (this.getClass() != o.getClass())) 
+			return false;
+
+		Apartamento a = (Apartamento) o;
+		return  super.equals(a) &&
+				this.tipo.equals(a.getTipo()) && 
+				this.area == a.getArea() &&
+				this.quartos == a.getQuartos() &&
+				this.wc == a.getWC() &&
+				this.andar == a.getAndar() &&
+				this.porta == a.getPorta() &&
+				this.garagem == a.getGaragem();
 	}
 
 	/**

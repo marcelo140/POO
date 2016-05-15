@@ -13,17 +13,6 @@ public class Loja extends Imovel
     private boolean wc;
 
     /**
-     * Construtor padrão
-     */ 
-    public Loja(){
-       super();
-       this.tipoNegocio = "n/a";
-       this.area = 0;
-       this.porta = 0;
-       this.wc = false;
-    }
-
-    /**
      * Construtor por parâmatros
      * @param rua
      * @param estado
@@ -37,22 +26,34 @@ public class Loja extends Imovel
     public Loja(String rua, String estado, double precoMinimo, double precoPedido,
                 ArrayList<Consulta> consultas, String tipo, double area, 
 				int porta, boolean wc) {
+
 		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipoNegocio = tipo;
 		this.area = area;
 		this.porta = porta;
 		this.wc = wc;
 	}
+    
+	/**
+     * Construtor padrão
+     */ 
+    public Loja(){
+       super();
+       tipoNegocio = "n/a";
+       area = 0;
+       porta = 0;
+       wc = false;
+    }
 
 	/**
 	 * Construtor por cópia
 	 */
 	public Loja(Loja t){
 		super(t);
-		this.tipoNegocio = t.getTipoNegocio();
-		this.area = t.getArea();
-		this.porta = t.getPorta();
-		this.wc = t.getWC();
+		tipoNegocio = t.getTipoNegocio();
+		area = t.getArea();
+		porta = t.getPorta();
+		wc = t.getWC();
 	}
 
     /**
@@ -60,28 +61,31 @@ public class Loja extends Imovel
      * @return
      */
     public String getTipoNegocio() {
-     return this.tipoNegocio;
-        }
+    	 return tipoNegocio;
+    }
+
     /**
      * Obter área total
      * @return
      */
     public double getArea(){
-    return this.area;
+	    return area;
     }
+
     /**
      * Obter número da porta
      * @return
      */
     public int getPorta(){
-    return this.porta;
+	    return porta;
     }
+
     /**
      * Determina se o apartamento tem wc
      * @return
      */
     public boolean getWC(){
-    return this.wc;
+	    return wc;
     }
     /**
      * Define tipo de negócio 
@@ -91,13 +95,15 @@ public class Loja extends Imovel
     public void setTipo(String tipo) {
         this.tipoNegocio = tipoNegocio;
     }
+
     /**
      * Define área da loja
      * @param area
      */
     public void setArea(double area) {
-        this.area= area;
+        this.area = area;
     }
+
     /**
      * Define número da porta
      * @param porta
@@ -105,6 +111,7 @@ public class Loja extends Imovel
     public void setPorta(int porta) {
         this.porta = porta;
     }
+
     /**
      * Define se o apartamento tem, ou não, garagem
      * @param garagem
@@ -118,15 +125,17 @@ public class Loja extends Imovel
 	 * @param o Objeto
 	 */
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if ((o == null) || (o.getClass() != this.getClass())) return false;
-		else {
-			Loja l = (Loja) o;
-			return  super.equals(l) && 
-					this.tipoNegocio.equals(l.tipoNegocio) && 
-					this.area == l.area &&
-					this.wc == l.wc;
-		}
+		if (this == o)
+			 return true;
+
+		if ((o == null) || (o.getClass() != this.getClass())) 
+			return false;
+
+		Loja l = (Loja) o;
+		return  super.equals(l) && 
+				tipoNegocio.equals(l.getTipoNegocio()) && 
+				area == l.getArea() &&
+				wc == l.getWC();
 	}
 
 	/**
@@ -169,4 +178,3 @@ public class Loja extends Imovel
 		return new Loja(this);
 	}
 }
-

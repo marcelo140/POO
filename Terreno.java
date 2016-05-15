@@ -26,7 +26,9 @@ public class Terreno extends Imovel
      */
 	public Terreno(String rua, String estado, double precoMinimo, double precoPedido, 
                    ArrayList<Consulta> consultas, String tipo, double area, 
-                   double diametroCanalizacao, double potenciaSuportada, boolean acessoEsgotos) {
+                   double diametroCanalizacao, double potenciaSuportada, 
+				   boolean acessoEsgotos) {
+
 		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.area = area;
@@ -39,7 +41,12 @@ public class Terreno extends Imovel
      * Construtor padrão
      */	
 	public Terreno() {
-		this("n/a", "n/a", 0, 0, null, "n/a", 0.0, 0.0, 0.0, false);
+		super();
+		tipo = "n/a";
+		area = 0.0;
+		diametroCanalizacao = 0.0;
+		potenciaSuportada = 0.0;
+		acessoEsgotos = false;
 	}
 	
 	/**
@@ -47,9 +54,11 @@ public class Terreno extends Imovel
      */
 	public Terreno(Terreno t) {
 		super(t);
-		this.diametroCanalizacao = t.getDiametroCanalizacao();
-		this.potenciaSuportada = t.getPotenciaSuportada();
-		this.acessoEsgotos = t.getAcessoEsgotos();
+		tipo = t.getTipo();
+		area = t.getArea();
+		diametroCanalizacao = t.getDiametroCanalizacao();
+		potenciaSuportada = t.getPotenciaSuportada();
+		acessoEsgotos = t.getAcessoEsgotos();
 	}
 
 	/**
@@ -57,7 +66,7 @@ public class Terreno extends Imovel
      * @return
      */
 	public String getTipo() {
-		return this.tipo;
+		return tipo;
 	}
 
 	/**
@@ -65,7 +74,7 @@ public class Terreno extends Imovel
      * @return
      */
 	public double getArea() {
-		return this.area;
+		return area;
 	}
 
 	/**
@@ -73,7 +82,7 @@ public class Terreno extends Imovel
      * @return
      */ 
 	public double getDiametroCanalizacao() {
-		return this.diametroCanalizacao;
+		return diametroCanalizacao;
 	}
 
 	/**
@@ -81,7 +90,7 @@ public class Terreno extends Imovel
      * @return
      */
 	public double getPotenciaSuportada() {
-		return this.potenciaSuportada;
+		return potenciaSuportada;
 	}
 
 	/**
@@ -89,7 +98,7 @@ public class Terreno extends Imovel
      * @return
      */
 	public boolean getAcessoEsgotos() {
-		return this.acessoEsgotos;
+		return acessoEsgotos;
 	}
 
 	/**
@@ -137,17 +146,19 @@ public class Terreno extends Imovel
 	 * @param o Objeto
 	 */
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if ( (o == null) || (this.getClass() != o.getClass()) ) return false;
-		else {
-			Terreno t = (Terreno) o;
-			return (super.equals(t) && 
-					this.tipo.equals(t.getTipo()) &&
-					this.area == t.getArea() && 
-				  	this.diametroCanalizacao == t.getDiametroCanalizacao() &&
-					this.potenciaSuportada == t.getPotenciaSuportada() &&
-				  	this.acessoEsgotos == t.getAcessoEsgotos() );
-		}
+		if (this == o)
+			 return true;
+
+		if ( (o == null) || (this.getClass() != o.getClass()) ) 
+			return false;
+
+		Terreno t = (Terreno) o;
+		return (super.equals(t) && 
+				tipo.equals(t.getTipo()) &&
+				area == t.getArea() && 
+				diametroCanalizacao == t.getDiametroCanalizacao() &&
+				potenciaSuportada == t.getPotenciaSuportada() &&
+				acessoEsgotos == t.getAcessoEsgotos());
 	}
 
 	/**
@@ -177,6 +188,7 @@ public class Terreno extends Imovel
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
+		sb.append(super.toString());
 		sb.append("Tipo: ").append(tipo).append("\n");
 		sb.append("Área: ").append(area).append("\n");
 		sb.append("Diâmetro da canalização: ").append(diametroCanalizacao).append("\n");

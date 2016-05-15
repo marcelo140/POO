@@ -2,7 +2,8 @@
  * Abstract class Imovel - write a description of the class here
  */
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Imovel {
     private String rua, estado;
@@ -19,18 +20,23 @@ public abstract class Imovel {
      */ 
     public Imovel(String rua, String estado, double precoMinimo, double precoPedido, 
                   List<Consulta> consultas) {
+
         this.rua = rua;
         this.estado = estado;
         this.precoMinimo = precoMinimo;
         this.precoPedido = precoPedido;
-        this.consultas = new ArrayList<Consulta>(consultas);
+		setConsultas(consultas);
     }
 
     /**
      * Construtor padrão
      */ 
     public Imovel() {
-        this("n/a", "n/a", 0.0, 0.0, null);
+		rua = "n/a";
+		estado = "em venda";
+		precoMinimo = 0.0;
+		precoPedido = 0.0;
+		consultas = new ArrayList<Consulta>();
     }
 
     /**
@@ -41,7 +47,7 @@ public abstract class Imovel {
         estado = i.getEstado();
         precoMinimo = i.getPrecoMinimo();
         precoPedido = i.getPrecoPedido();
-        consultas = new ArrayList<Consulta> (i.getConsultas());
+        consultas = i.getConsultas();
     }
 
     /**
@@ -81,8 +87,14 @@ public abstract class Imovel {
      * @return consultas
      */
     public List<Consulta> getConsultas() {
-        return new ArrayList<Consulta>(consultas);
+		ArrayList<Consulta> consultas = new ArrayList<>();
+
+		for(Consulta c: this.consultas)
+			consultas.add(c.clone());
+
+		return consultas;
     }
+
     /**
      * Define nome da rua
      * @param rua
@@ -120,24 +132,37 @@ public abstract class Imovel {
      * @param consultas
      */
     public void setConsultas(List<Consulta> consultas) {
-        this.consultas = new ArrayList<Consulta> (consultas);
+        this.consultas = new ArrayList<Consulta>();
+
+		for(Consulta c: consultas)
+			this.consultas.add(c.clone());
     }
     
+    /**
+     * Adiciona uma consulta ao imóvel
+     * @param consulta
+     */
+    public void addConsulta(Consulta c) {
+        consultas.add(c.clone());
+    }
+
     /**
      * Verifica se um objeto dado é igual a este.
      * @param o Objeto
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if ((o == null) || (this.getClass() != o.getClass())) return false;
-        else {
-            Imovel i = (Imovel) o;
-            return ( this.precoMinimo == i.getPrecoMinimo() &&
-                     this.precoPedido == i.getPrecoPedido() &&
-                     this.rua.equals(i.getRua()) &&
-                     this.estado.equals(i.getEstado()) &&
-                     this.consultas.equals(i.getConsultas()));
-        }
+        if (this == o) 
+			return true;
+
+        if ((o == null) || (this.getClass() != o.getClass()))
+			 return false;
+
+		Imovel i = (Imovel) o;
+		return (precoMinimo == i.getPrecoMinimo() &&
+				precoPedido == i.getPrecoPedido() &&
+				rua.equals(i.getRua()) &&
+				estado.equals(i.getEstado()) &&
+				consultas.equals(i.getConsultas()));
     }
 
     /**
@@ -181,11 +206,4 @@ public abstract class Imovel {
      */
     public abstract Imovel clone();
 
-    /**
-     * Adiciona uma consulta ao imóvel
-     * @param consulta
-     */
-    public void addConsulta(Consulta c) {
-        consultas.add(c);
-    }
 }

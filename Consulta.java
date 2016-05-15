@@ -1,5 +1,6 @@
 import java.util.GregorianCalendar;
 import java.util.Calendar;
+
 /**
  * Classe que guarda a informação de quem consulta um anúncio. 
  */
@@ -39,14 +40,14 @@ public class Consulta {
 	 * Obtem data da consulta.
 	 */ 
 	public Calendar getData() {
-		return (GregorianCalendar) this.data.clone();
+		return (GregorianCalendar) data.clone();
 	}
 
 	/**
 	 * Obtem email do visitante
 	 */ 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	/**
@@ -70,13 +71,15 @@ public class Consulta {
 	 * @param o Objeto
 	 */
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if ( (o == null) || (this.getClass() != o.getClass()) ) return false;
-		else {
-			Consulta c = (Consulta) o;
-			return  this.data.equals(c.data) && 
-					this.email.equals(c.email) ;
-		}
+		if (this == o) 
+			return true;
+
+		if ((o == null) || (this.getClass() != o.getClass())) 
+			return false;
+
+		Consulta c = (Consulta) o;
+		return this.data.equals(c.data) && 
+			   this.email.equals(c.email) ;
 	}
 
 	/**
@@ -95,6 +98,6 @@ public class Consulta {
 	 * Clone da Consulta
 	 */
 	public Consulta clone() {
-		return new Consulta (this);
+		return new Consulta(this);
 	}
 }
