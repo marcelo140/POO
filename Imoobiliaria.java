@@ -5,7 +5,9 @@ import java.util.*;
  */
 public class Imoobiliaria 
 {
+	// Utilizador logado
 	private Utilizador utilizador;
+	// Lista de utilizadores registados na aplicação
 	private Map<String, Utilizador> utilizadores; //Email -> Utilizador
 	private Map<Imovel, Vendedor> anuncios;
 	private Map<String, Imovel> imoveis; //IdImovel -> Imovel
