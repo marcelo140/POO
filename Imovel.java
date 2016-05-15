@@ -4,8 +4,9 @@
 
 import java.util.List;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public abstract class Imovel {
+public abstract class Imovel implements Serializable {
     private String rua, estado;
     private double precoMinimo, precoPedido;
     private List<Consulta> consultas;
@@ -18,9 +19,8 @@ public abstract class Imovel {
      * @param precoPedido
      * @param consultas
      */ 
-    public Imovel(String rua, String estado, double precoMinimo, double precoPedido, 
-                  List<Consulta> consultas) {
-
+    public Imovel(String rua, String estado, double precoMinimo,
+                  double precoPedido, List<Consulta> consultas) {
         this.rua = rua;
         this.estado = estado;
         this.precoMinimo = precoMinimo;
