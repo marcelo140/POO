@@ -93,6 +93,14 @@ public class Vendedor extends Utilizador
 	}
 
 	/**
+ 	 * Adiciona o imóvel à lista de imoveis em venda
+ 	 * @param Imovel
+ 	 */
+	public void addImovelEmVenda(Imovel im) {
+		imoveisEmVenda.add(im);	
+	}	
+
+	/**
 	 * Verifica se dado Objeto é igual a este Vendedor.
 	 * @param o Objeto
 	 */
@@ -108,6 +116,8 @@ public class Vendedor extends Utilizador
 				imoveisEmVenda.equals(v.getImoveisEmVenda()) &&
 				imoveisVendidos.equals(v.getImoveisVendidos()));
 	}
+
+	
 
 	/**
 	 * HashCode do Vendedor
