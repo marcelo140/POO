@@ -14,6 +14,7 @@ public class Terreno extends Imovel
 
 	/**
      * Construtor por parâmatros
+     * @param id
      * @param rua
      * @param estado
      * @param precoMinimo
@@ -24,12 +25,12 @@ public class Terreno extends Imovel
      * @param potenciaSuportada
      * @param acessoEsgotos
      */
-	public Terreno(String rua, String estado, double precoMinimo, double precoPedido, 
-                   ArrayList<Consulta> consultas, String tipo, double area, 
-                   double diametroCanalizacao, double potenciaSuportada, 
+	public Terreno(String id, String rua, String estado, double precoMinimo, 
+                   double precoPedido, ArrayList<Consulta> consultas, String tipo, 
+                   double area, double diametroCanalizacao, double potenciaSuportada, 
 				   boolean acessoEsgotos) {
 
-		super(rua, estado, precoMinimo, precoPedido, consultas);
+		super(id, rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.area = area;
 		this.diametroCanalizacao = diametroCanalizacao;

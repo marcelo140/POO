@@ -12,6 +12,7 @@ public class Apartamento extends Imovel implements Habitavel {
     
     /**
      * Construtor por parâmatros
+     * @param id
      * @param rua
      * @param precoMinimo
      * @param precoPedido
@@ -23,11 +24,12 @@ public class Apartamento extends Imovel implements Habitavel {
      * @param porta
      * @param garagem
      */
-	public Apartamento(String rua, String estado, double precoMinimo, double precoPedido,
-					   ArrayList<Consulta> consultas, String tipo, double area, int quartos, 
-					   int wc, int andar, int porta, boolean garagem){
+	public Apartamento(String id, String rua, String estado, double precoMinimo, 
+                       double precoPedido, ArrayList<Consulta> consultas, String tipo, 
+                       double area, int quartos, int wc, int andar, int porta, 
+                       boolean garagem){
 
-		super(rua, estado, precoMinimo, precoPedido, consultas);
+		super(id, rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.area = area;
 		this.quartos = quartos;
