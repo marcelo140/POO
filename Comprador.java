@@ -1,6 +1,7 @@
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Write a description of class Comprador here.
@@ -14,7 +15,7 @@ public class Comprador extends Utilizador
  	 * Construtor por parâmetros
  	 */
     public Comprador(String email, String nome, String password, String morada, 
-					 GregorianCalendar dataNascimento, Set<Imovel> favoritos) {
+					 LocalDate dataNascimento, Set<Imovel> favoritos) {
 
         super(email, nome, password, morada, dataNascimento);
         setFavoritos(favoritos);
@@ -43,8 +44,10 @@ public class Comprador extends Utilizador
 	public Set<Imovel> getFavoritos() {
 		TreeSet<Imovel> favoritos = new TreeSet<>(new ComparatorImovelByPreco());
 
-		for(Imovel im: this.favoritos)
+		for(Imovel im: this.favoritos){
+			im.addConsulta(new Consulta(LocalDateTime.now(), getEmail()));
 			favoritos.add(im.clone());
+		}
 		
 		return favoritos;
 	}

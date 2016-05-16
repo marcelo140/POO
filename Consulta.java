@@ -1,12 +1,12 @@
-import java.util.GregorianCalendar;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.io.Serializable;
 
 /**
  * Classe que guarda a informação de quem consulta um anúncio. 
  */
-public class Consulta {
+public class Consulta implements Serializable {
 
-	private GregorianCalendar data; // Data da consulta
+	private LocalDateTime data; // Data da consulta
 	private String email; // Email do visitante
 
 	/**
@@ -14,8 +14,8 @@ public class Consulta {
 	 * @param data data da consulta
 	 * @param email email do visitante
 	 */	
-	public Consulta(GregorianCalendar data, String email) {
-		this.data = (GregorianCalendar) data.clone(); 
+	public Consulta(LocalDateTime data, String email) {
+		this.data = data;
 		this.email = email;
 	}
 
@@ -23,7 +23,7 @@ public class Consulta {
      * Construtor padrão 
      */
     public Consulta() {
-		this.data = new GregorianCalendar();
+		this.data = LocalDateTime.now();
 		this.email = "n/a";
     }
 
@@ -32,15 +32,15 @@ public class Consulta {
 	 * @param consulta 
 	 */
 	public Consulta(Consulta consulta) {
-		this.data = (GregorianCalendar) consulta.data.clone();
-		this.email = consulta.email;
+		data = consulta.getData();
+		email = consulta.getEmail();
 	}
 
 	/**
 	 * Obtem data da consulta.
 	 */ 
-	public Calendar getData() {
-		return (GregorianCalendar) data.clone();
+	public LocalDateTime getData() {
+		return data;
 	}
 
 	/**
@@ -54,15 +54,15 @@ public class Consulta {
 	 * Define a data da consulta
 	 * @param data
 	 */
-	private void setData(Calendar data) {
-		this.data = (GregorianCalendar) data.clone();
+	private void setData(LocalDateTime data) {
+		this.data = data;
 	}
 
 	/**
 	 * Define o email do visitante
 	 * @param email
 	 */
-	public void setEmail(String email) {
+	private void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -78,8 +78,21 @@ public class Consulta {
 			return false;
 
 		Consulta c = (Consulta) o;
-		return this.data.equals(c.data) && 
-			   this.email.equals(c.email) ;
+		return data.equals(c.getData()) && 
+			   email.equals(c.getEmail());
+	}
+
+	/**
+ 	 * Converte o localtime numa String
+ 	 * @return String
+ 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Email: ").append(email).append("\n");
+		sb.append("Data: ").append(data).append("\n");
+
+		return sb.toString();
 	}
 
 	/**

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 /**
  * O vendedor é a entidade responsável pela gestão dos anúncios de imóveis para
@@ -23,7 +23,7 @@ public class Vendedor extends Utilizador
 	 * @param imoveisVendidos
 	 */
 	public Vendedor(String email, String nome, String password, String morada, 
-                    GregorianCalendar dataNascimento, List<Imovel> imoveisEmVenda, 
+                    LocalDate dataNascimento, List<Imovel> imoveisEmVenda, 
                     List<Imovel> imoveisVendidos) {
 
 		super(email, nome, password, morada, dataNascimento);

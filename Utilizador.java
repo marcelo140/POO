@@ -1,13 +1,14 @@
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.io.Serializable;
 
 /**
  * Abstract class Utilizador - Gerir dados do utilizador
  */
 
-public abstract class Utilizador
+public abstract class Utilizador implements Serializable
 {
 	private String email, nome, password, morada;
-	private GregorianCalendar dataNascimento;
+	private LocalDate dataNascimento;
 
 	/**
      * Construtor por parâmetros
@@ -18,12 +19,12 @@ public abstract class Utilizador
      * @param dataNascimento
      */
 	public Utilizador(String email, String nome, String password, String morada, 
-                      GregorianCalendar dataNascimento) {
+                      LocalDate dataNascimento) {
 		this.email = email;
 		this.nome = nome;
 		this.password = password;
 		this.morada = morada;
-		this.dataNascimento = (GregorianCalendar) dataNascimento.clone();
+		this.dataNascimento = dataNascimento;
 	}
 
 	/**
@@ -34,7 +35,7 @@ public abstract class Utilizador
 		nome = "n/a";
 		password = "n/a";
 		morada = "n/a";
-		dataNascimento = new GregorianCalendar();
+		dataNascimento = LocalDate.now();
 	}
 
 	/**
@@ -79,8 +80,8 @@ public abstract class Utilizador
     /**
      * Obter a data de nascimento do utilizador
      */
-	public GregorianCalendar getDataNascimento() {
-		return (GregorianCalendar) dataNascimento.clone();
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
 	}
 
 	/**
@@ -119,8 +120,8 @@ public abstract class Utilizador
      * Define a data de nascimento do utilizador
      * @param dataNascimento
      */
-	public void setDataNascimento(GregorianCalendar dataNascimento) {
-		this.dataNascimento = (GregorianCalendar) dataNascimento.clone();
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	/**

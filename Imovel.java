@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public abstract class Imovel implements Serializable {
     private String id, rua, estado;
-    private precoMinimo, precoPedido;
+    private double precoMinimo, precoPedido;
     private List<Consulta> consultas;
 
     /**
@@ -163,7 +163,7 @@ public abstract class Imovel implements Serializable {
      * @param consulta
      */
     public void addConsulta(Consulta c) {
-        consultas.add(c.clone());
+        consultas.add(c);
     }
 
     /**

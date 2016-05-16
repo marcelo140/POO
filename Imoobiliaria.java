@@ -1,31 +1,30 @@
 import java.util.*;
+import java.io.*;
+import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.io.Serializable;
 
 /**
  * Classe que definie a imobiliaria 
  */
-public class Imoobiliaria 
+public class Imoobiliaria implements Serializable
 {
-	// Utilizador logado
 	private Utilizador utilizador;
-	// Lista de utilizadores registados na aplicação
 	private Map<String, Utilizador> utilizadores; //Email -> Utilizador
-	private Map<Imovel, Vendedor> anuncios;
-	private Map<String, Imovel> imoveis; //IdImovel -> Imovel
+	private Map<String, Imovel> anuncios; //IdImovel -> Imovel
 
 	/**
 	 * Construtor por parametros
 	 * @param utilizador
 	 * @param utilizadores
 	 * @param anuncios
-	 * @param imoveis
 	 */
 	public Imoobiliaria(Utilizador utilizador, Map<String, Utilizador> utilizadores, 
-						Map<Imovel, Vendedor> anuncios, Map<String, Imovel> imoveis) {
+						Map<String, Imovel> anuncios) {
 
 		setUtilizador(utilizador);
 		setUtilizadores(utilizadores);
 		setAnuncios(anuncios);
-		setImoveis(imoveis);
 	}
 
 	/**
@@ -34,8 +33,7 @@ public class Imoobiliaria
 	public Imoobiliaria() {
 		utilizador = null;
 		utilizadores = new TreeMap<String, Utilizador>();
-		anuncios = new TreeMap<Imovel, Vendedor>();
-		imoveis = new TreeMap<String, Imovel>();
+		anuncios = new TreeMap<String, Imovel>();
 	}
 
 	/**
@@ -46,7 +44,29 @@ public class Imoobiliaria
 		utilizador = i.getUtilizador();	
 		utilizadores = i.getUtilizadores();
 		anuncios = i.getAnuncios();
-		imoveis = i.getImoveis();
+	}
+	
+	/**
+ 	 * Obtem o tipo de utilizador:
+ 	 * 0 - não existe
+ 	 * 1 - comprador
+ 	 * 2 - vendedor
+ 	 */
+	public int getTipoUtilizador() {
+		if (utilizador instanceof Comprador)
+			return 1;
+
+		if (utilizador instanceof Vendedor)
+			return 2;
+
+		return 0;
+	}	
+
+	private String getUserEmail() {
+		if (utilizador != null)
+			return utilizador.getEmail();		
+
+		return "n/a";
 	}
 
 	/**
@@ -54,17 +74,11 @@ public class Imoobiliaria
  	 * @return Utilizador
  	 */
 	private Utilizador getUtilizador() {
-		Vendedor v;
-		Comprador c;
-
-		if (utilizador instanceof Vendedor) {
-			v = (Vendedor) utilizador;
-			return v.clone();
-		}
-
-		if (utilizador instanceof Comprador) {
-			c = (Comprador) utilizador;
-			return c.clone();
+		switch (getTipoUtilizador()) {
+			case 1: Comprador c = (Comprador) utilizador;
+                    return c.clone();
+			case 2: Vendedor v = (Vendedor) utilizador;
+					return v.clone();			
 		}
 
 		return null;
@@ -74,21 +88,24 @@ public class Imoobiliaria
 	 * Obtem utilizadores da imobiliaria
 	 */
 	private Map<String, Utilizador> getUtilizadores() {
-		return new TreeMap<String, Utilizador>(utilizadores);
+		utilizadores = new TreeMap<String, Utilizador>();
+
+		for(Map.Entry<String, Utilizador> entry: this.utilizadores.entrySet())
+			utilizadores.put(entry.getKey(), entry.getValue().clone());
+
+		return utilizadores;
 	}
 
 	/**
 	 * Obtem anúncios da imobiliaria
 	 */
-	private Map<Imovel, Vendedor> getAnuncios() {
-		return new TreeMap<Imovel, Vendedor>(anuncios);
-	}
+	private Map<String, Imovel> getAnuncios() {
+		anuncios = new TreeMap<String, Imovel>();
 
-	/**
-	 * Obtem todos os imóveis da imobiliaria
-	 */
-	private Map<String, Imovel> getImoveis() {
-		return new TreeMap<String, Imovel>(imoveis);
+		for(Map.Entry<String, Imovel> entry: this.anuncios.entrySet())
+			anuncios.put(entry.getKey(), entry.getValue().clone());
+
+		return anuncios;
 	}
 
 	/**
@@ -109,25 +126,22 @@ public class Imoobiliaria
 	 * @param utilizadores
 	 */
 	private void setUtilizadores(Map<String, Utilizador> utilizadores) {
-		this.utilizadores = new TreeMap<String, Utilizador> (utilizadores);
+		this.utilizadores = new TreeMap<String, Utilizador>();
+
+		for(Map.Entry<String, Utilizador> entry: utilizadores.entrySet())
+			this.utilizadores.put(entry.getKey(), entry.getValue().clone());
 	}
 
 	/**
 	 * Define os Anúncios
 	 * @param anuncios
 	 */
-	private void setAnuncios(Map<Imovel, Vendedor> anuncios) {
-		this.anuncios = new TreeMap<Imovel, Vendedor> (anuncios);
+	private void setAnuncios(Map<String, Imovel> anuncios) {
+		this.anuncios = new TreeMap<String, Imovel>();
+
+		for(Map.Entry<String, Imovel> entry: anuncios.entrySet())
+			this.anuncios.put(entry.getKey(), entry.getValue().clone());
 	}
-
-	/**
-	 * Define os Imóveis
-	 * @param imoveis
-	 */
-	private void setImoveis(Map<String, Imovel> imoveis) {
-		this.imoveis = new TreeMap<String, Imovel> (imoveis);
-	}	
-
 
 	/**
 	 * Verifica se um dado Objeto é igual a esta Imoobiliaria
@@ -180,11 +194,11 @@ public class Imoobiliaria
 		if (!u.getPassword().equals(password))
 			throw new SemAutorizacaoException("Password não corresponde");
 
-		this.utilizador = this.utilizadores.get(email);
+		utilizador = utilizadores.get(email);
 	}
 
 	public void fechaSessao() {
-		this.utilizador = null;
+		utilizador = null;
 	}
 
 /************************** Vendedores ******************************/
@@ -201,14 +215,13 @@ public class Imoobiliaria
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("Utilizador não está inscrito como Vendedor");
 
-		if (anuncios.containsKey(im))
+		if (anuncios.containsKey(im.getID()))
 			throw new ImovelExisteException("Imóvel já existe.");
 
 		v = (Vendedor) utilizador;
 		
 		v.addImovelEmVenda(im);	
-		imoveis.put(im.hashCode() + "", im);
-		anuncios.put(im, v);
+		anuncios.put(im.getID(), im);
 	}
 
 	/**
@@ -253,13 +266,14 @@ public class Imoobiliaria
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("Utilizador não está ligado como Vendedor");
 
-		if (!imoveis.containsKey(idImovel))
+		if (!anuncios.containsKey(idImovel))
 			throw new ImovelInexistenteException("Imóvel inexistente");
 
 		if (!(estado.equals("em venda") || estado.equals("reservado") || estado.equals("vendido")))
 			throw new EstadoInvalidoException("Estado deve ser 'em venda', 'reservado' ou 'vendido'");
 
-		 imoveis.get(idImovel).setEstado(estado);
+		
+		 anuncios.get(idImovel).setEstado(estado);
 	}
 
 	/**
@@ -267,23 +281,22 @@ public class Imoobiliaria
 	 * @param n
 	 * @return Conjunto com os n imóveis
 	 */
-/*
+
 	public Set<String> getTopImoveis(int n) throws SemAutorizacaoException {
-		ArrayList<String> topImoveis;
+		ArrayList<Imovel> topImoveis;
 		Vendedor v;
 
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("Utilizador não está ligado como vendedor");	
 
 		v = (Vendedor) utilizador;
-		topImoveis = (ArrayList<String>) v.getImoveisEmVenda();
+		topImoveis = (ArrayList<Imovel>) v.getImoveisEmVenda();
 	
-		topImoveis.sort((s1, s2) -> imoveis.get(s2).getConsultas().size() - 
-                                    imoveis.get(s1).getConsultas().size());
+		topImoveis.sort((s1, s2) -> s2.getConsultas().size() - s1.getConsultas().size());
 
-		return new TreeSet<String>(topImoveis.subList(0,n));
+		return new TreeSet<String>(topImoveis.subList(0,n-1).stream().map(Imovel::getID).collect(Collectors.toSet()));
 	}
-*/
+
 	
 /************************** Todos os Utilizadores ******************************/
 
@@ -293,15 +306,19 @@ public class Imoobiliaria
 	 * @param preco
 	 * @return Lista de Imóveis
 	 */
-	public List<Imovel> getImovel(String classe, int preco) {
-		List<Imovel> l = new ArrayList<Imovel>();
+	public List<Imovel> getImovel(String classe, double preco) {
+		List<Imovel> lista = new ArrayList<Imovel>();
 
-		for (Imovel i: imoveis.values()) {
-			if (i.getClass().getSimpleName().equals(classe) && i.getPrecoPedido() <= preco)
-				l.add(i);
+		for (Imovel im: anuncios.values()) {
+			if (im.getClass().getSimpleName().equals(classe) && im.getPrecoPedido() <= preco) {
+				lista.add(im);
+				im.addConsulta(new Consulta(LocalDateTime.now(), getUserEmail()));
+			}
 		}
 
-		return l;
+			
+
+		return lista;
 	}
 
 	/**
@@ -309,12 +326,13 @@ public class Imoobiliaria
 	 * @param preco
 	 * @return lista de imóveis habitáveis
 	 */
-	public List<Habitavel> getHabitaveis(int preco) {
+	public List<Habitavel> getHabitaveis(double preco) {
 		ArrayList<Habitavel> imoveisHabitaveis = new ArrayList<>();
 
-		for (Imovel i : this.imoveis.values()) {
-			if (i instanceof Habitavel) {
-				Habitavel h = (Habitavel) i;
+		for (Imovel im: anuncios.values()) {
+			if (im instanceof Habitavel) {
+				im.addConsulta(new Consulta(LocalDateTime.now(), getUserEmail()));
+				Habitavel h = (Habitavel) im;
 				imoveisHabitaveis.add(h);
 			}
 		}
@@ -327,7 +345,20 @@ public class Imoobiliaria
 	 * @return Mapeamento imovel, vendedor
 	 */
 	public Map<Imovel, Vendedor> getMapeamentoImoveis() {
-		return new TreeMap<Imovel, Vendedor> (anuncios);
+		TreeMap<Imovel, Vendedor> map = new TreeMap<>();
+
+		for(Utilizador u: utilizadores.values()) {
+			if (u instanceof Vendedor) {
+				Vendedor v = (Vendedor) u;
+
+				for(Imovel im: v.getImoveisEmVenda()){
+					im.addConsulta(new Consulta(LocalDateTime.now(), getUserEmail()));
+					map.put(im, v);
+				}
+			}
+		}
+
+		return map;
 	}
 
 /************************** Compradores ******************************/
@@ -344,11 +375,11 @@ public class Imoobiliaria
 		if (!(utilizador instanceof Comprador))
 			throw new SemAutorizacaoException("Utilizador não está ligado como Comprador");
 
-		if (!(imoveis.containsKey(idImovel)))
+		if (!(anuncios.containsKey(idImovel)))
 			throw new ImovelInexistenteException("Imovel não existe.");
 
 		Comprador c = (Comprador) utilizador;
-		Imovel i = imoveis.get(idImovel);
+		Imovel i = anuncios.get(idImovel);
 
 		c.addFavoritos(i);		
 	}
@@ -368,4 +399,27 @@ public class Imoobiliaria
 		return (TreeSet<Imovel>) c.getFavoritos();
 	}
 
+	/**
+ 	 * Gravar estado da aplicação
+ 	 * @param ficheiro
+ 	 */
+	public void gravar() throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("imoobiliaria.data"));
+		oos.writeObject(this);
+
+		oos.flush();
+		oos.close();
+	}
+
+	/**
+ 	 * Iniciar aplicação com os dados guardados
+ 	 * @return Imoobiliaria
+ 	 */
+	public static Imoobiliaria initApp() throws IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream("imoobiliaria.data"));
+		Imoobiliaria im = (Imoobiliaria) ois.readObject();
+
+		ois.close();
+		return im;
+	}
 }
