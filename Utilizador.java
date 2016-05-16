@@ -30,7 +30,11 @@ public abstract class Utilizador
      * Construtor padrão
      */
 	public Utilizador() {
-		this("n/a", "n/a", "n/a", "n/a", null);
+		email = "n/a";
+		nome = "n/a";
+		password = "n/a";
+		morada = "n/a";
+		dataNascimento = new GregorianCalendar();
 	}
 
 	/**
