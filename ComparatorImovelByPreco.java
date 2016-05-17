@@ -7,6 +7,6 @@ import java.io.Serializable;
 
 public class ComparatorImovelByPreco implements Comparator<Imovel>, Serializable {
 	public int compare(Imovel im1, Imovel im2) {
-		return (int) (im1.getPrecoPedido() - im2.getPrecoPedido());
+		return im1.getPrecoPedido() - im2.getPrecoPedido();
 	}
 }
