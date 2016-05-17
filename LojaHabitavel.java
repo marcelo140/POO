@@ -6,34 +6,51 @@
 import java.util.ArrayList;
 
 public class LojaHabitavel extends Loja implements Habitavel {
-    private Apartamento parteHabitacional;
+	private String tipoApartamento;
+	private double areaApartamento;
+	private int quartos, wcApartamento, andar;
+	private boolean garagem;
 
     /**
      * Construtor padrão
      */ 
     public LojaHabitavel(){
-       super();
-       this.parteHabitacional = new Apartamento();
+		super();
+		tipoApartamento = "n/a";
+		areaApartamento = 0.0;
+		quartos = wcApartamento = andar = 0;
+		garagem = false;
     }
 
     /**
      * Construtor por parâmatros
+     * @param id
      * @param rua
      * @param estado
      * @param precoMinimo
      * @param precoPedido
-     * @param parteHab
+     * @param consultas
      * @param tipo
      * @param area
      * @param porta
      * @param wc
+     * @param tipoApartamento
+     * @param areaApartamento
+     * @param quartos
+     * @param wcApartamento
+     * @param andar
      */
-    public LojaHabitavel(String rua, String estado, double precoMinimo, double precoPedido,
-                ArrayList<Consulta> consultas, Apartamento parteHab, String tipo, 
-                double area, int porta, boolean wc) {
+    public LojaHabitavel(String id, String rua, String estado, int precoMinimo, 
+                int precoPedido, ArrayList<Consulta> consultas, String tipo, double area, 
+                boolean wc, int porta, String tipoApartamento, double areaApartamento, 
+                int quartos, int wcApartamento, int andar) {
 
-		super(rua, estado, precoMinimo, precoPedido, consultas, tipo, area, porta, wc);
-		setParteHabitacional(parteHab);
+		super(id, rua, estado, precoMinimo, precoPedido, consultas, tipo, area, porta, wc);
+		this.tipoApartamento = tipoApartamento;
+		this.areaApartamento = areaApartamento;
+		this.quartos = quartos;
+		this.wcApartamento = wcApartamento;
+		this.andar = andar;
 	}
 
 	/**
@@ -41,19 +58,91 @@ public class LojaHabitavel extends Loja implements Habitavel {
 	 */
 	public LojaHabitavel(LojaHabitavel t){
 		super(t);
-		parteHabitacional = t.getParteHabitacional();
+		tipoApartamento = t.getTipoApartamento();
+		areaApartamento = t.getAreaApartamento();
+		quartos = t.getQuartos();
+		wcApartamento = t.getWcApartamento();
+		andar = t.getAndar();
 	}
 
 	/**
- 	 * Obter parte habitacional da loja
- 	 * @return Apartamento
+ 	 * Obter tipo de apartamento
+ 	 * @return Tipo
  	 */
-	private Apartamento getParteHabitacional() {
-		return parteHabitacional.clone();
+	public String getTipoApartamento() {
+		return tipoApartamento;
 	}
 
-	private void setParteHabitacional(Apartamento parteHab) {
-		parteHabitacional = parteHab.clone();
+	/**
+ 	 * Obter área do apartamento
+ 	 * @return área
+ 	 */
+	public double getAreaApartamento() {
+		return areaApartamento;
+	}
+
+	/**
+ 	 * Obter número de quartos
+ 	 * @return quartos
+ 	 */
+	public int getQuartos() {
+		return quartos;
+	}
+
+	/**
+ 	 * Obter número de wc no apartamento
+ 	 * @return número wc
+ 	 */
+	public int getWcApartamento() {
+		return wcApartamento;
+	}
+
+	/**
+  	 * Obter andar da parte habitável
+  	 * @return andar
+  	 */
+	public int getAndar() {
+		return andar;
+	}
+
+	/**
+ 	 * Define tipo de apartamento
+ 	 * @param tipo
+ 	 */
+	public void setTipoApartamento(String tipo) {
+		this.tipoApartamento = tipo;
+	}
+
+	/**
+ 	 * Define área da parte habitacional
+ 	 * @param area
+ 	 */
+	public void setAreaApartamento(double area) {
+		this.areaApartamento = area;
+	}
+
+	/**
+ 	 * Define número de quartos da parte habitacional
+ 	 * @param quartos
+ 	 */
+	public void setQuartos(int quartos) {
+		this.quartos = quartos;
+	}
+
+	/**
+ 	 * Define número de wc na parte habitacional
+ 	 * @param wc
+ 	 */
+	public void setWcApartamento(int wcApartamento) {
+		this.wcApartamento = wcApartamento;
+	}
+
+	/**
+ 	 * Define andar da parte habitável
+ 	 * @param andar
+ 	 */
+	public void setAndar(int andar) {
+		this.andar = andar;
 	}
 
 	public boolean equals(Object o) {
@@ -64,8 +153,12 @@ public class LojaHabitavel extends Loja implements Habitavel {
 			return false;
 
 		LojaHabitavel l = (LojaHabitavel) o;
-		return super.equals(l) && 
-			   parteHabitacional.equals(l.getParteHabitacional());
+		return super.equals(l) &&
+			   tipoApartamento.equals(l.getTipoApartamento()) &&  
+			   areaApartamento == l.getAreaApartamento() &&
+			   quartos == l.getQuartos() &&
+			   wcApartamento == l.getWcApartamento() &&
+			   andar == l.getAndar();
 	}
 
 	/**
@@ -76,7 +169,12 @@ public class LojaHabitavel extends Loja implements Habitavel {
 		long aux;
 	
 		hash = 31*hash + super.hashCode();	
-		hash = 31*hash + this.parteHabitacional.hashCode();
+		hash = 31*hash + tipoApartamento.hashCode();
+		aux = Double.doubleToLongBits(areaApartamento);
+		hash = 31*hash + (int)(aux^(aux >>> 32));
+		hash = 31*hash + quartos;
+		hash = 31*hash + wcApartamento;
+		hash = 31*hash + andar;
 		
 		return hash;	
 	}
@@ -89,8 +187,12 @@ public class LojaHabitavel extends Loja implements Habitavel {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(super.toString());
-		sb.append(parteHabitacional.toString());
-		
+		sb.append("Tipo apartamento: ").append(tipoApartamento).append("\n");
+		sb.append("Área do apartamento: ").append(areaApartamento).append(" m²\n");
+		sb.append("Número de quartos: ").append(quartos).append("\n");
+		sb.append("Número de wc no apartamento: ").append(wcApartamento).append("\n");
+		sb.append("Andar: ").append(andar).append("\n");
+	
 		return sb.toString();
 	}
 
