@@ -15,7 +15,7 @@ public class Imoobiliaria implements Serializable
 
 	private Utilizador utilizador;
 	private Map<String, Utilizador> utilizadores; //Email -> Utilizador
-	private Map<String, Imovel> anuncios; //IdImovel -> Imovel
+	private Map<String, Imovel> anuncios; 
 
 	/**
 	 * Construtor por parametros
@@ -214,7 +214,6 @@ public class Imoobiliaria implements Serializable
 	 * @throws SemAutorizacaoException Caso o utilizador não tenha autorização
 	 */
 	public void registaImovel(Imovel im) throws ImovelExisteException, SemAutorizacaoException {
-		Vendedor v;
 
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("Utilizador não está inscrito como Vendedor");
@@ -222,10 +221,12 @@ public class Imoobiliaria implements Serializable
 		if (anuncios.containsValue(im))
 			throw new ImovelExisteException("Imóvel já existe.");
 
-		v = (Vendedor) utilizador;
-		
+		Vendedor v = (Vendedor) utilizador;
+		String id = Integer.toString(getNumImoveis());
+		im.setID(id);	
+	
 		v.addImovelEmVenda(im);	
-		anuncios.put(Integer.toString(getNumImoveis()), im);
+		anuncios.put(id, im);
 
 		incNumImoveis();
 	}
@@ -245,7 +246,7 @@ public class Imoobiliaria implements Serializable
 			throw new SemAutorizacaoException("O utilizador não está ligado como Vendedor");
 
 		v = (Vendedor) utilizador;
-		imoveis = (ArrayList<Imovel>) v.getImoveisEmVenda();
+		imoveis = new ArrayList<Imovel> (v.getImoveisEmVenda());
  
 		for (Imovel i: imoveis){
 			consultas.addAll(i.getConsultas());	
@@ -289,18 +290,18 @@ public class Imoobiliaria implements Serializable
 	 */
 
 	public Set<String> getTopImoveis(int n) throws SemAutorizacaoException {
-		ArrayList<Imovel> topImoveis;
-		Vendedor v;
 
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("Utilizador não está ligado como vendedor");	
 
-		v = (Vendedor) utilizador;
-		topImoveis = (ArrayList<Imovel>) v.getImoveisEmVenda();
-	
-		topImoveis.sort((s1, s2) -> s2.getConsultas().size() - s1.getConsultas().size());
+		Vendedor v = (Vendedor) utilizador;
+		TreeSet<String> topImoveis = new TreeSet<>();
 
-		return new TreeSet<String>(topImoveis.subList(0,n-1).stream().map(Imovel::getID).collect(Collectors.toSet()));
+		for(Imovel im: anuncios.values())
+			if (im.getConsultas().size() > n)
+				topImoveis.add(im.getID());
+
+		return topImoveis;
 	}
 
 	
@@ -312,7 +313,7 @@ public class Imoobiliaria implements Serializable
 	 * @param preco
 	 * @return Lista de Imóveis
 	 */
-	public List<Imovel> getImovel(String classe, double preco) {
+	public List<Imovel> getImovel(String classe, int preco) {
 		List<Imovel> lista = new ArrayList<Imovel>();
 
 		for (Imovel im: anuncios.values()) {
@@ -332,7 +333,7 @@ public class Imoobiliaria implements Serializable
 	 * @param preco
 	 * @return lista de imóveis habitáveis
 	 */
-	public List<Habitavel> getHabitaveis(double preco) {
+	public List<Habitavel> getHabitaveis(int preco) {
 		ArrayList<Habitavel> imoveisHabitaveis = new ArrayList<>();
 
 		for (Imovel im: anuncios.values()) {
