@@ -208,14 +208,14 @@ public class ImoobiliariaApp {
 	private static void imoveisPorTipo() {
 		Scanner input = new Scanner(System.in);
 		String classe;
-		double precoMaximo;
+		int precoMaximo;
 		List<Imovel> lista;
 
 		System.out.print("Tipo de imóvel: ");
 		classe = input.nextLine();
 		input.close();
 
-		precoMaximo = lerDouble("Preço máximo: ");
+		precoMaximo = lerInt("Preço máximo: ");
 
 		lista = empresa.getImovel(classe, precoMaximo);
 		for(Imovel im: lista)
@@ -243,10 +243,10 @@ public class ImoobiliariaApp {
 	}
 
 	private static void imoveisHabitaveis() {
-		double precoMaximo;
+		int precoMaximo;
 		List<Habitavel> lista;
 
-		precoMaximo = lerDouble("Preço máximo: ");
+		precoMaximo = lerInt("Preço máximo: ");
 
 		lista = empresa.getHabitaveis(precoMaximo);
 		for(Habitavel h: lista)
@@ -341,7 +341,7 @@ public class ImoobiliariaApp {
 			case 1: im = lerMoradia(); break;
 			case 2: im = lerApartamento(); break;
 			case 3: im = lerLoja(); break;
-			case 4: break;
+			case 4: im = lerLojaHabitavel(); break;
 			case 5: im = lerTerreno(); break;
 		}
 
@@ -355,128 +355,192 @@ public class ImoobiliariaApp {
 
 	private static Imovel lerMoradia() {
 		Scanner input = new Scanner(System.in);
-		ArrayList<Consulta> consultas = new ArrayList<>();
-		String rua, estado, tipo;
-		double precoMinimo, precoPedido, areaImplantacao, areaCoberta, areaTerreno;
-		int quartos, wc, porta;
+		Moradia im = new Moradia();
 
 		System.out.print("Rua: ");
-		rua = input.nextLine();
-
-		porta = lerInt("Porta: ");
+		String rua = input.nextLine();
 
 		System.out.print("Estado: ");
-		estado = input.nextLine();
+		String estado = input.nextLine();
 
 		System.out.print("Tipo: ");
-		tipo = input.nextLine();
+		String tipo = input.nextLine();
 
-		quartos = lerInt("Número de quartos: ");
-		wc = lerInt("Número de casas de banho: ");
-		areaImplantacao = lerDouble("Área de implantação: ");
-		areaCoberta = lerDouble("Área coberta: ");
-		areaTerreno = lerDouble("Área do terreno: ");
-		precoMinimo = lerDouble("Preço mínimo: ");
-		precoPedido = lerDouble("Preço pedido: ");
+		int porta = lerInt("Porta: ");
+		int quartos = lerInt("Número de quartos: ");
+		int wc = lerInt("Número de casas de banho: ");
+		double areaImplantacao = lerDouble("Área de implantação: ");
+		double areaCoberta = lerDouble("Área coberta: ");
+		double areaTerreno = lerDouble("Área do terreno: ");
+		int precoMinimo = lerInt("Preço mínimo: ");
+		int precoPedido = lerInt("Preço pedido: ");
 		
+		im.setRua(rua);
+		im.setPorta(porta);
+		im.setEstado(estado);
+		im.setTipo(tipo);
+		im.setQuartos(quartos);
+		im.setWC(wc);
+		im.setAreaImplantacao(areaImplantacao);
+		im.setAreaCoberta(areaCoberta);
+		im.setAreaTerreno(areaTerreno);
+		im.setPrecoMinimo(precoMinimo);
+		im.setPrecoPedido(precoPedido);
+
 		input.close();
-
-		return new Moradia(rua, estado, precoMinimo, precoPedido, consultas, tipo,
-                           areaImplantacao, areaCoberta, areaTerreno, quartos, wc, porta);
-
+		return im;
 	}
 
 	private static Imovel lerApartamento() {
 		Scanner input = new Scanner(System.in);
-		ArrayList<Consulta> consultas = new ArrayList<>();
-		String rua, estado, tipo;
-		double precoMinimo, precoPedido, area;
-		int quartos, wc, porta, andar;
-		boolean garagem;
+		Apartamento im = new Apartamento();
 
 		System.out.print("Rua: ");
-		rua = input.nextLine();
+		String rua = input.nextLine();
 
-		porta = lerInt("Porta: ");
-		andar = lerInt("Andar: ");
+		int porta = lerInt("Porta: ");
+		int andar = lerInt("Andar: ");
 
 		System.out.print("Estado: ");
-		estado = input.nextLine();
+		String estado = input.nextLine();
 
 		System.out.print("Tipo: ");
-		tipo = input.nextLine();
+		String tipo = input.nextLine();
 
-		area = lerDouble("Área: ");
-		quartos = lerInt("Número de quartos: ");
-		wc = lerInt("Número de casas de banho: ");
-		garagem = lerBoolean("Garagem (s/n): ");
-		precoMinimo = lerDouble("Preço mínimo: ");
-		precoPedido = lerDouble("Preço pedido: ");
-		
+		double area = lerDouble("Área: ");
+		int quartos = lerInt("Número de quartos: ");
+		int wc = lerInt("Número de casas de banho: ");
+		boolean garagem = lerBoolean("Garagem (s/n): ");
+		int precoMinimo = lerInt("Preço mínimo: ");
+		int precoPedido = lerInt("Preço pedido: ");
+	
+		im.setRua(rua);
+		im.setPorta(porta);
+		im.setAndar(andar);
+		im.setEstado(estado);
+		im.setTipo(tipo);
+		im.setArea(area);
+		im.setQuartos(quartos);
+		im.setWC(wc);
+		im.setGaragem(garagem);
+		im.setPrecoMinimo(precoMinimo);
+		im.setPrecoPedido(precoPedido);
+	
 		input.close();
-
-		return new Apartamento(rua, estado, precoMinimo, precoPedido, consultas, tipo,
-                               area, quartos, wc, andar, porta, garagem);
+		return im;
 
 	}
 
 	private static Imovel lerLoja() {
 		Scanner input = new Scanner(System.in);
-		ArrayList<Consulta> consultas = new ArrayList<>();
-		String rua, estado, tipo;
-		int porta;
-		double precoMinimo, precoPedido, area;
-		boolean wc;
+		Loja im = new Loja();
 
 		System.out.print("Rua: ");
-		rua = input.nextLine();
+		String rua = input.nextLine();
 
-		porta = lerInt("Porta: ");
+		int porta = lerInt("Porta: ");
 
 		System.out.print("Estado: ");
-		estado = input.nextLine();
+		String estado = input.nextLine();
 
 		System.out.print("Tipo: ");
-		tipo = input.nextLine();
+		String tipo = input.nextLine();
 
-		area = lerDouble("Área: ");
-		wc = lerBoolean("Casa de banho (s/n): ");
-		precoMinimo = lerDouble("Preço mínimo: ");
-		precoPedido = lerDouble("Preço pedido: ");
+		double area = lerDouble("Área: ");
+		boolean wc = lerBoolean("Casa de banho (s/n): ");
+		int precoMinimo = lerInt("Preço mínimo: ");
+		int precoPedido = lerInt("Preço pedido: ");
 		
 		input.close();
 
-		return new Loja(rua, estado, precoMinimo, precoPedido, consultas, tipo, area,
-                        porta, wc);
+		im.setRua(rua);
+		im.setPorta(porta);
+		im.setEstado(estado);
+		im.setTipo(tipo);
+		im.setArea(area);
+		im.setWC(wc);
+		im.setPrecoMinimo(precoMinimo);
+		im.setPrecoPedido(precoPedido);
+
+		return im;
+	}
+
+	private static Imovel lerLojaHabitavel() {
+		Scanner input = new Scanner(System.in);
+		LojaHabitavel im = new LojaHabitavel();
+
+		System.out.print("Rua: ");
+		String rua = input.nextLine();
+
+		int porta = lerInt("Porta: ");
+
+		System.out.print("Estado: ");
+		String estado = input.nextLine();
+
+		System.out.print("Tipo: ");
+		String tipo = input.nextLine();
+
+		double area = lerDouble("Área: ");
+		boolean wc = lerBoolean("Casa de banho (s/n): ");
+
+		System.out.print("Tipo de apartamento: ");
+		String tipoApartamento = input.nextLine();
+
+		double areaApartamento = lerDouble("Área do apartamento (m²): ");
+		int quartos = lerInt("Número de quartos: ");
+		int wcApartamento = lerInt("Número de wc no apartamento: ");
+		int andar = lerInt("Andar da parte habitável: ");		
+		int precoMinimo = lerInt("Preço mínimo: ");
+		int precoPedido = lerInt("Preço pedido: ");
+	
+		im.setRua(rua);
+		im.setEstado(estado);
+		im.setTipo(tipo);
+		im.setArea(area);
+		im.setWC(wc);
+		im.setTipoApartamento(tipoApartamento);
+		im.setAreaApartamento(areaApartamento);
+		im.setQuartos(quartos);
+		im.setWcApartamento(wcApartamento);
+		im.setAndar(andar);
+		im.setPrecoMinimo(precoMinimo);
+		im.setPrecoPedido(precoPedido);
+	
+		input.close();
+		return im;
 	}
 
 	private static Imovel lerTerreno() {
 		Scanner input = new Scanner(System.in);
-		ArrayList<Consulta> consultas = new ArrayList<>();
-		String rua, estado, tipo;
-		double diametroCanalizacao, potenciaSuportada, precoMinimo, precoPedido, area;
-		boolean acessoEsgotos;
+		Terreno im = new Terreno();
 
 		System.out.print("Rua: ");
-		rua = input.nextLine();
+		String rua = input.nextLine();
 
 		System.out.print("Estado: ");
-		estado = input.nextLine();
+		String estado = input.nextLine();
 
 		System.out.print("Tipo: ");
-		tipo = input.nextLine();
+		String tipo = input.nextLine();
 
-		area = lerDouble("Área: ");
-		diametroCanalizacao = lerDouble("Diâmetro da canalização (mm): ");
-		potenciaSuportada = lerDouble("Potência potenciaSuportada (KWh): ");
-		acessoEsgotos = lerBoolean("Acesso a esgotos (s/n): ");
-		precoMinimo = lerDouble("Preço mínimo: ");
-		precoPedido = lerDouble("Preço pedido: ");
+		double area = lerDouble("Área: ");
+		double diametroCanalizacao = lerDouble("Diâmetro da canalização (mm): ");
+		double potenciaSuportada = lerDouble("Potência potenciaSuportada (KWh): ");
+		boolean acessoEsgotos = lerBoolean("Acesso a esgotos (s/n): ");
+		int precoMinimo = lerInt("Preço mínimo: ");
+		int precoPedido = lerInt("Preço pedido: ");
 
+		im.setRua(rua);
+		im.setEstado(estado);
+		im.setTipo(tipo);
+		im.setArea(area);
+		im.setDiametroCanalizacao(diametroCanalizacao);
+		im.setPotenciaSuportada(potenciaSuportada);
+		im.setPrecoMinimo(precoMinimo);
+		im.setPrecoPedido(precoPedido);
+	
 		input.close();
-
-		return new Terreno(rua, estado, precoMinimo, precoPedido, consultas, tipo, area,
-                           diametroCanalizacao, potenciaSuportada, acessoEsgotos);
+		return im;
 	}
 
 	private static LocalDate lerData(String msg) {
