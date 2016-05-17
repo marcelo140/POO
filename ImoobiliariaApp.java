@@ -329,7 +329,7 @@ public class ImoobiliariaApp {
 	}
 
 	private static void registarImovel() {
-		Imovel im;
+		Imovel im = null;
 
 		menuImovel.executa();
 		if (menuImovel.getOpcao() == 0) {
@@ -344,17 +344,21 @@ public class ImoobiliariaApp {
 			case 4: break;
 			case 5: im = lerTerreno(); break;
 		}
+
+		try {
+			empresa.registaImovel(im);
+		}
+		catch(ImovelExisteException | SemAutorizacaoException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	private static Imovel lerMoradia() {
 		Scanner input = new Scanner(System.in);
 		ArrayList<Consulta> consultas = new ArrayList<>();
-		String id, rua, estado, tipo;
+		String rua, estado, tipo;
 		double precoMinimo, precoPedido, areaImplantacao, areaCoberta, areaTerreno;
 		int quartos, wc, porta;
-
-		System.out.print("ID: ");
-		id = input.nextLine();
 
 		System.out.print("Rua: ");
 		rua = input.nextLine();
@@ -377,7 +381,7 @@ public class ImoobiliariaApp {
 		
 		input.close();
 
-		return new Moradia(id, rua, estado, precoMinimo, precoPedido, consultas, tipo,
+		return new Moradia(rua, estado, precoMinimo, precoPedido, consultas, tipo,
                            areaImplantacao, areaCoberta, areaTerreno, quartos, wc, porta);
 
 	}
@@ -385,13 +389,10 @@ public class ImoobiliariaApp {
 	private static Imovel lerApartamento() {
 		Scanner input = new Scanner(System.in);
 		ArrayList<Consulta> consultas = new ArrayList<>();
-		String id, rua, estado, tipo;
+		String rua, estado, tipo;
 		double precoMinimo, precoPedido, area;
 		int quartos, wc, porta, andar;
 		boolean garagem;
-
-		System.out.print("ID: ");
-		id = input.nextLine();
 
 		System.out.print("Rua: ");
 		rua = input.nextLine();
@@ -414,7 +415,7 @@ public class ImoobiliariaApp {
 		
 		input.close();
 
-		return new Apartamento(id, rua, estado, precoMinimo, precoPedido, consultas, tipo,
+		return new Apartamento(rua, estado, precoMinimo, precoPedido, consultas, tipo,
                                area, quartos, wc, andar, porta, garagem);
 
 	}
@@ -422,13 +423,10 @@ public class ImoobiliariaApp {
 	private static Imovel lerLoja() {
 		Scanner input = new Scanner(System.in);
 		ArrayList<Consulta> consultas = new ArrayList<>();
-		String id, rua, estado, tipo;
+		String rua, estado, tipo;
 		int porta;
 		double precoMinimo, precoPedido, area;
 		boolean wc;
-
-		System.out.print("ID: ");
-		id = input.nextLine();
 
 		System.out.print("Rua: ");
 		rua = input.nextLine();
@@ -448,19 +446,16 @@ public class ImoobiliariaApp {
 		
 		input.close();
 
-		return new Loja(id, rua, estado, precoMinimo, precoPedido, consultas, tipo, area,
+		return new Loja(rua, estado, precoMinimo, precoPedido, consultas, tipo, area,
                         porta, wc);
 	}
 
 	private static Imovel lerTerreno() {
 		Scanner input = new Scanner(System.in);
 		ArrayList<Consulta> consultas = new ArrayList<>();
-		String id, rua, estado, tipo;
+		String rua, estado, tipo;
 		double diametroCanalizacao, potenciaSuportada, precoMinimo, precoPedido, area;
 		boolean acessoEsgotos;
-
-		System.out.print("ID: ");
-		id = input.nextLine();
 
 		System.out.print("Rua: ");
 		rua = input.nextLine();
@@ -480,7 +475,7 @@ public class ImoobiliariaApp {
 
 		input.close();
 
-		return new Terreno(id, rua, estado, precoMinimo, precoPedido, consultas, tipo, area,
+		return new Terreno(rua, estado, precoMinimo, precoPedido, consultas, tipo, area,
                            diametroCanalizacao, potenciaSuportada, acessoEsgotos);
 	}
 

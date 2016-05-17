@@ -9,6 +9,10 @@ import java.io.Serializable;
  */
 public class Imoobiliaria implements Serializable
 {
+	private static int numImoveis = 0;
+	private static int getNumImoveis() { return numImoveis; }
+	private static void incNumImoveis() { numImoveis++; }
+
 	private Utilizador utilizador;
 	private Map<String, Utilizador> utilizadores; //Email -> Utilizador
 	private Map<String, Imovel> anuncios; //IdImovel -> Imovel
@@ -215,13 +219,15 @@ public class Imoobiliaria implements Serializable
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("Utilizador não está inscrito como Vendedor");
 
-		if (anuncios.containsKey(im.getID()))
+		if (anuncios.containsValue(im))
 			throw new ImovelExisteException("Imóvel já existe.");
 
 		v = (Vendedor) utilizador;
 		
 		v.addImovelEmVenda(im);	
-		anuncios.put(im.getID(), im);
+		anuncios.put(Integer.toString(getNumImoveis()), im);
+
+		incNumImoveis();
 	}
 
 	/**
