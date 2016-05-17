@@ -13,7 +13,6 @@ public class Moradia extends Imovel implements Habitavel
 
 	/**
  	 * Construtor por parâmetro
- 	 * @param id
  	 * @param rua
  	 * @param estado
  	 * @param precoMinimo
@@ -26,12 +25,12 @@ public class Moradia extends Imovel implements Habitavel
  	 * @param wc
  	 * @param porta
  	 */
-	public Moradia(String id, String rua, String estado, double precoMinimo, 
+	public Moradia(String rua, String estado, double precoMinimo, 
                    double precoPedido, ArrayList<Consulta> consultas, String tipo, 
                    double areaImplantacao, double areaCoberta,
                    double areaTerreno, int quartos, int wc, int porta) {
 
-		super(id, rua, estado, precoMinimo, precoPedido, consultas);
+		super(rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.areaImplantacao = areaImplantacao;
 		this.areaCoberta = areaCoberta;

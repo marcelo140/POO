@@ -7,22 +7,20 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public abstract class Imovel implements Serializable {
-    private String id, rua, estado;
+    private String rua, estado;
     private double precoMinimo, precoPedido;
     private List<Consulta> consultas;
 
     /**
      * Construtor por parâmetros
-     * @param id
      * @param rua
      * @param estado
      * @param precoMinimo
      * @param precoPedido
      * @param consultas
      */ 
-    public Imovel(String id, String rua, String estado, double precoMinimo,
+    public Imovel(String rua, String estado, double precoMinimo,
                   double precoPedido, List<Consulta> consultas) {
-		this.id = id;
         this.rua = rua;
         this.estado = estado;
         this.precoMinimo = precoMinimo;
@@ -34,7 +32,6 @@ public abstract class Imovel implements Serializable {
      * Construtor padrão
      */ 
     public Imovel() {
-		id = "n/a";
 		rua = "n/a";
 		estado = "em venda";
 		precoMinimo = 0.0;
@@ -46,21 +43,12 @@ public abstract class Imovel implements Serializable {
      * Construtor por cópia
      */
     public Imovel(Imovel i) {
-		id = i.getID();
         rua = i.getRua();
         estado = i.getEstado();
         precoMinimo = i.getPrecoMinimo();
         precoPedido = i.getPrecoPedido();
         consultas = i.getConsultas();
     }
-
-	/**
- 	 * Obter id do imóvel
- 	 * @return
- 	 */
-	public String getID() {
-		return id;
-	}
 
     /**
      * Obter nome da rua
@@ -106,14 +94,6 @@ public abstract class Imovel implements Serializable {
 
 		return consultas;
     }
-
-	/**
- 	 * Define id do imóvel
- 	 * @param id
- 	 */
-	public void setID(String id) {
-		this.id = id;
-	}
 
     /**
      * Define nome da rua
@@ -180,7 +160,6 @@ public abstract class Imovel implements Serializable {
 		Imovel i = (Imovel) o;
 		return (precoMinimo == i.getPrecoMinimo() &&
 				precoPedido == i.getPrecoPedido() &&
-				id.equals(i.getID()) &&
 				rua.equals(i.getRua()) &&
 				estado.equals(i.getEstado()) &&
 				consultas.equals(i.getConsultas()));
@@ -194,7 +173,6 @@ public abstract class Imovel implements Serializable {
         int hash = 7;
         long aux;
 
-        hash = 31*hash + id.hashCode();
         hash = 31*hash + rua.hashCode();
         hash = 31*hash + estado.hashCode();
         aux = Double.doubleToLongBits(precoMinimo);
@@ -213,12 +191,9 @@ public abstract class Imovel implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-		sb.append("ID: ").append(id).append("\n");
         sb.append("Rua: ").append(rua).append("\n");
         sb.append("Estado: ").append(estado).append("\n");
-        sb.append("Preço mínimo: ").append(precoMinimo).append("\n");
         sb.append("Preço pedido: ").append(precoPedido).append("\n");
-        sb.append("Consultas: ").append(consultas.toString()).append("\n");
         
         return sb.toString();
     }
