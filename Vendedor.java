@@ -23,7 +23,7 @@ public class Vendedor extends Utilizador
 	 * @param imoveisVendidos
 	 */
 	public Vendedor(String email, String nome, String password, String morada, 
-                    LocalDate dataNascimento, List<Imovel> imoveisEmVenda, 
+                    LocalDate dataNascimento, List<Imovel> imoveisEmVenda,
                     List<Imovel> imoveisVendidos) {
 
 		super(email, nome, password, morada, dataNascimento);
@@ -75,7 +75,7 @@ public class Vendedor extends Utilizador
  	 * @param imoveisEmVenda
  	 */
 	private void setImoveisEmVenda(List<Imovel> imoveisEmVenda) {
-		this.imoveisEmVenda = new ArrayList<Imovel>(imoveisEmVenda);
+		this.imoveisEmVenda = new ArrayList<Imovel>();
 
 		for(Imovel im: imoveisEmVenda)
 			this.imoveisEmVenda.add(im.clone());
