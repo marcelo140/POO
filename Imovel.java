@@ -7,20 +7,22 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public abstract class Imovel implements Serializable {
-    private String rua, estado;
-    private double precoMinimo, precoPedido;
+    private String id, rua, estado;
+    private int precoMinimo, precoPedido;
     private List<Consulta> consultas;
 
     /**
      * Construtor por parâmetros
+     * @param id
      * @param rua
      * @param estado
      * @param precoMinimo
      * @param precoPedido
      * @param consultas
      */ 
-    public Imovel(String rua, String estado, double precoMinimo,
-                  double precoPedido, List<Consulta> consultas) {
+    public Imovel(String id,String rua, String estado, int precoMinimo,
+                  int precoPedido, List<Consulta> consultas) {
+		this.id = id;
         this.rua = rua;
         this.estado = estado;
         this.precoMinimo = precoMinimo;
@@ -32,10 +34,11 @@ public abstract class Imovel implements Serializable {
      * Construtor padrão
      */ 
     public Imovel() {
+		id = "n/a";
 		rua = "n/a";
 		estado = "em venda";
-		precoMinimo = 0.0;
-		precoPedido = 0.0;
+		precoMinimo = 0;
+		precoPedido = 0;
 		consultas = new ArrayList<Consulta>();
     }
 
@@ -43,12 +46,21 @@ public abstract class Imovel implements Serializable {
      * Construtor por cópia
      */
     public Imovel(Imovel i) {
+		id = i.getID();
         rua = i.getRua();
         estado = i.getEstado();
         precoMinimo = i.getPrecoMinimo();
         precoPedido = i.getPrecoPedido();
         consultas = i.getConsultas();
     }
+
+	/**
+ 	 * Obter id do imovel
+ 	 * @return
+ 	 */
+	public String getID() {
+		return id;
+	}
 
     /**
      * Obter nome da rua
@@ -62,7 +74,7 @@ public abstract class Imovel implements Serializable {
      * Obter preço mínimo
      * @return
      */
-    public double getPrecoMinimo() {
+    public int getPrecoMinimo() {
         return precoMinimo;
     }
 
@@ -70,7 +82,7 @@ public abstract class Imovel implements Serializable {
      * Obter preço pedido
      * @return
      */
-    public double getPrecoPedido() {
+    public int getPrecoPedido() {
         return precoPedido;
     }
 
@@ -95,6 +107,14 @@ public abstract class Imovel implements Serializable {
 		return consultas;
     }
 
+	/**
+ 	 * Define id do imovel
+ 	 * @param id
+ 	 */
+	public void setID(String id) {
+		this.id = id;
+	}
+
     /**
      * Define nome da rua
      * @param rua
@@ -115,7 +135,7 @@ public abstract class Imovel implements Serializable {
      * Define preço mínimo
      * @param precoMinimo
      */
-    public void setPrecoMinimo(double precoMinimo) {
+    public void setPrecoMinimo(int precoMinimo) {
         this.precoMinimo = precoMinimo;
     }
 
@@ -123,7 +143,7 @@ public abstract class Imovel implements Serializable {
      * Define preço pedido
      * @param precoPedido
      */
-    public void setPrecoPedido(double precoPedido) {
+    public void setPrecoPedido(int precoPedido) {
         this.precoPedido = precoPedido;
     }
     
@@ -171,14 +191,12 @@ public abstract class Imovel implements Serializable {
      */
     public int hashCode() {
         int hash = 7;
-        long aux;
 
         hash = 31*hash + rua.hashCode();
         hash = 31*hash + estado.hashCode();
-        aux = Double.doubleToLongBits(precoMinimo);
-        hash = 31*hash + (int)(aux^(aux >>> 32));
-        aux = Double.doubleToLongBits(precoPedido);
-        hash = 31*hash + (int)(aux^(aux >>> 32));
+		hash = 31*hash + id.hashCode();
+        hash = 31*hash + precoMinimo;
+        hash = 31*hash + precoPedido;
         hash = 31*hash + consultas.hashCode();
 
         return hash;
@@ -191,6 +209,7 @@ public abstract class Imovel implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
+		sb.append("ID: ").append(id).append("\n");
         sb.append("Rua: ").append(rua).append("\n");
         sb.append("Estado: ").append(estado).append("\n");
         sb.append("Preço pedido: ").append(precoPedido).append("\n");

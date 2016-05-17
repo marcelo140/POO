@@ -13,6 +13,7 @@ public class Moradia extends Imovel implements Habitavel
 
 	/**
  	 * Construtor por parâmetro
+ 	 * @param id
  	 * @param rua
  	 * @param estado
  	 * @param precoMinimo
@@ -25,12 +26,12 @@ public class Moradia extends Imovel implements Habitavel
  	 * @param wc
  	 * @param porta
  	 */
-	public Moradia(String rua, String estado, double precoMinimo, 
-                   double precoPedido, ArrayList<Consulta> consultas, String tipo, 
+	public Moradia(String id, String rua, String estado, int precoMinimo, 
+                   int precoPedido, ArrayList<Consulta> consultas, String tipo, 
                    double areaImplantacao, double areaCoberta,
                    double areaTerreno, int quartos, int wc, int porta) {
 
-		super(rua, estado, precoMinimo, precoPedido, consultas);
+		super(id, rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipo = tipo;
 		this.areaImplantacao = areaImplantacao;
 		this.areaCoberta = areaCoberta;
@@ -160,7 +161,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * Define o número de quartos da moradia
  	 * @param quartos
  	 */
-	public void setNumQuartos(int quartos) {
+	public void setQuartos(int quartos) {
 		this.quartos = quartos;
 	}
 
@@ -168,7 +169,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * Define o número de casas de banho da moradia
  	 * @param wc
  	 */
-	public void setNumWC(int wc) {
+	public void setWC(int wc) {
 		this.wc = wc;
 	}
 
@@ -176,7 +177,7 @@ public class Moradia extends Imovel implements Habitavel
  	 * Define o número da porta da moradia
  	 * @param numeroPorta
  	 */
-	public void setNumeroPorta(int numeroPorta) {
+	public void setPorta(int numeroPorta) {
 		this.porta = numeroPorta;
 	}
 

@@ -14,6 +14,7 @@ public class Loja extends Imovel
 
     /**
      * Construtor por parâmatros
+     * @param id
      * @param rua
      * @param estado
      * @param precoMinimo
@@ -23,11 +24,11 @@ public class Loja extends Imovel
      * @param porta
      * @param wc
      */
-    public Loja(String rua, String estado, double precoMinimo, 
-                double precoPedido, ArrayList<Consulta> consultas, String tipo, double area,
+    public Loja(String id, String rua, String estado, int precoMinimo, 
+                int precoPedido, ArrayList<Consulta> consultas, String tipo, double area,
  				int porta, boolean wc) {
 
-		super(rua, estado, precoMinimo, precoPedido, consultas);
+		super(id, rua, estado, precoMinimo, precoPedido, consultas);
 		this.tipoNegocio = tipo;
 		this.area = area;
 		this.porta = porta;
@@ -116,7 +117,7 @@ public class Loja extends Imovel
      * Define se o apartamento tem, ou não, garagem
      * @param garagem
      */
-    public void setwc(boolean wc) {
+    public void setWC(boolean wc) {
         this.wc = wc;
     }
 
