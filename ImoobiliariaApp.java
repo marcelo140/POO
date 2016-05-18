@@ -106,7 +106,7 @@ public class ImoobiliariaApp {
 				case 7: mudarEstado(); break;
 				case 8: empresa.fechaSessao(); break;
 			}
-		} while(menuVendedor.getOpcao() != 0 && menuComprador.getOpcao() != 8);
+		} while(menuVendedor.getOpcao() != 0 && menuVendedor.getOpcao() != 8);
 	}
 
 	private static void carregarDados() {
@@ -247,6 +247,7 @@ public class ImoobiliariaApp {
 		List<Habitavel> lista;
 
 		precoMaximo = lerInt("Preço máximo: ");
+		System.out.print("\n");
 
 		lista = empresa.getHabitaveis(precoMaximo);
 		for(Habitavel h: lista)
@@ -256,8 +257,10 @@ public class ImoobiliariaApp {
 	private static void mapearImoveis() {
 		Set<Map.Entry<Imovel, Vendedor>> map = empresa.getMapeamentoImoveis().entrySet();
 
+		System.out.print("\n");
+
 		for(Map.Entry<Imovel, Vendedor> entry: map) {
-			System.out.println(entry.getValue().toString());
+			System.out.println("Email: " + entry.getValue().getEmail()+"\n");
 			System.out.println(entry.getKey().toString());	
 		}
 	}
@@ -360,9 +363,6 @@ public class ImoobiliariaApp {
 		System.out.print("Rua: ");
 		String rua = input.nextLine();
 
-		System.out.print("Estado: ");
-		String estado = input.nextLine();
-
 		System.out.print("Tipo: ");
 		String tipo = input.nextLine();
 
@@ -377,7 +377,6 @@ public class ImoobiliariaApp {
 		
 		im.setRua(rua);
 		im.setPorta(porta);
-		im.setEstado(estado);
 		im.setTipo(tipo);
 		im.setQuartos(quartos);
 		im.setWC(wc);
@@ -401,13 +400,10 @@ public class ImoobiliariaApp {
 		int porta = lerInt("Porta: ");
 		int andar = lerInt("Andar: ");
 
-		System.out.print("Estado: ");
-		String estado = input.nextLine();
-
 		System.out.print("Tipo: ");
 		String tipo = input.nextLine();
 
-		double area = lerDouble("Área: ");
+		double area = lerDouble("Área m²: ");
 		int quartos = lerInt("Número de quartos: ");
 		int wc = lerInt("Número de casas de banho: ");
 		boolean garagem = lerBoolean("Garagem (s/n): ");
@@ -417,7 +413,6 @@ public class ImoobiliariaApp {
 		im.setRua(rua);
 		im.setPorta(porta);
 		im.setAndar(andar);
-		im.setEstado(estado);
 		im.setTipo(tipo);
 		im.setArea(area);
 		im.setQuartos(quartos);
@@ -440,9 +435,6 @@ public class ImoobiliariaApp {
 
 		int porta = lerInt("Porta: ");
 
-		System.out.print("Estado: ");
-		String estado = input.nextLine();
-
 		System.out.print("Tipo: ");
 		String tipo = input.nextLine();
 
@@ -455,7 +447,6 @@ public class ImoobiliariaApp {
 
 		im.setRua(rua);
 		im.setPorta(porta);
-		im.setEstado(estado);
 		im.setTipo(tipo);
 		im.setArea(area);
 		im.setWC(wc);
@@ -474,9 +465,6 @@ public class ImoobiliariaApp {
 
 		int porta = lerInt("Porta: ");
 
-		System.out.print("Estado: ");
-		String estado = input.nextLine();
-
 		System.out.print("Tipo: ");
 		String tipo = input.nextLine();
 
@@ -494,7 +482,6 @@ public class ImoobiliariaApp {
 		int precoPedido = lerInt("Preço pedido: ");
 	
 		im.setRua(rua);
-		im.setEstado(estado);
 		im.setTipo(tipo);
 		im.setArea(area);
 		im.setWC(wc);
@@ -517,9 +504,6 @@ public class ImoobiliariaApp {
 		System.out.print("Rua: ");
 		String rua = input.nextLine();
 
-		System.out.print("Estado: ");
-		String estado = input.nextLine();
-
 		System.out.print("Tipo: ");
 		String tipo = input.nextLine();
 
@@ -531,7 +515,6 @@ public class ImoobiliariaApp {
 		int precoPedido = lerInt("Preço pedido: ");
 
 		im.setRua(rua);
-		im.setEstado(estado);
 		im.setTipo(tipo);
 		im.setArea(area);
 		im.setDiametroCanalizacao(diametroCanalizacao);
@@ -612,6 +595,7 @@ public class ImoobiliariaApp {
 		String s;
 		boolean res = true;
 
+		System.out.print(msg);
 		s = input.nextLine();
 
 		if (s.charAt(0) == 'n')
