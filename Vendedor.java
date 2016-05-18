@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeMap;
+import java.util.Map;
 import java.time.LocalDate;
 
 /**
@@ -9,8 +9,8 @@ import java.time.LocalDate;
 
 public class Vendedor extends Utilizador 
 {
-	private List<Imovel> imoveisEmVenda;
-	private List<Imovel> imoveisVendidos;
+	private Map<String, Imovel> imoveisEmVenda;
+	private Map<String, Imovel> imoveisVendidos;
 
 	/**
 	 * Construtor por parametros
@@ -23,8 +23,8 @@ public class Vendedor extends Utilizador
 	 * @param imoveisVendidos
 	 */
 	public Vendedor(String email, String nome, String password, String morada, 
-                    LocalDate dataNascimento, List<Imovel> imoveisEmVenda,
-                    List<Imovel> imoveisVendidos) {
+                    LocalDate dataNascimento, Map<String, Imovel> imoveisEmVenda,
+                    Map<String, Imovel> imoveisVendidos) {
 
 		super(email, nome, password, morada, dataNascimento);
 		setImoveisEmVenda(imoveisEmVenda);
@@ -36,8 +36,8 @@ public class Vendedor extends Utilizador
 	 */
 	public Vendedor() {
 		super();
-		this.imoveisEmVenda = new ArrayList<Imovel>();
-		this.imoveisVendidos = new ArrayList<Imovel>();	
+		this.imoveisEmVenda = new TreeMap<String, Imovel>();
+		this.imoveisVendidos = new TreeMap<String, Imovel>();	
 	}
 		
 	public Vendedor(Vendedor v) {
@@ -49,11 +49,11 @@ public class Vendedor extends Utilizador
 	/**
 	 * Obtem imóveis em venda do Vendedor
 	 */
-	public List<Imovel> getImoveisEmVenda() {
-		ArrayList<Imovel> imoveisEmVenda = new ArrayList<>();
+	public Map<String, Imovel> getImoveisEmVenda() {
+		TreeMap<String, Imovel> imoveisEmVenda = new TreeMap<>();
 
-		for(Imovel im: this.imoveisEmVenda)
-			imoveisEmVenda.add(im.clone());
+		for(Map.Entry<String, Imovel> map: this.imoveisEmVenda.entrySet())
+			imoveisEmVenda.put(map.getKey(), map.getValue().clone());
 
 		return imoveisEmVenda;
 	}
@@ -61,11 +61,11 @@ public class Vendedor extends Utilizador
 	/**
 	 * Obtem imóveis vendidos pelo Vendedor
 	 */
-	public List<Imovel> getImoveisVendidos() {
-		ArrayList<Imovel> imoveisVendidos = new ArrayList<>();
+	public Map<String, Imovel> getImoveisVendidos() {
+		TreeMap<String, Imovel> imoveisVendidos = new TreeMap<>();
 
-		for(Imovel im: this.imoveisVendidos)
-			imoveisVendidos.add(im.clone());
+		for(Map.Entry<String, Imovel> map: this.imoveisVendidos.entrySet())
+			imoveisVendidos.put(map.getKey(), map.getValue().clone());
 
 		return imoveisVendidos;
 	}
@@ -74,22 +74,22 @@ public class Vendedor extends Utilizador
  	 * Define a lista de imóveis em venda
  	 * @param imoveisEmVenda
  	 */
-	private void setImoveisEmVenda(List<Imovel> imoveisEmVenda) {
-		this.imoveisEmVenda = new ArrayList<Imovel>();
+	private void setImoveisEmVenda(Map<String, Imovel> imoveisEmVenda) {
+		this.imoveisEmVenda = new TreeMap<String, Imovel>();
 
-		for(Imovel im: imoveisEmVenda)
-			this.imoveisEmVenda.add(im.clone());
+		for(Map.Entry<String, Imovel> map: imoveisEmVenda.entrySet())
+			this.imoveisEmVenda.put(map.getKey(), map.getValue().clone());
 	}
 
 	/**
  	 * Define a lista de imóveis vendidos
  	 * @param imoveisVendidos
  	 */
-	private void setImoveisVendidos(List<Imovel> imoveisVendidos) {
-		this.imoveisVendidos = new ArrayList<Imovel>();
+	private void setImoveisVendidos(Map<String, Imovel> imoveisVendidos) {
+		this.imoveisVendidos = new TreeMap<String, Imovel>();
 
-		for(Imovel im: imoveisVendidos)
-			this.imoveisVendidos.add(im.clone());
+		for(Map.Entry<String, Imovel> map: imoveisVendidos.entrySet())
+			this.imoveisVendidos.put(map.getKey(), map.getValue().clone());
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class Vendedor extends Utilizador
  	 * @param Imovel
  	 */
 	public void addImovelEmVenda(Imovel im) {
-		imoveisEmVenda.add(im);	
+		imoveisEmVenda.put(im.getID(), im);	
 	}	
 
 	/**
@@ -130,6 +130,32 @@ public class Vendedor extends Utilizador
 		hash = 31*hash + imoveisVendidos.hashCode();
 
 		return hash;
+	}
+
+	/**
+  	 * Muda estado do imóvel
+  	 * @param idImovel
+  	 * @param estado
+  	 */
+	public void setEstado(String idImovel, String estado) {
+		Imovel im;
+		
+		if (!estado.equals("em venda")) {
+			im = imoveisEmVenda.remove(idImovel);
+			if (im != null) {
+				im.setEstado(estado);
+				imoveisVendidos.put(im.getID(), im);		
+			}
+		}
+
+		if (estado.equals("em venda")) {
+			im = imoveisVendidos.remove(idImovel);
+			if (im != null) {
+				im.setEstado(estado);
+				imoveisEmVenda.put(im.getID(), im);
+			}
+		}
+
 	}
 
 	/**
