@@ -239,18 +239,14 @@ public class Imoobiliaria implements Serializable
 	 */
 	public List<Consulta> getConsultas() throws SemAutorizacaoException {
 		ArrayList<Consulta> consultas = new ArrayList<>();
-		ArrayList<Imovel> imoveis; 
 		Vendedor v;
 
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("O utilizador não está ligado como Vendedor");
 
 		v = (Vendedor) utilizador;
-		imoveis = new ArrayList<Imovel> (v.getImoveisEmVenda());
- 
-		for (Imovel i: imoveis){
-			consultas.addAll(i.getConsultas());	
-		}
+		for (Imovel im: v.getImoveisEmVenda().values())
+			consultas.addAll(im.getConsultas());	
 
 		consultas.sort((c1, c2) -> c1.getData().compareTo(c2.getData()));
 
@@ -279,8 +275,8 @@ public class Imoobiliaria implements Serializable
 		if (!(estado.equals("em venda") || estado.equals("reservado") || estado.equals("vendido")))
 			throw new EstadoInvalidoException("Estado deve ser 'em venda', 'reservado' ou 'vendido'");
 
-		
-		 anuncios.get(idImovel).setEstado(estado);
+		Vendedor v = (Vendedor) utilizador;	
+		v.setEstado(idImovel, estado);
 	}
 
 	/**
@@ -358,7 +354,7 @@ public class Imoobiliaria implements Serializable
 			if (u instanceof Vendedor) {
 				Vendedor v = (Vendedor) u;
 
-				for(Imovel im: v.getImoveisEmVenda()){
+				for(Imovel im: v.getImoveisEmVenda().values()){
 					im.addConsulta(new Consulta(LocalDateTime.now(), getUserEmail()));
 					map.put(im, v);
 				}
