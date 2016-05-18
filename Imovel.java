@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.Serializable;
 
-public abstract class Imovel implements Serializable {
+public abstract class Imovel implements Comparable<Imovel>, Serializable {
     private String id, rua, estado;
     private int precoMinimo, precoPedido;
     private List<Consulta> consultas;
@@ -216,6 +216,14 @@ public abstract class Imovel implements Serializable {
         
         return sb.toString();
     }
+
+	/**
+ 	 * Compara dois Imoveis
+ 	 * @param Imovel
+ 	 */
+	public int compareTo(Imovel im) {
+		return im.getID().compareTo(id);
+	}
 
     /**
      * Cria uma cópia do imóvel
