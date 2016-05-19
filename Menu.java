@@ -35,12 +35,16 @@ public class Menu {
     /** Apresentar o menu */
     private void showMenu() {
         System.out.println("\n *** Menu *** ");
-        for (int i=0; i<this.opcoes.size(); i++) {
+        int numOpcoes = opcoes.size();
+        
+        for (int i=0; i< numOpcoes; i++) {
             System.out.print(i+1);
             System.out.print(" - ");
             System.out.println(this.opcoes.get(i));
         }
-        System.out.println("0 - Sair");
+        
+        if (!opcoes.get(numOpcoes-1).equals("Fechar sessão"))
+            System.out.println("0 - Sair");
     }
     
     /** Ler uma opção válida */

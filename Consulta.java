@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.io.Serializable;
 
 /**
@@ -88,9 +89,10 @@ public class Consulta implements Serializable {
  	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
 		sb.append("Email: ").append(email).append("\n");
-		sb.append("Data: ").append(data).append("\n");
+		sb.append("Data: ").append(data.format(formato)).append("\n");
 
 		return sb.toString();
 	}
