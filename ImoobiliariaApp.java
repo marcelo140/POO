@@ -47,6 +47,9 @@ public class ImoobiliariaApp {
 							 "Obter últimas consultas",
 							 "Obter imóveis mais consultados",
 							 "Mudar estado de imóvel",
+							 "Iniciar leilão",
+							 "Adicionar comprador ao leilão",
+							 "Encerrar leilão",
 							 "Fechar sessão"};
 
 		String[] registar = {"Registar comprador",
@@ -218,6 +221,8 @@ public class ImoobiliariaApp {
 		precoMaximo = lerInt("Preço máximo: ");
 
 		lista = empresa.getImovel(classe, precoMaximo);
+
+		System.out.print("\n");
 		for(Imovel im: lista)
 			System.out.println(im.toString());
 	}
@@ -225,13 +230,14 @@ public class ImoobiliariaApp {
 	private static void imoveisMaisConsultados() {
 		Scanner input = new Scanner(System.in);
 		Set<String> topImoveis;
-		int n = lerInt("Número de imóveis: ");
+		int n = lerInt("Número mínimo de consultas: ");
 
 		try {
 			topImoveis = empresa.getTopImoveis(n);
 
+			System.out.print("\n");
 			for(String s: topImoveis)
-				System.out.println(s);
+				System.out.println("ID: " + s);
 		}
 		catch (SemAutorizacaoException e) {
 			System.out.println(e.getMessage());
@@ -247,11 +253,11 @@ public class ImoobiliariaApp {
 		List<Habitavel> lista;
 
 		precoMaximo = lerInt("Preço máximo: ");
-		System.out.print("\n");
 
 		lista = empresa.getHabitaveis(precoMaximo);
+
 		for(Habitavel h: lista)
-			System.out.println(h.toString());
+			System.out.print("\n" + h.toString());
 	}
 
 	private static void mapearImoveis() {
@@ -269,6 +275,7 @@ public class ImoobiliariaApp {
 		try {
 			List<Consulta> consultas = empresa.getConsultas();
 
+			System.out.print("\n");
 			for(Consulta c: consultas)
 				System.out.println(c.toString());
 		}
@@ -281,6 +288,7 @@ public class ImoobiliariaApp {
 		Scanner input = new Scanner(System.in);
 		String imovelId;
 
+		System.out.println("ID do imovel: ");
 		imovelId = input.nextLine();
 
 		try {
@@ -306,6 +314,7 @@ public class ImoobiliariaApp {
 			return;
 		}
 
+		System.out.print("\n");
 		for(Imovel im: fav)
 			System.out.println(im.toString());
 		
@@ -315,7 +324,10 @@ public class ImoobiliariaApp {
 		Scanner input = new Scanner(System.in);
 		String estado, idImovel;
 
+		System.out.print("Id do imóvel: ");
 		idImovel = input.nextLine();
+
+		System.out.print("Novo estado: ");
 		estado = input.nextLine();
 
 		try {

@@ -15,7 +15,8 @@ public class Imoobiliaria implements Serializable
 
 	private Utilizador utilizador;
 	private Map<String, Utilizador> utilizadores; //Email -> Utilizador
-	private Map<String, Imovel> anuncios; 
+	private Map<String, Imovel> anuncios;
+	private Leilao leilao; 
 
 	/**
 	 * Construtor por parametros
@@ -24,11 +25,12 @@ public class Imoobiliaria implements Serializable
 	 * @param anuncios
 	 */
 	public Imoobiliaria(Utilizador utilizador, Map<String, Utilizador> utilizadores, 
-						Map<String, Imovel> anuncios) {
+						Map<String, Imovel> anuncios, Leilao leilao) {
 
 		setUtilizador(utilizador);
 		setUtilizadores(utilizadores);
 		setAnuncios(anuncios);
+		setLeilao(leilao);
 	}
 
 	/**
@@ -38,6 +40,7 @@ public class Imoobiliaria implements Serializable
 		utilizador = null;
 		utilizadores = new TreeMap<String, Utilizador>();
 		anuncios = new TreeMap<String, Imovel>();
+		leilao = null;
 	}
 
 	/**
@@ -48,6 +51,7 @@ public class Imoobiliaria implements Serializable
 		utilizador = i.getUtilizador();	
 		utilizadores = i.getUtilizadores();
 		anuncios = i.getAnuncios();
+		leilao = i.getLeilao();
 	}
 	
 	/**
@@ -113,6 +117,14 @@ public class Imoobiliaria implements Serializable
 	}
 
 	/**
+ 	 * Obtem o leilão a decorrer
+ 	 * @return Leilao
+ 	 */
+	private Leilao getLeilao() {
+		return leilao.clone();
+	}
+
+	/**
  	 * Define o utilizador logado
  	 * @param Utilizador
  	 */
@@ -148,17 +160,27 @@ public class Imoobiliaria implements Serializable
 	}
 
 	/**
+ 	 * Define o leilão a decorrer
+ 	 * @param Leilao
+ 	 */
+	private void setLeilao(Leilao leilao) {
+		this.leilao = leilao.clone();
+	}
+
+	/**
 	 * Verifica se um dado Objeto é igual a esta Imoobiliaria
 	 * @param o Objeto
 	 */
 	public boolean equals (Object o) {
-		if ( this == o ) return true;
-		if ( o == null || this.getClass() != o.getClass() ) return false;
-		else {
-			Imoobiliaria i = (Imoobiliaria) o;
-			return  this.utilizadores.equals(i.utilizadores) &&
-					this.anuncios.equals(i.anuncios);	
-		} 	
+		if (this == o) 
+			return true;
+
+		if (o == null || this.getClass() != o.getClass()) 
+			return false;
+
+		Imoobiliaria i = (Imoobiliaria) o;
+		return utilizadores.equals(i.utilizadores) &&
+               anuncios.equals(i.anuncios) &&
 	}
 
 	/**
@@ -167,8 +189,8 @@ public class Imoobiliaria implements Serializable
 	public int hashCode() {
 		int hash = 7;
 
-		hash = 31*hash + this.utilizadores.hashCode();
-		hash = 31*hash + this.anuncios.hashCode();
+		hash = 31*hash + utilizadores.hashCode();
+		hash = 31*hash + anuncios.hashCode();
 
 		return hash;
 	}
@@ -208,6 +230,47 @@ public class Imoobiliaria implements Serializable
 /************************** Vendedores ******************************/
 
 	/**
+ 	 * Inicia um novo leilão
+ 	 * @param Imovel
+ 	 * @param horas
+ 	 */
+	public void iniciaLeilao(Imovel im, int horas) throws SemAutorizacaoException {
+
+		if (!(utilizador instanceof Vendedor))
+			throw new SemAutorizacaoException("Utilizador não está inscrito como vendedor");
+
+		leilao = new Leilao(im, horas, new ArrayList<Licitador>());
+	}
+
+	/**
+ 	 * Adiciona um licitador ao leilão a decorrer
+ 	 * @param idComprador
+ 	 * @param limite
+ 	 * @param incrementos
+ 	 * @param minutos
+ 	 */
+	public void adicionaComprador(String idComprador, double limite, double incrementos,
+                                  double minutos) throws LeilaoTerminadoException {
+
+		if (leilao.getTerminado())
+			throw new LeilaoTerminadoException("O leilão já terminou!");
+
+		leilao.addLicitador(idComprador, limite, incrementos, minutos);
+	}
+
+	/**
+ 	 * Encerra o leilão que está a decorrer
+ 	 * @return Comprador
+ 	 */
+	public Comprador encerraLeilao() {
+		String idComprador = leilao.encerrar();
+		Comprador c = new Comprador();
+
+		c.setID(idComprador);
+		return c;
+	}
+
+	/**
 	 * Regista um imóvel na imoobiliaria
 	 * @param im Imóvel
 	 * @throws ImovelExisteException Caso o imóvel a adicionar já existe
@@ -216,7 +279,7 @@ public class Imoobiliaria implements Serializable
 	public void registaImovel(Imovel im) throws ImovelExisteException, SemAutorizacaoException {
 
 		if (!(utilizador instanceof Vendedor))
-			throw new SemAutorizacaoException("Utilizador não está inscrito como Vendedor");
+			throw new SemAutorizacaoException("Utilizador não está inscrito como vendedor");
 
 		if (anuncios.containsValue(im))
 			throw new ImovelExisteException("Imóvel já existe.");
@@ -240,6 +303,7 @@ public class Imoobiliaria implements Serializable
 	public List<Consulta> getConsultas() throws SemAutorizacaoException {
 		ArrayList<Consulta> consultas = new ArrayList<>();
 		Vendedor v;
+		int size = 9;
 
 		if (!(utilizador instanceof Vendedor))
 			throw new SemAutorizacaoException("O utilizador não está ligado como Vendedor");
@@ -250,7 +314,10 @@ public class Imoobiliaria implements Serializable
 
 		consultas.sort((c1, c2) -> c1.getData().compareTo(c2.getData()));
 
-		return consultas.subList(0, 9);
+		if (consultas.size() < size)
+			size = consultas.size();
+
+		return consultas.subList(0, size);
 	}
 
 	/**
@@ -277,6 +344,14 @@ public class Imoobiliaria implements Serializable
 
 		Vendedor v = (Vendedor) utilizador;	
 		v.setEstado(idImovel, estado);
+
+		if (estado.equals("em venda")) {
+			Imovel im = v.getImoveisEmVenda().get(idImovel);
+			anuncios.put(idImovel, im);
+		}
+
+		if (estado.equals("reservado") || estado.equals("vendido"))
+			anuncios.remove(idImovel);
 	}
 
 	/**
@@ -333,7 +408,8 @@ public class Imoobiliaria implements Serializable
 		ArrayList<Habitavel> imoveisHabitaveis = new ArrayList<>();
 
 		for (Imovel im: anuncios.values()) {
-			if (im instanceof Habitavel) {
+			if (im instanceof Habitavel && im.getPrecoPedido() < preco) {
+
 				im.addConsulta(new Consulta(LocalDateTime.now(), getUserEmail()));
 				Habitavel h = (Habitavel) im;
 				imoveisHabitaveis.add(h);
