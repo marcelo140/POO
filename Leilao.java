@@ -1,137 +1,167 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 public class Leilao {
-	private Imovel im;
-	private int horas;
-	private boolean terminado;
-	List<Licitador> licitadores;
-	
-	/**
- 	 * Construtor por parâmetros
- 	 * @param im
- 	 * @param horas
- 	 * @param licitacoes
- 	 */
-	public Leilao(Imovel im, int horas, boolean terminado, List<Licitador> licitares) {
-		this.im = im;
-		this.horas = horas;
-		this.terminado = terminado;
-		setLicitadores(licitadores);
-	}
+    private Imovel im;
+    private int horas;
+    private boolean comecou;
+    List<Licitador> licitadores;
+    
+    /**
+     * Construtor por parâmetros
+     * @param im
+     * @param horas
+     * @param licitacoes
+     */
+    public Leilao(Imovel im, int horas, boolean comecou, List<Licitador> licitares) {
+        this.im = im;
+        this.horas = horas;
+        this.comecou = comecou;
+        setLicitadores(licitadores);
+    }
 
-	/**
- 	 * Construtor padrão
- 	 */
-	public Leilao() {
-		im = null;
-		horas = 0;
-		terminado = false;
-		licitadores= new ArrayList<Licitador>();
-	}
+    /**
+     * Construtor padrão
+     */
+    public Leilao() {
+        im = null;
+        horas = 0;
+        comecou = false;
+        licitadores= new ArrayList<Licitador>();
+    }
 
-	/**
- 	 * Construtor por cópia
- 	 * @param l
- 	 */
-	public Leilao(Leilao l) {
-		im = l.getImovel();
-		horas = l.getHoras();
-		terminado = l.getTerminado();
-		licitadores= l.getLicitadores();
-	}
+    /**
+     * Construtor por cópia
+     * @param l
+     */
+    public Leilao(Leilao l) {
+        im = l.getImovel();
+        horas = l.getDuracao();
+        comecou = l.getComecou();
+        licitadores= l.getLicitadores();
+    }
 
-	/**
- 	 * Obter o imóvel a ser leiloada
- 	 * @return Imovel
- 	 */
-	public Imovel getImovel() {
-		return im;
-	}
+    /**
+     * Obter o imóvel a ser leiloada
+     * @return Imovel
+     */
+    public Imovel getImovel() {
+        return im;
+    }
 
-	/**
- 	 * Obter duracao do leilão
- 	 * @return duracao
- 	 */
-	public int getDuracao() {
-		return horas;
-	}
+    /**
+     * Obter duracao do leilão
+     * @return duracao
+     */
+    public int getDuracao() {
+        return horas;
+    }
 
-	/**
- 	 * Obter estado do leilão
- 	 * @return estado
- 	 */
-	public boolean get() {
-		return terminado;
-	}
+    /**
+     * Obter estado do leilão
+     * @return estado
+     */
+    public boolean getComecou() {
+        return comecou;
+    }
 
-	/**
- 	 * Obter lista de licitadores que participam no leilão
- 	 * @return licitadores
- 	 */
-	private List<Licitador> getLicitadores() {
-		ArrayList<Licitador> licitacoes = new ArrayList();
+    /**
+     * Obter lista de licitadores que participam no leilão
+     * @return licitadores
+     */
+    private List<Licitador> getLicitadores() {
+        ArrayList<Licitador> licitacoes = new ArrayList();
 
-		for(Licitador l: this.licitacoes)
-			licitacoes.add(l.clone());
+        for(Licitador l: this.licitadores)
+            licitacoes.add(l.clone());
 
-		return licitacoes;
-	}
+        return licitacoes;
+    }
 
-	/**
- 	 * Define imovel a ser leiloada
- 	 * @param Imovel
- 	 */
-	public setImovel(Imovel im) {
-		this.im = im;
-	}
+    /**
+     * Define imovel a ser leiloada
+     * @param Imovel
+     */
+    public void setImovel(Imovel im) {
+        this.im = im;
+    }
 
-	/**
- 	 * Define duração do leilão
- 	 * @param horas
- 	 */
-	public setDuracao(int horas) {
-		this.horas = horas;
-	}
+    /**
+     * Define duração do leilão
+     * @param horas
+     */
+    public void setDuracao(int horas) {
+        this.horas = horas;
+    }
 
-	/**
- 	 * Define estado do leilão
- 	 * @param estado
- 	 */
-	public setTerminado(boolean estado) {
-		this.terminado = estado;
-	}
+    /**
+     * Define estado do leilão
+     * @param estado
+     */
+    public void setComecou(boolean estado) {
+        this.comecou = estado;
+    }
 
-	/**
- 	 * Define lista de licitadores
- 	 * @param Licitadores
- 	 */
-	private void setLicitadores(List<Licitador> licitadores) {
-		this.licitadores = new ArrayList<>();
+    /**
+     * Define lista de licitadores
+     * @param Licitadores
+     */
+    private void setLicitadores(List<Licitador> licitadores) {
+        this.licitadores = new ArrayList<>();
 
-		for(Licitador l: licitadores)
-			this.licitadores(l.clone());
-	}
+        for(Licitador l: licitadores)
+            this.licitadores.add(l.clone());
+    }
 
-	/**
- 	 * Adiciona um licitador ao leilão
- 	 * @param idComprador
- 	 * @param limite
- 	 * @param incrementos
- 	 * @param minutos
- 	 */
-	public addLicitador(String idComprador, double limite, double incrementos,
+    /**
+     * Adiciona um licitador ao leilão
+     * @param idComprador
+     * @param limite
+     * @param incrementos
+     * @param minutos
+     */
+    public void addLicitador(String idComprador, double limite, double incrementos,
                         double minutos) {
 
-		licitacoes.add(new Licitador(idComprador, limite, incrementos, minutos);
-	}
+        licitadores.add(new Licitador(idComprador, limite, incrementos, minutos));
+    }
 
-	/**
- 	 * Encerra o leilão e decide o vencedor
- 	 * @return idComprador
- 	 */
-	public String encerrar() {
-		boolean fim = false;
+    /**
+     * Encerra o leilão e decide o vencedor
+     * @return idComprador
+     */
+    public String encerrar() {
+        long start = System.currentTimeMillis() % 1000;
+        String topId="n/a";
+        double valor, topValor = 0;
+        setComecou(true);
 
-		while(!fim) {
-			for(i = 0; i < licitadores.size(); i++)
-		}
-	}
+        long time = System.currentTimeMillis() % 1000;
+        while (time-start < horas) {
+            for(Licitador lic: licitadores) {
+                valor = (time-start)/60 * lic.getMinutos() * lic.getIncrementos();
+                if (valor < lic.getLimite() && !lic.getComprador().equals(topId)) {
+                    System.out.println("Licitador "+lic.getComprador()+"licitou "+valor);
+                    
+                    if (valor > topValor) {
+                        topValor = valor;
+                        topId = lic.getComprador();
+                    }
+                }
+            }
+            try {
+            TimeUnit.SECONDS.sleep(1);
+        }catch(InterruptedException e){
+            return "n/a";
+        }
+            time = System.currentTimeMillis() % 1000;
+        }
+
+        return topId;
+    }
+    
+    public Leilao clone() {
+        return new Leilao(this);
+    }
 }

@@ -74,7 +74,7 @@ public class Licitador {
  	 * @param idComprador
  	 */
 	public void setComprador(String idComprador) {
-		this.idComprador = comprador;
+		this.idComprador = idComprador;
 	}
 
 	/**
@@ -133,8 +133,8 @@ public class Licitador {
 		if (o == this)
 			return true;
 
-		if (o == null || this.getClass() != o.getClass)
-			return false
+		if (o == null || this.getClass() != o.getClass())
+			return false;
 
 		Licitador l = (Licitador) o;
 		return idComprador.equals(l.idComprador) &&
@@ -143,17 +143,4 @@ public class Licitador {
                minutos == l.minutos;
 	}
 
-	/**
- 	 * HashCode da Class Licitador
- 	 */
-	public int hashCode() {
-		int hash = 7;
-
-		hash = 31*hash + idComprador.hashCode();
-		hash = 31*hash + limite;
-		hash = 31*hash + incrementos;
-		hash = 31*hash + minutos;
-
-		return hash;
-	}
 }

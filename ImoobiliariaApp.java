@@ -100,16 +100,57 @@ public class ImoobiliariaApp {
 		do {
 			menuVendedor.executa();
 			switch(menuVendedor.getOpcao()) {
-				case 1: imoveisPorTipo(); break;
-				case 2: imoveisHabitaveis(); break;
-				case 3: mapearImoveis(); break;
-				case 4: registarImovel(); break;
-				case 5: obterUltimasConsultas(); break;
-				case 6: imoveisMaisConsultados(); break;
-				case 7: mudarEstado(); break;
-				case 8: empresa.fechaSessao(); break;
+				case  1: imoveisPorTipo(); break;
+				case  2: imoveisHabitaveis(); break;
+				case  3: mapearImoveis(); break;
+				case  4: registarImovel(); break;
+				case  5: obterUltimasConsultas(); break;
+				case  6: imoveisMaisConsultados(); break;
+				case  7: mudarEstado(); break;
+				case  8: iniciarLeilao(); break;
+				case  9: adicionarComprador(); break;
+				case 10: encerrarLeilao(); break;
+				case 11: empresa.fechaSessao(); break;
 			}
 		} while(menuVendedor.getOpcao() != 0 && menuVendedor.getOpcao() != 8);
+	}
+
+	private static void iniciarLeilao() {
+		Scanner input = new Scanner(System.in);
+		int horas = lerInt("Número de horas: ");
+
+		Moradia im = new Moradia();
+
+		try {
+			empresa.registaImovel(im);
+			im.setID(Long.toString(System.currentTimeMillis()));
+			empresa.iniciaLeilao(im, horas);
+		}catch (SemAutorizacaoException | ImovelExisteException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void adicionarComprador() {
+	    Scanner input = new Scanner(System.in);
+		System.out.print("ID do Comprador: ");
+		String id = input.nextLine();
+
+		double limite = lerDouble("Limite máximo: ");
+		double incrementos = lerDouble("Incrementos: ");
+		double intervalo = lerDouble("Intervalo entre licitações: ");
+
+		try {
+			empresa.adicionaComprador(id, limite, incrementos, intervalo);
+		}
+		catch(LeilaoTerminadoException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void encerrarLeilao() {
+		Comprador c = empresa.encerraLeilao();
+
+		System.out.println("\nVencedor: " + c.getEmail() + "\n");
 	}
 
 	private static void carregarDados() {

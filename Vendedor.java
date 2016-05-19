@@ -1,6 +1,7 @@
 import java.util.TreeMap;
 import java.util.Map;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * O vendedor é a entidade responsável pela gestão dos anúncios de imóveis para
@@ -11,6 +12,7 @@ public class Vendedor extends Utilizador
 {
 	private Map<String, Imovel> imoveisEmVenda;
 	private Map<String, Imovel> imoveisVendidos;
+	private Leilao leilao;
 
 	/**
 	 * Construtor por parametros
@@ -24,11 +26,12 @@ public class Vendedor extends Utilizador
 	 */
 	public Vendedor(String email, String nome, String password, String morada, 
                     LocalDate dataNascimento, Map<String, Imovel> imoveisEmVenda,
-                    Map<String, Imovel> imoveisVendidos) {
+                    Map<String, Imovel> imoveisVendidos, Leilao leilao) {
 
 		super(email, nome, password, morada, dataNascimento);
 		setImoveisEmVenda(imoveisEmVenda);
 		setImoveisVendidos(imoveisVendidos);
+		setLeilao(leilao);
 	}
 
 	/**
@@ -36,14 +39,16 @@ public class Vendedor extends Utilizador
 	 */
 	public Vendedor() {
 		super();
-		this.imoveisEmVenda = new TreeMap<String, Imovel>();
-		this.imoveisVendidos = new TreeMap<String, Imovel>();	
+		imoveisEmVenda = new TreeMap<String, Imovel>();
+		imoveisVendidos = new TreeMap<String, Imovel>();
+		leilao = null;
 	}
 		
 	public Vendedor(Vendedor v) {
 		super(v);
         imoveisEmVenda = v.getImoveisEmVenda();
 		imoveisVendidos = v.getImoveisVendidos();
+		leilao = v.getLeilao();
 	}
 
 	/**
@@ -71,6 +76,14 @@ public class Vendedor extends Utilizador
 	}
 
 	/**
+ 	 * Obtem o leilão a decorrer
+ 	 * @return Leilão
+ 	 */
+	public Leilao getLeilao() {
+		return leilao.clone();
+	}
+
+	/**
  	 * Define a lista de imóveis em venda
  	 * @param imoveisEmVenda
  	 */
@@ -93,6 +106,14 @@ public class Vendedor extends Utilizador
 	}
 
 	/**
+ 	 * Define o leilão a decorrer
+ 	 * @param Leilao
+ 	 */
+	private void setLeilao(Leilao leilao) {
+		this.leilao = leilao.clone();
+	}
+
+	/**
  	 * Adiciona o imóvel à lista de imoveis em venda
  	 * @param Imovel
  	 */
@@ -112,12 +133,11 @@ public class Vendedor extends Utilizador
 			return false;
 
 		Vendedor v = (Vendedor) o;
-		return (super.equals(v) &&
-				imoveisEmVenda.equals(v.getImoveisEmVenda()) &&
-				imoveisVendidos.equals(v.getImoveisVendidos()));
+		return super.equals(v) &&
+			   imoveisEmVenda.equals(v.getImoveisEmVenda()) &&
+			   imoveisVendidos.equals(v.getImoveisVendidos()) &&
+               leilao.equals(v.leilao);
 	}
-
-	
 
 	/**
 	 * HashCode do Vendedor
@@ -128,6 +148,7 @@ public class Vendedor extends Utilizador
 		hash = 31*hash + super.hashCode();
 		hash = 31*hash + imoveisEmVenda.hashCode();
 		hash = 31*hash + imoveisVendidos.hashCode();
+		hash = 31*hash + leilao.hashCode();
 
 		return hash;
 	}
@@ -159,6 +180,40 @@ public class Vendedor extends Utilizador
 	}
 
 	/**
+ 	 * Inicia um novo leilão
+ 	 * @param Imovel
+ 	 * @param horas
+ 	 */
+	public void iniciaLeilao(Imovel im, int horas) {
+		this.leilao = new Leilao(im, horas, false, new ArrayList<Licitador>());
+	}
+
+	/**
+ 	 * Adiciona um licitador ao leilão
+ 	 * @param idComprador
+ 	 * @param limite
+ 	 * @param incrementos
+ 	 * @param minutos
+ 	 */
+	public void adicionaComprador(String idComprador, double limite, double incrementos,
+								  double minutos) {
+
+		leilao.addLicitador(idComprador, limite, incrementos, minutos);
+	}
+
+	/**
+ 	 * Encerra o leilão atual
+ 	 * @return Comprador
+ 	 */
+	public Comprador encerrarLeilao() {
+		String str = leilao.encerrar();
+		Comprador c = new Comprador();
+		c.setEmail(str);
+
+		return c;
+	}
+
+	/**
  	 * Converte Vendedor em String
  	 * @return String
  	 */
@@ -168,6 +223,7 @@ public class Vendedor extends Utilizador
 		sb.append(super.toString());
 		sb.append("Imoveis em venda: ").append(imoveisEmVenda.toString()).append("\n");
 		sb.append("Imoveis vendidos: ").append(imoveisVendidos.toString()).append("\n");
+		sb.append("Leilão: ").append(leilao.toString()).append("\n");
 
 		return sb.toString();
 	}
