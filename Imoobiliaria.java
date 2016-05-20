@@ -9,9 +9,9 @@ import java.io.Serializable;
  */
 public class Imoobiliaria implements Serializable
 {
-	private static int numImoveis = 0;
-	private static int getNumImoveis() { return numImoveis; }
-	private static void incNumImoveis() { numImoveis++; }
+	private int numImoveis;
+	private int getNumImoveis() { return numImoveis; }
+	private void incNumImoveis() { numImoveis++; }
 
 	private Utilizador utilizador;
 	private Map<String, Utilizador> utilizadores; //Email -> Utilizador
@@ -24,11 +24,12 @@ public class Imoobiliaria implements Serializable
 	 * @param anuncios
 	 */
 	public Imoobiliaria(Utilizador utilizador, Map<String, Utilizador> utilizadores, 
-						Map<String, Imovel> anuncios) {
+						Map<String, Imovel> anuncios, int numImoveis) {
 
 		setUtilizador(utilizador);
 		setUtilizadores(utilizadores);
 		setAnuncios(anuncios);
+		this.numImoveis = numImoveis;
 	}
 
 	/**
@@ -38,6 +39,7 @@ public class Imoobiliaria implements Serializable
 		utilizador = null;
 		utilizadores = new TreeMap<String, Utilizador>();
 		anuncios = new TreeMap<String, Imovel>();
+		numImoveis = 0;
 	}
 
 	/**
@@ -48,6 +50,7 @@ public class Imoobiliaria implements Serializable
 		utilizador = i.getUtilizador();	
 		utilizadores = i.getUtilizadores();
 		anuncios = i.getAnuncios();
+		numImoveis = i.getNumImoveis();
 	}
 	
 	/**
