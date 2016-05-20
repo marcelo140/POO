@@ -1,8 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.io.Serializable;
 
-public class Leilao {
+public class Leilao implements Serializable {
     private Imovel im;
     private int horas;
     private boolean comecou;
@@ -14,7 +15,7 @@ public class Leilao {
      * @param horas
      * @param licitacoes
      */
-    public Leilao(Imovel im, int horas, boolean comecou, List<Licitador> licitares) {
+    public Leilao(Imovel im, int horas, boolean comecou, List<Licitador> licitadores) {
         this.im = im;
         this.horas = horas;
         this.comecou = comecou;
@@ -71,7 +72,7 @@ public class Leilao {
      * @return licitadores
      */
     private List<Licitador> getLicitadores() {
-        ArrayList<Licitador> licitacoes = new ArrayList();
+        ArrayList<Licitador> licitacoes = new ArrayList<>();
 
         for(Licitador l: this.licitadores)
             licitacoes.add(l.clone());
@@ -132,33 +133,35 @@ public class Leilao {
      * @return idComprador
      */
     public String encerrar() {
-        long start = System.currentTimeMillis() % 1000;
+        long start = System.currentTimeMillis();
         String topId="n/a";
-        double valor, topValor = 0;
+        double montante, topValor = 0;
         setComecou(true);
 
-        long time = System.currentTimeMillis() % 1000;
-        while (time-start < horas) {
+        long time = System.currentTimeMillis();
+        while ((time-start)/1000 < horas) {
             for(Licitador lic: licitadores) {
-                valor = (time-start)/60 * lic.getMinutos() * lic.getIncrementos();
-                if (valor < lic.getLimite() && !lic.getComprador().equals(topId)) {
-                    System.out.println("Licitador "+lic.getComprador()+"licitou "+valor);
-                    
-                    if (valor > topValor) {
-                        topValor = valor;
-                        topId = lic.getComprador();
-                    }
-                }
-            }
-            try {
-            TimeUnit.SECONDS.sleep(1);
-        }catch(InterruptedException e){
-            return "n/a";
-        }
-            time = System.currentTimeMillis() % 1000;
-        }
+                if (lic.getMinutos() > (time-lic.getUltimaLicitacao())/1000)
+					continue;
 
-        return topId;
+                if (lic.getMontante() > lic.getLimite() || lic.getComprador().equals(topId))
+					continue;
+
+				lic.setUltimaLicitacao(time);
+				montante = lic.getMontante() + lic.getIncrementos();
+				lic.setMontante(montante);
+	
+                System.out.println("Licitador "+lic.getComprador()+" licitou "+montante);
+                    
+                if (montante> topValor) {
+                	topValor = montante;
+                    topId = lic.getComprador();
+                }
+        	}
+            time = System.currentTimeMillis();
+       }	
+
+       return topId;
     }
     
     public Leilao clone() {

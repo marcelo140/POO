@@ -92,7 +92,7 @@ public class ImoobiliariaApp {
 				case 5: obterFavoritos(); break;
 				case 6: empresa.fechaSessao(); break;
 			}
-		} while(menuComprador.getOpcao() != 0 && menuComprador.getOpcao() != 6);
+		} while(menuComprador.getOpcao() != 6);
 
 	}
 
@@ -112,7 +112,7 @@ public class ImoobiliariaApp {
 				case 10: encerrarLeilao(); break;
 				case 11: empresa.fechaSessao(); break;
 			}
-		} while(menuVendedor.getOpcao() != 0 && menuVendedor.getOpcao() != 8);
+		} while(menuVendedor.getOpcao() != 11);
 	}
 
 	private static void iniciarLeilao() {
@@ -120,10 +120,10 @@ public class ImoobiliariaApp {
 		int horas = lerInt("Número de horas: ");
 
 		Moradia im = new Moradia();
+		im.setRua(Long.toString(System.currentTimeMillis()));
 
 		try {
 			empresa.registaImovel(im);
-			im.setID(Long.toString(System.currentTimeMillis()));
 			empresa.iniciaLeilao(im, horas);
 		}catch (SemAutorizacaoException | ImovelExisteException e) {
 			System.out.println(e.getMessage());

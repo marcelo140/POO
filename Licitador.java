@@ -1,6 +1,9 @@
-public class Licitador {
+import java.io.Serializable;
+
+public class Licitador implements Serializable {
 	private String idComprador;
-	private double limite, incrementos, minutos;
+	private double montante, limite, incrementos, minutos;
+	private long ultimaLicitacao;
 
 	/**
   	 * Construtor por argumentos
@@ -14,6 +17,8 @@ public class Licitador {
 		this.limite = limite;
 		this.incrementos = incrementos;
 		this.minutos = minutos;
+		this.ultimaLicitacao = 0;
+		this.montante = 0.0;
 	}
 
 	/**
@@ -22,6 +27,8 @@ public class Licitador {
 	public Licitador() {
 		idComprador = "n/a";
 		limite = 0.0;
+		this.ultimaLicitacao = 0;
+		this.montante = 0.0;
 		incrementos = 0.0;
 		minutos = 0.0;
 	}
@@ -35,6 +42,8 @@ public class Licitador {
 		limite = l.getLimite();
 		incrementos = l.getIncrementos();
 		minutos = l.getMinutos();
+		this.ultimaLicitacao = 0;
+		this.montante = 0.0;
 	}
 
 	/**
@@ -51,6 +60,14 @@ public class Licitador {
  	 */
 	public double getLimite() {
 		return limite;
+	}
+
+	public double getMontante() {
+		return this.montante;
+	}
+
+	public long getUltimaLicitacao() {
+		return this.ultimaLicitacao;
 	}
 
 	/**
@@ -93,6 +110,14 @@ public class Licitador {
 		this.incrementos = incrementos;
 	}
 
+	public void setMontante(double montante) {
+		this.montante = montante;
+	}
+
+	public void setUltimaLicitacao(long ultimaLicitacao) {
+		this.ultimaLicitacao = ultimaLicitacao;
+	}
+	
 	/**
   	 * Define o intervalo de tempo entre licitações
   	 * @param minutos
