@@ -161,6 +161,9 @@ public class Leilao implements Serializable {
             time = System.currentTimeMillis();
        }	
 
+		if (topValor < im.getPrecoMinimo())
+			topId = "n/a";
+
        return topId;
     }
     

@@ -250,8 +250,16 @@ public class Imoobiliaria implements Serializable
  	 */
 	public Comprador encerraLeilao() {
 		Vendedor v = (Vendedor) utilizador;
+		Comprador vencedor = v.encerrarLeilao();
 
-		return v.encerrarLeilao();
+		try {
+			if (vencedor != null)
+				setEstado(v.getLeilao().getImovel().getID(), "reservado");
+		} catch(ImovelInexistenteException | SemAutorizacaoException | EstadoInvalidoException e) {
+			System.out.println(e.getMessage());
+		}
+
+		return null;
 	}
 
 	/**

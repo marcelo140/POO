@@ -207,6 +207,10 @@ public class Vendedor extends Utilizador
  	 */
 	public Comprador encerrarLeilao() {
 		String str = leilao.encerrar();
+
+		if (str.equals("n/a"))
+			return null;
+
 		Comprador c = new Comprador();
 		c.setEmail(str);
 
